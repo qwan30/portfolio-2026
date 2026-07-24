@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Anton", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Colors (V6 Elegant Brutalist Theme) */
+  --color-canvas: #f4f0e6; /* Warm beige */
+  --color-ink: #111111; /* Near black */
+  --color-accent: #e05d34; /* Rust orange */
+  --color-primary: #111111;
+  
+  --color-surface-soft: #ffffff; /* White cards */
+  --color-surface-dark: #111111; /* Dark sections */
+  
+  --color-pastel-blue: #e0f2fe;
+  --color-pastel-green: #dcfce7;
+  --color-pastel-pink: #ffe4e6;
+  --color-pastel-purple: #f3e8ff;
+  --color-pastel-yellow: #fef08a;
+  
+  --color-hairline: #e5e5e5;
+  
+  --color-text-muted: #b5a999; /* For 'Hey, there' */
+  --color-text-body: #555555;
+  
+  --color-on-primary: #ffffff;
+  --color-on-dark: #ffffff;
+}
+
+body, html {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* Minimalist scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-canvas); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted); 
+}
