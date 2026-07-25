@@ -18,14 +18,26 @@ const About = () => {
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
           
-          {/* Left Column: Summary */}
+          {/* Left Column: Profile Card + Summary */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            <h2 className="font-display text-4xl md:text-5xl uppercase text-ink mb-10">
+            <h2 className="font-display text-4xl md:text-5xl uppercase text-ink mb-8">
               BACKGROUND
             </h2>
-            <p className="font-sans text-xl md:text-2xl leading-relaxed text-ink/80 font-light">
-              {summary}
-            </p>
+            <div className="flex flex-col sm:flex-row items-start gap-8">
+              <div className="w-36 h-48 md:w-44 md:h-56 rounded-2xl overflow-hidden border border-black/10 shadow-md flex-shrink-0 bg-slate-100 group relative">
+                <img 
+                  src="/anh_the.png" 
+                  alt="Tran Thanh Quan Profile Photo" 
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                  <span className="font-mono text-[10px] font-bold text-white uppercase tracking-wider">Tran Thanh Quan</span>
+                </div>
+              </div>
+              <p className="font-sans text-lg md:text-xl leading-relaxed text-ink/80 font-light flex-1">
+                {summary}
+              </p>
+            </div>
           </div>
 
           {/* Right Column: Details */}

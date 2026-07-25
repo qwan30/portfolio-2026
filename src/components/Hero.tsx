@@ -8,10 +8,26 @@ const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
   return (
     <section className="bg-canvas mt-24 px-6 md:px-12 lg:px-24 py-24 min-h-screen flex flex-col justify-center">
       <div className="max-w-7xl mx-auto w-full">
-        {/* Top center greeting */}
-        <h1 className="font-serif italic text-4xl md:text-6xl text-ink/60 text-center mb-8">
-          Hi, I'm <span className="font-display not-italic text-ink">Tran Thanh Quan</span>
-        </h1>
+        {/* Top center greeting with profile photo avatar */}
+        <div className="flex flex-col items-center justify-center mb-10">
+          <div className="relative group mb-6">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-accent rounded-full blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+            <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-canvas shadow-2xl bg-white">
+              <img 
+                src="/anh_the.png" 
+                alt="Tran Thanh Quan" 
+                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" 
+              />
+            </div>
+            {/* Active Status Badge */}
+            <div className="absolute bottom-2 right-2 bg-emerald-500 w-5 h-5 rounded-full border-2 border-canvas shadow-md flex items-center justify-center" title="Available for backend engineering opportunities">
+              <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+            </div>
+          </div>
+          <h1 className="font-serif italic text-4xl md:text-6xl text-ink/60 text-center">
+            Hi, I'm <span className="font-display not-italic text-ink">Tran Thanh Quan</span>
+          </h1>
+        </div>
         
         {/* 3-column grid layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center mb-24">
