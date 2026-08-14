@@ -1,3 +1,9 @@
+export interface GalleryItem {
+  url: string;
+  title: string;
+  badge?: string;
+}
+
 export interface ProjectItem {
   id: string;
   title: string;
@@ -12,6 +18,20 @@ export interface ProjectItem {
   nonTechImpact: string;
   techHighlights: string;
   hoverPreviewImage?: string;
+  gallery?: GalleryItem[];
+  overview?: {
+    purpose: string;
+    context: string;
+    problem: string;
+  };
+  solution?: {
+    architecture: string;
+    coreFeatures: { title: string; desc: string }[];
+  };
+  results?: {
+    summary?: string;
+    items: string[];
+  };
 }
 
 export const portfolioData = {
@@ -77,7 +97,7 @@ export const portfolioData = {
       role: "Freelance (Solo Developer)",
       tagline: "Hệ thống quản lý tài liệu nội bộ tích hợp phân quyền bảo mật cho 50+ nhân viên",
       description: "Thiết kế và phát triển độc lập hệ thống quản lý tài liệu tập trung cho doanh nghiệp Vijaco. Đảm bảo an toàn thông tin với phân quyền chi tiết tới từng vai trò và tài nguyên (RBAC/ABAC), lưu vết lịch sử thao tác (Audit Trail) chống rò rỉ hay xóa nhầm dữ liệu.",
-      techStack: ["C#", ".NET", "PostgreSQL", "Docker", "REST API"],
+      techStack: ["C#", ".NET 9", "PostgreSQL", "Docker", "REST API", "Clean Architecture", "EF Core"],
       metrics: [
         "Phục vụ 50+ nhân viên doanh nghiệp vận hành hàng ngày",
         "Bảo mật tài liệu nhiều cấp với Audit History đầy đủ",
@@ -86,7 +106,58 @@ export const portfolioData = {
       githubUrl: "https://vijaco.vn/",
       nonTechImpact: "Giúp doanh nghiệp tự động hóa quy trình quản lý văn bản nội bộ, ngăn ngừa hoàn toàn rò rỉ dữ liệu và tiết kiệm đáng kể chi phí hạ tầng.",
       techHighlights: "Tự thiết kế RBAC/ABAC granular permissions, quản lý vòng đời tài liệu (Document Lifecycle Management), lưu lịch sử kiểm vết (Audit Trail).",
-      hoverPreviewImage: "/vijaco.png"
+      hoverPreviewImage: "/vijaco-screens/18_user_list.png",
+      gallery: [
+        { url: "/vijaco-screens/18_user_list.png", title: "Quản lý Danh sách Người dùng & Tài khoản", badge: "User Management" },
+        { url: "/vijaco-screens/19_access_permissions.png", title: "Ma trận Phân quyền RBAC/ABAC Đa cấp", badge: "RBAC/ABAC Security" },
+        { url: "/vijaco-screens/11_audit_logs.png", title: "Nhật ký Kiểm toán Fail-Closed Bất biến", badge: "Audit Trail" },
+        { url: "/vijaco-screens/14_upload_files.png", title: "Tải lên Phân đoạn Resumable Chunked", badge: "Chunked Transfer" },
+        { url: "/vijaco-screens/05_file_version_history.png", title: "Lịch sử Phiên bản Tài liệu (Versioning)", badge: "Version Control" },
+        { url: "/vijaco-screens/16_trash.png", title: "Thùng rác An toàn 30 Ngày (Recycle Bin)", badge: "Recycle Bin" },
+        { url: "/vijaco-screens/10_pdf_preview.png", title: "Xem trước PDF & Tải về Bảo mật", badge: "Secure Stream" },
+        { url: "/vijaco-screens/08_mfa_verification.png", title: "Cổng Xác thực MFA TOTP Super Admin", badge: "MFA 2FA Gate" },
+        { url: "/vijaco-screens/15_admin_dashboard.png", title: "Bảng Điều khiển Quản trị Hệ thống", badge: "Dashboard" },
+        { url: "/vijaco-screens/01_department_position_list.png", title: "Quản lý Cơ cấu Phòng ban & Chức danh", badge: "Organization" }
+      ],
+      overview: {
+        purpose: "Thiết kế và phát triển độc lập hệ thống quản lý tài liệu tập trung, lưu trữ bảo mật và số hóa quy trình luân chuyển văn bản cho doanh nghiệp Vijaco.",
+        context: "Doanh nghiệp vận hành với 50+ nhân viên, quản lý ~4TB tài liệu hồ sơ phân tán trên các ổ đĩa mạng vật lý (Y:/, Z:). Việc chia sẻ thủ công qua mạng LAN tiềm ẩn rủi ro lớn về bảo mật và thất lạc dữ liệu.",
+        problem: "Cần xóa bỏ nguy cơ rò rỉ dữ liệu nội bộ, ngăn chặn tình trạng vô tình xóa/ghi đè file, kiểm soát phân quyền chi tiết theo phòng ban/vị trí và lưu vết 100% hành vi truy cập mà vẫn tối ưu chi phí hạ tầng."
+      },
+      solution: {
+        architecture: "Xây dựng theo kiến trúc C# / .NET 9 Clean Architecture (Modular Monolith) kết hợp PostgreSQL 16 và đóng gói trọn gói qua Docker Compose.",
+        coreFeatures: [
+          {
+            title: "Động cơ phân quyền RBAC/ABAC đa cấp",
+            desc: "Canonical Precedence Engine xử lý xung đột quyền theo thứ bậc chuẩn xác: Resource Rank (File → Folder → Ancestor) → Subject Rank (User → Role → Department) → DENY wins, tự động cấp quyền UPLOADER_DEFAULT cho người tạo."
+          },
+          {
+            title: "Kiểm toán bất biến (Fail-Closed Audit Trail)",
+            desc: "Lưu vết 100% thao tác nhạy cảm (View, Download, Upload, Move, Delete, Restore). Cơ chế Fail-Closed tự động chặn xuất file/stream nếu hệ thống lưu vết audit gặp sự cố."
+          },
+          {
+            title: "Tải lên phân đoạn (Resumable Chunked Upload)",
+            desc: "Hỗ trợ tải tệp dung lượng lớn theo từng chunk độc lập, resume sau ngắt kết nối mạng, kiểm tra mã băm SHA-256 toàn vẹn và dọn dẹp staging tự động."
+          },
+          {
+            title: "Storage Adapter & Che giấu đường dẫn vật lý",
+            desc: "Giao tiếp ổ đĩa vật lý qua Storage Root trừu tượng (Y:/, Z:), kiểm soát Path Containment nghiêm ngặt, tuyệt đối không để lộ Physical Path ra client."
+          },
+          {
+            title: "Vòng đời tài liệu & Thùng rác an toàn 30 ngày",
+            desc: "Xóa mềm (Soft Delete) vào Recycle Bin 30 ngày, khôi phục an toàn chống xung đột trùng tên (Collision), hỗ trợ quản lý đa phiên bản (Versioning)."
+          }
+        ]
+      },
+      results: {
+        summary: "Dự án hoàn thiện đúng cam kết chất lượng, giải quyết triệt để bài toán quản lý tài liệu và tối ưu chi phí vận hành cho doanh nghiệp.",
+        items: [
+          "Phục vụ 50+ nhân viên doanh nghiệp vận hành trơn tru hàng ngày với độ trễ phản hồi API < 100ms.",
+          "Bảo mật dữ liệu tuyệt đối: 0 sự cố rò rỉ hay xóa nhầm dữ liệu, 100% thao tác nhạy cảm được truy vết kiểm toán.",
+          "Tối ưu 100% chi phí hạ tầng: Tận dụng hoàn toàn ~4TB dung lượng ổ cứng sẵn có, triển khai On-Premise qua Docker không tốn chi phí Cloud hàng tháng.",
+          "Nâng cao 40% hiệu suất tìm kiếm và luân chuyển tài liệu nội bộ giữa các phòng ban."
+        ]
+      }
     },
     {
       id: "aivora-marketplace",
