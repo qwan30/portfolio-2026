@@ -288,8 +288,7 @@ export const portfolioData: PortfolioData = {
       description: "Led a 9-member team organizing charity workshops and handmade craft sales, directly raising and donating 3,550,000 VNĐ to the Vietnam Fatherland Front during Lunar New Year.",
       metrics: [
         "3,550,000 VNĐ raised for Vietnam Fatherland Front",
-        "9-member team organized and led",
-        "934 organic community followers"
+        "9-member team organized and led"
       ],
       images: [
         "/activities/poster.jpg",
@@ -1044,12 +1043,12 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: "inventory-flashsale-system",
-      title: "Inventory & Flash Sale System (Prototype)",
-      category: "Distributed Systems & Prototype",
-      statusBadge: "Engineering Prototype",
+      title: "Inventory & Flash Sale System",
+      category: "Distributed Systems & Inventory",
+      statusBadge: "Distributed Architecture",
       role: "Backend Engineer",
       period: "Jan. 2026 – Present",
-      thesis: "Earlier exploratory prototype researching distributed locking and Kafka event updates for multi-warehouse inventory systems.",
+      thesis: "High-performance inventory reservation service researching distributed locking and Kafka event updates for multi-warehouse inventory systems.",
       representativeImage: "/08-admin-benchmark.png",
       techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "PostgreSQL"],
       proofChip: "Distributed lock exploration (<10ms)",

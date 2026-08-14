@@ -26,10 +26,10 @@ export const MoreProjects: React.FC<MoreProjectsProps> = ({
             </span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl uppercase tracking-tight text-ink">
-            SECONDARY PROJECTS & PROTOTYPES
+            SECONDARY ENGINEERING PROJECTS
           </h2>
           <p className="mt-2 font-sans text-ink/75 text-sm sm:text-base leading-relaxed">
-            Financial ledger engines, fintech banking workflows, freelance marketplace backends, and distributed locking research prototypes.
+            Financial ledger engines, fintech banking workflows, freelance marketplace backends, and distributed inventory systems.
           </p>
         </div>
 
