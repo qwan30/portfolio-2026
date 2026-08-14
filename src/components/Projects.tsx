@@ -3,6 +3,7 @@ import { ExternalLink, ArrowRight, ZoomIn } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import type { FeaturedProjectItem } from '../data/portfolioData';
 import type { LightboxData } from './ImageLightbox';
+import TechIcon from './TechIcon';
 
 const categoryPillColors = [
   'bg-sky-100 text-sky-900 border-sky-200',
@@ -133,9 +134,10 @@ const FeaturedProjectCard = memo(
               {project.techStack.slice(0, 6).map((tech, tIdx) => (
                 <span
                   key={tIdx}
-                  className="font-mono text-[11px] font-medium uppercase bg-white px-2.5 py-1 rounded-lg border border-black/10 text-ink"
+                  className="font-mono text-[11px] font-medium uppercase bg-white px-2.5 py-1 rounded-lg border border-black/10 text-ink flex items-center gap-1.5 shadow-2xs"
                 >
-                  {tech}
+                  <TechIcon name={tech} className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>{tech}</span>
                 </span>
               ))}
             </div>

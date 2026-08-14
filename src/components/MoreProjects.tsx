@@ -3,6 +3,7 @@ import { ExternalLink, ArrowRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import type { SecondaryProjectItem } from '../data/portfolioData';
 import type { LightboxData } from './ImageLightbox';
+import TechIcon from './TechIcon';
 
 interface MoreProjectsProps {
   onExpandImage: (data: LightboxData) => void;
@@ -89,9 +90,10 @@ export const MoreProjects: React.FC<MoreProjectsProps> = ({
                   {project.techStack.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="font-mono text-[10px] uppercase font-medium bg-gray-100 px-2.5 py-0.5 rounded-md text-ink"
+                      className="font-mono text-[10px] uppercase font-medium bg-gray-100 px-2.5 py-0.5 rounded-md text-ink flex items-center gap-1"
                     >
-                      {tech}
+                      <TechIcon name={tech} className="w-3 h-3 flex-shrink-0" />
+                      <span>{tech}</span>
                     </span>
                   ))}
                 </div>

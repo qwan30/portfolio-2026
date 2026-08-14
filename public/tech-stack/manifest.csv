@@ -1,0 +1,38 @@
+﻿category,badge,file,source_type,source_url_or_note
+Languages,Java,Languages/Java.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/java.png
+Languages,Python,Languages/Python.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/python.png
+Languages,SQL,Languages/SQL.png,web,https://cdn-icons-png.flaticon.com/512/8453/8453211.png
+Languages,TypeScript,Languages/TypeScript.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/typescript.png
+Backend,Spring Boot,Backend/Spring-Boot.png,web,https://www.iconarchive.com/download/i150990/simpleicons-team/simple/springboot.128.png
+Backend,Spring Security,Backend/Spring-Security.png,web-vector,Simple Icons springsecurity.svg (retrieved via web/GitHub)
+Backend,FastAPI,Backend/FastAPI.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/fastapi.png
+Backend,JPA/Hibernate,Backend/JPA-Hibernate.png,representative-web,Hibernate logo: https://www.iconarchive.com/download/i149944/simpleicons-team/simple/hibernate.128.png
+Backend,REST APIs,Backend/REST-APIs.png,representative-web,Swagger logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/swagger.png
+Backend,Redis/RQ,Backend/Redis-RQ.png,representative-web,Redis logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/redis.png
+Data & Messaging,PostgreSQL,Data-and-Messaging/PostgreSQL.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/postgresql.png
+Data & Messaging,MySQL,Data-and-Messaging/MySQL.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mysql.png
+Data & Messaging,Redis,Data-and-Messaging/Redis.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/redis.png
+Data & Messaging,pgvector,Data-and-Messaging/pgvector.png,screenshot-exact,pgvector has no clear standalone official brand mark in the source searched; exact icon extracted from supplied screenshot
+Data & Messaging,Kafka,Data-and-Messaging/Kafka.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/kafka.png
+Data & Messaging,Flyway,Data-and-Messaging/Flyway.png,web,https://www.iconarchive.com/download/i149744/simpleicons-team/simple/flyway.128.png
+Testing & Observability,JUnit,Testing-and-Observability/JUnit.png,web,https://www.iconarchive.com/download/i150088/simpleicons-team/simple/junit-5.128.png
+Testing & Observability,Testcontainers,Testing-and-Observability/Testcontainers.png,web,https://opensource.muenchen.de/logo/testcontainers-logo.svg
+Testing & Observability,JMeter,Testing-and-Observability/JMeter.png,web,https://www.iconarchive.com/download/i149134/simpleicons-team/simple/apache-jmeter.128.png
+Testing & Observability,k6,Testing-and-Observability/k6.png,web,https://www.iconarchive.com/download/i150093/simpleicons-team/simple/k6.128.png
+Testing & Observability,Prometheus,Testing-and-Observability/Prometheus.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/prometheus.png
+Testing & Observability,Playwright,Testing-and-Observability/Playwright.png,official-web,https://github.com/microsoft/playwright/raw/2f6148bcd1a96ec687d55ce08645fc6315b1514e/packages/recorder/public/playwright-logo.svg
+Testing & Observability,Grafana,Testing-and-Observability/Grafana.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/grafana.png
+Testing & Observability,Loki,Testing-and-Observability/Loki.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/loki.png
+Testing & Observability,ELK,Testing-and-Observability/ELK.png,web,https://www.svgrepo.com/download/341783/elastic-stack.svg
+DevOps & Cloud,Docker,DevOps-and-Cloud/Docker.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/docker.png
+DevOps & Cloud,Docker Compose,DevOps-and-Cloud/Docker-Compose.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/docker-compose.png
+DevOps & Cloud,Dokploy Traefik,DevOps-and-Cloud/Dokploy-Traefik.png,combined-web,Combined from Dokploy and Traefik web-downloaded logos
+DevOps & Cloud,Nginx,DevOps-and-Cloud/Nginx.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/nginx.png
+DevOps & Cloud,Git,DevOps-and-Cloud/Git.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/git.png
+DevOps & Cloud,GitHub Actions,DevOps-and-Cloud/GitHub-Actions.png,web,https://www.iconarchive.com/download/i149813/simpleicons-team/simple/github-actions.128.png
+DevOps & Cloud,AWS,DevOps-and-Cloud/AWS.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/aws-light.png
+Code Quality & Security,AI-assisted PR Review,Code-Quality-and-Security/AI-assisted-PR-Review.png,representative-web,"Pull Request icon from SVG Repo, recolored purple: https://www.svgrepo.com/download/433132/pull-request.svg"
+Code Quality & Security,SonarCloud,Code-Quality-and-Security/SonarCloud.png,web,https://www.iconarchive.com/download/i150953/simpleicons-team/simple/sonarcloud.128.png
+Code Quality & Security,CodeQL,Code-Quality-and-Security/CodeQL.png,web,https://www.svgrepo.com/download/373515/codeql.svg
+Code Quality & Security,Trivy,Code-Quality-and-Security/Trivy.png,web,https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/trivy.png
+Code Quality & Security,Dependabot,Code-Quality-and-Security/Dependabot.png,web,https://www.iconarchive.com/download/i133760/github/octicons/dependabot-24.128.png

@@ -52,7 +52,7 @@ export const Skills: React.FC = () => {
                       key={sIdx}
                       className="flex items-center gap-2.5 bg-[#fbf9f5] px-3.5 py-2.5 rounded-xl border border-black/8 hover:border-blue-500/50 hover:bg-blue-50/40 hover:shadow-xs transition-all group"
                     >
-                      <TechIcon name={skill} className="w-4 h-4 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                      <TechIcon name={skill} className="w-5 h-5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                       <span className="font-sans text-xs sm:text-sm font-semibold text-ink">
                         {skill}
                       </span>

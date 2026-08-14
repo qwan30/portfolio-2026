@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { X, ExternalLink, ShieldCheck, CheckCircle2, AlertTriangle, Layers, Activity } from 'lucide-react';
 import type { FeaturedProjectItem, SecondaryProjectItem } from '../data/portfolioData';
 import type { LightboxData } from './ImageLightbox';
+import TechIcon from './TechIcon';
 
 interface CaseStudyModalProps {
   project: (FeaturedProjectItem | SecondaryProjectItem) | null;
@@ -91,9 +92,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             {project.techStack.map((tech, idx) => (
               <span
                 key={idx}
-                className="font-mono text-xs font-semibold uppercase bg-gray-100 text-ink px-3 py-1 rounded-full border border-black/5"
+                className="font-mono text-xs font-semibold uppercase bg-gray-100 text-ink px-3 py-1 rounded-full border border-black/5 flex items-center gap-1.5"
               >
-                {tech}
+                <TechIcon name={tech} className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>{tech}</span>
               </span>
             ))}
           </div>
