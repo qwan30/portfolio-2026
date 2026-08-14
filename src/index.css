@@ -6,7 +6,7 @@
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
-  /* Colors (V6 Elegant Brutalist Theme) */
+  /* Colors (Warm Editorial Theme) */
   --color-canvas: #f4f0e6; /* Warm beige */
   --color-ink: #111111; /* Near black */
   --color-accent: #e05d34; /* Rust orange */
@@ -23,7 +23,7 @@
   
   --color-hairline: #e5e5e5;
   
-  --color-text-muted: #b5a999; /* For 'Hey, there' */
+  --color-text-muted: #b5a999;
   --color-text-body: #555555;
   
   --color-on-primary: #ffffff;
@@ -47,15 +47,15 @@ body, html {
   background: var(--color-canvas); 
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-hairline); 
+  background: #d8d0c2; 
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted); 
+  background: #b5a999; 
 }
 
 /* Performance optimizations: Content-visibility for offscreen sections */
-#about, #projects, #expertise, #skills, #activities {
+#about, #projects, #engineering, #skills, #activities {
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
 }
@@ -95,3 +95,11 @@ body, html {
   will-change: transform, opacity;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -2,552 +2,1102 @@ export interface GalleryItem {
   url: string;
   title: string;
   badge?: string;
+  description?: string;
 }
 
-export interface ProjectItem {
+export interface EngineeredDecision {
+  technique: string;
+  mechanism: string;
+  property: string;
+}
+
+export interface FailureMode {
+  failureMode: string;
+  mitigation: string;
+  tradeOff: string;
+}
+
+export interface VerificationItem {
+  type: string;
+  details: string;
+  result: string;
+}
+
+export interface CaseStudyData {
+  executiveSummary: string;
+  businessContext: string;
+  problemStatement: string;
+  systemConstraints: string[];
+  architecture: string;
+  architectureHighlights: string[];
+  deepDecisions: {
+    title: string;
+    technique: string;
+    mechanism: string;
+    impact: string;
+  }[];
+  failureModesAndTradeoffs: FailureMode[];
+  testingAndVerification: VerificationItem[];
+  deploymentAndObservability: string[];
+  operationalOutcomes: string[];
+  gallery: GalleryItem[];
+}
+
+export interface FeaturedProjectItem {
+  id: string;
+  number: string;
+  title: string;
+  category: string;
+  status: string;
+  role: string;
+  period: string;
+  thesis: string;
+  problem: string;
+  engineeredDecisions: EngineeredDecision[];
+  proofChips: string[];
+  techStack: string[];
+  githubUrl?: string; // undefined for private repos (Vijaco)
+  liveUrl?: string;
+  featuredImage: string;
+  thumbnails: GalleryItem[];
+  caseStudy: CaseStudyData;
+}
+
+export interface SecondaryProjectItem {
   id: string;
   title: string;
   category: string;
-  period: string;
+  statusBadge: string;
   role: string;
-  tagline: string;
-  description: string;
+  period: string;
+  thesis: string;
+  representativeImage: string;
   techStack: string[];
-  metrics: string[];
-  githubUrl: string;
-  nonTechImpact: string;
-  techHighlights: string;
-  hoverPreviewImage?: string;
-  quickSpecs?: {
-    tech: string;
-    infra: string;
-    scale: string;
-  };
-  gallery?: GalleryItem[];
-  overview?: {
-    purpose: string;
-    context: string;
-    problem: string;
-  };
-  solution?: {
-    architecture: string;
-    coreFeatures: { title: string; desc: string }[];
-  };
-  results?: {
-    summary?: string;
-    items: string[];
-  };
+  proofChip: string;
+  githubUrl?: string; // undefined for Aivora!
+  liveUrl?: string;
+  caseStudy: CaseStudyData;
 }
 
-export const portfolioData = {
+export interface ProofMetricItem {
+  metric: string;
+  context: string;
+  source: string;
+}
+
+export interface EngineeringFocusArea {
+  number: string;
+  title: string;
+  description: string;
+  linkedProject: string;
+  linkedProjectId: string;
+}
+
+export interface CertificationItem {
+  name: string;
+  issuer: string;
+  year: string;
+  image: string;
+}
+
+export interface EducationItem {
+  degree: string;
+  institution: string;
+  duration: string;
+  gpa: string;
+}
+
+export interface BeyondCodeData {
+  title: string;
+  role: string;
+  projectName: string;
+  description: string;
+  metrics: string[];
+  images: string[];
+}
+
+export interface PersonalData {
+  name: string;
+  eyebrow: string;
+  title: string;
+  email: string;
+  phone: string;
+  phoneRaw: string;
+  location: string;
+  resumeUrl: string;
+  socials: {
+    github: string;
+    linkedin: string;
+    facebook: string;
+  };
+  heroStatement: string;
+  heroSubstatement: string;
+  heroTerminalLines: string[];
+  heroProofMetrics: ProofMetricItem[];
+  summary: string;
+  education: EducationItem[];
+  certifications: CertificationItem[];
+  engineeringFocus: EngineeringFocusArea[];
+  technicalSkills: {
+    [tier: string]: string[];
+  };
+  beyondCode: BeyondCodeData;
+}
+
+export interface PortfolioData {
+  personal: PersonalData;
+  featuredProjects: FeaturedProjectItem[];
+  secondaryProjects: SecondaryProjectItem[];
+}
+
+export const portfolioData: PortfolioData = {
   personal: {
     name: "Tran Thanh Quan",
+    eyebrow: "SOFTWARE ENGINEERING · BACKEND & SYSTEMS",
     title: "Backend Software Engineer",
     email: "tranthanhquan09@gmail.com",
-    phone: "0974426058",
+    phone: "+84 974 426 058",
+    phoneRaw: "0974426058",
     location: "Ho Chi Minh City, Vietnam",
+    resumeUrl: "/Tran_Thanh_Quan_Java_Software_Engineer_Kms.pdf",
     socials: {
       github: "https://github.com/qwan30",
       linkedin: "https://www.linkedin.com/in/tran-thanh-quan-eric-78842b326/",
       facebook: "https://www.facebook.com/tran.quan.182591/?locale=vi_VN"
     },
-    summary: "Software Engineering student focused on backend development, reliable system design, and AI-assisted workflows. Experienced in building production systems with role-based permissions, high-concurrency transaction engines, idempotent payment flows, and Graph RAG architectures.",
+    heroStatement: "I BUILD RELIABLE SYSTEMS.",
+    heroSubstatement: "Specializing in high-concurrency backend systems, transactional data integrity, fail-closed security models, and applied AI retrieval engines.",
+    heroTerminalLines: [
+      "> Initializing distributed core services...",
+      "[OK] Vijaco Doc-Mgmt System active (30+ staff)",
+      "[OK] Redis Lua stock gate & compensation ready",
+      "[OK] Transactional Outbox event relay online",
+      "> System operational. Ready for high-throughput traffic."
+    ],
+    heroProofMetrics: [
+      {
+        metric: "0 Oversells",
+        context: "5,000 reservation attempts across 100 concurrent threads",
+        source: "JMeter Concurrency Benchmark"
+      },
+      {
+        metric: "30+ Staff",
+        context: "Multi-role internal document management system in daily operation",
+        source: "Vijaco Production Deployment"
+      },
+      {
+        metric: "95.2% Score",
+        context: "Citation precision across 300 verified clinical cases",
+        source: "Graph RAG Evaluation Benchmark"
+      }
+    ],
+    summary: "Software Engineering student at FPT University specializing in backend systems, high-concurrency transaction architectures, and applied AI. Experienced in delivering production systems with multi-tier RBAC/ABAC authorization, idempotent payment workflows, and Graph RAG knowledge pipelines.",
     education: [
       {
         degree: "Bachelor of Engineering in Software Engineering",
         institution: "FPT University",
-        duration: "Aug. 2023 - Aug. 2027",
-        gpa: "8.0/10"
+        duration: "Aug. 2023 – Aug. 2027",
+        gpa: "8.0 / 10"
       }
     ],
     certifications: [
       {
-        name: "Architecting Solutions on AWS (2026)",
+        name: "Architecting Solutions on AWS",
+        issuer: "Amazon Web Services",
+        year: "2026",
         image: "/certificates/AWS.jpeg"
       },
       {
-        name: "Retrieval Augmented Generation (RAG) (2026)",
+        name: "Retrieval Augmented Generation (RAG)",
+        issuer: "DeepLearning.AI",
+        year: "2026",
         image: "/certificates/rag.jpeg"
       },
       {
-        name: "Foundations of User Experience (UX) Design (2026)",
+        name: "Foundations of User Experience (UX) Design",
+        issuer: "Google",
+        year: "2026",
         image: "/certificates/UX (User Experience).jpeg"
       }
     ],
-    skills: [
-      "Java", "Python", "C#", "SQL", "TypeScript",
-      "Spring Boot", "Spring Security", ".NET 10", "FastAPI", "JPA/Hibernate", "SignalR", "REST APIs", "Redis/RQ",
-      "PostgreSQL", "MySQL", "Redis", "pgvector", "Kafka", "Flyway",
-      "JUnit", "Testcontainers", "JMeter", "k6", "Prometheus", "Playwright", "Grafana", "Loki",
-      "Docker", "Docker Compose", "Nginx", "Git", "GitHub Actions", "GHCR", "AWS",
-      "AI-assisted PR Review", "SonarCloud", "CodeQL", "Trivy", "Dependabot",
-      "Domain-Driven Design", "Event-Driven", "Transactional Outbox", "Hybrid Retrieval", "RAG"
+    engineeringFocus: [
+      {
+        number: "01",
+        title: "Backend Systems",
+        description: "Enterprise APIs, transactional consistency, granular RBAC/ABAC authorization models, and domain-driven service boundaries.",
+        linkedProject: "Enterprise Hospital Management System (HMS)",
+        linkedProjectId: "hospital-management-system"
+      },
+      {
+        number: "02",
+        title: "Concurrency & Reliability",
+        description: "In-memory atomic gating, two-layer compensation reconciliation, distributed locking, and JMeter load testing.",
+        linkedProject: "Flash Sale Concurrency Engine",
+        linkedProjectId: "flash-sale-concurrency-engine"
+      },
+      {
+        number: "03",
+        title: "Delivery & Operations",
+        description: "Multi-stage Docker builds, GitHub Actions CI/CD pipelines, Prometheus/Grafana metrics, and automated Playwright test gates.",
+        linkedProject: "Enterprise Hospital Management System (HMS)",
+        linkedProjectId: "hospital-management-system"
+      },
+      {
+        number: "04",
+        title: "Applied AI & Retrieval",
+        description: "Permission-aware Graph RAG, pgvector hybrid search (HNSW + BM25), hallucination guardrails, and async OCR ingestion.",
+        linkedProject: "AI Hospital Knowledge Assistant",
+        linkedProjectId: "ai-hospital-knowledge-assistant"
+      }
     ],
     technicalSkills: {
-      "LANGUAGES": ["Java", "Python", "C#", "SQL", "TypeScript"],
-      "BACKEND": ["Spring Boot", "Spring Security", ".NET 10", "FastAPI", "JPA/Hibernate", "SignalR", "REST APIs", "Redis/RQ"],
-      "DATA & MESSAGING": ["PostgreSQL", "MySQL", "Redis", "pgvector", "Kafka", "Flyway"],
-      "TESTING & OBSERVABILITY": ["JUnit", "Testcontainers", "JMeter", "k6", "Prometheus", "Playwright", "Grafana", "Loki"],
-      "DEVOPS & CLOUD": ["Docker", "Docker Compose", "Nginx", "Git", "GitHub Actions", "GHCR", "AWS"],
-      "CODE QUALITY & SECURITY": ["AI-assisted PR Review", "SonarCloud", "CodeQL", "Trivy", "Dependabot"],
-      "SYSTEM DESIGN & AI": ["Domain-Driven Design", "Event-Driven", "Transactional Outbox", "Hybrid Retrieval", "RAG"]
-    }
-  },
-  projects: [
-    {
-      id: "vijaco-doc-mgmt",
-      title: "Vijaco — Internal Document Management App",
-      category: "Solo Production Freelance",
-      period: "Jun. 2026 – Present",
-      role: "Freelance (Solo Developer)",
-      tagline: "Hệ thống quản lý tài liệu nội bộ tích hợp phân quyền bảo mật cho 30+ nhân viên",
-      description: "Thiết kế và phát triển độc lập hệ thống quản lý tài liệu tập trung cho doanh nghiệp Vijaco. Đảm bảo an toàn thông tin với phân quyền chi tiết tới từng vai trò và tài nguyên (RBAC/ABAC), lưu vết lịch sử thao tác (Audit Trail) chống rò rỉ hay xóa nhầm dữ liệu.",
-      techStack: ["NestJS", "TypeScript", "Flutter", "PostgreSQL", "Docker", "TypeORM", "REST API"],
-      metrics: [
-        "Phục vụ 30+ nhân viên doanh nghiệp vận hành hàng ngày",
-        "Bảo mật tài liệu nhiều cấp với Audit History đầy đủ",
-        "Tối ưu chi phí hạ tầng và lưu trữ trên tài nguyên công ty"
+      "Core Backend": [
+        "Java 21 / 17",
+        "Spring Boot",
+        "Spring Security",
+        "C# / .NET 10",
+        "Python",
+        "FastAPI",
+        "TypeScript",
+        "NestJS",
+        "PostgreSQL",
+        "MySQL"
       ],
-      githubUrl: "https://vijaco.vn/",
-      nonTechImpact: "Giúp doanh nghiệp tự động hóa quy trình quản lý văn bản nội bộ, ngăn ngừa hoàn toàn rò rỉ dữ liệu và tiết kiệm đáng kể chi phí hạ tầng.",
-      techHighlights: "Tự thiết kế RBAC/ABAC granular permissions, quản lý vòng đời tài liệu (Document Lifecycle Management), lưu lịch sử kiểm vết (Audit Trail).",
-      hoverPreviewImage: "/vijaco-screens/18_user_list.png",
-      quickSpecs: {
-        tech: "NestJS (TS) + Flutter (Dart)",
-        infra: "On-Premise Docker (~4TB)",
-        scale: "30+ Nhân sự vận hành"
-      },
-      gallery: [
-        { url: "/vijaco-screens/18_user_list.png", title: "Quản lý Danh sách Người dùng & Tài khoản", badge: "User Management" },
-        { url: "/vijaco-screens/19_access_permissions.png", title: "Ma trận Phân quyền RBAC/ABAC Đa cấp", badge: "RBAC/ABAC Security" },
-        { url: "/vijaco-screens/11_audit_logs.png", title: "Nhật ký Kiểm toán Fail-Closed Bất biến", badge: "Audit Trail" },
-        { url: "/vijaco-screens/14_upload_files.png", title: "Tải lên Phân đoạn Resumable Chunked", badge: "Chunked Transfer" },
-        { url: "/vijaco-screens/05_file_version_history.png", title: "Lịch sử Phiên bản Tài liệu (Versioning)", badge: "Version Control" },
-        { url: "/vijaco-screens/16_trash.png", title: "Thùng rác An toàn 30 Ngày (Recycle Bin)", badge: "Recycle Bin" },
-        { url: "/vijaco-screens/10_pdf_preview.png", title: "Xem trước PDF & Tải về Bảo mật", badge: "Secure Stream" },
-        { url: "/vijaco-screens/08_mfa_verification.png", title: "Cổng Xác thực MFA TOTP Super Admin", badge: "MFA 2FA Gate" },
-        { url: "/vijaco-screens/15_admin_dashboard.png", title: "Bảng Điều khiển Quản trị Hệ thống", badge: "Dashboard" },
-        { url: "/vijaco-screens/01_department_position_list.png", title: "Quản lý Cơ cấu Phòng ban & Chức danh", badge: "Organization" }
+      "Systems & Delivery": [
+        "Docker / Compose",
+        "Redis",
+        "Apache Kafka",
+        "Linux / Nginx",
+        "Prometheus & Grafana",
+        "GitHub Actions CI/CD",
+        "Playwright E2E",
+        "Flyway"
       ],
-      overview: {
-        purpose: "Thiết kế và phát triển độc lập hệ thống quản lý tài liệu tập trung, lưu trữ bảo mật và số hóa quy trình luân chuyển văn bản cho doanh nghiệp Vijaco.",
-        context: "Doanh nghiệp vận hành với 30+ nhân viên, quản lý ~4TB tài liệu hồ sơ phân tán trên các ổ đĩa mạng vật lý (Y:/, Z:). Việc chia sẻ thủ công qua mạng LAN tiềm ẩn rủi ro lớn về bảo mật và thất lạc dữ liệu.",
-        problem: "Cần xóa bỏ nguy cơ rò rỉ dữ liệu nội bộ, ngăn chặn tình trạng vô tình xóa/ghi đè file, kiểm soát phân quyền chi tiết theo phòng ban/vị trí và lưu vết 100% hành vi truy cập mà vẫn tối ưu chi phí hạ tầng."
-      },
-      solution: {
-        architecture: "Xây dựng theo kiến trúc NestJS / TypeScript Modular Monolith (Hexagonal Ports & Adapters) kết hợp ứng dụng mobile Flutter (Dart) cho Android & iOS, PostgreSQL 16 và đóng gói trọn gói qua Docker Compose.",
-        coreFeatures: [
-          {
-            title: "Động cơ phân quyền RBAC/ABAC đa cấp",
-            desc: "Canonical Precedence Engine xử lý xung đột quyền theo thứ bậc chuẩn xác: Resource Rank (File → Folder → Ancestor) → Subject Rank (User → Role → Department) → DENY wins, tự động cấp quyền UPLOADER_DEFAULT cho người tạo."
-          },
-          {
-            title: "Kiểm toán bất biến (Fail-Closed Audit Trail)",
-            desc: "Lưu vết 100% thao tác nhạy cảm (View, Download, Upload, Move, Delete, Restore). Cơ chế Fail-Closed tự động chặn xuất file/stream nếu hệ thống lưu vết audit gặp sự cố."
-          },
-          {
-            title: "Tải lên phân đoạn (Resumable Chunked Upload)",
-            desc: "Hỗ trợ tải tệp dung lượng lớn theo từng chunk độc lập, resume sau ngắt kết nối mạng, kiểm tra mã băm SHA-256 toàn vẹn và dọn dẹp staging tự động."
-          },
-          {
-            title: "Storage Adapter & Che giấu đường dẫn vật lý",
-            desc: "Giao tiếp ổ đĩa vật lý qua Storage Root trừu tượng (Y:/, Z:), kiểm soát Path Containment nghiêm ngặt, tuyệt đối không để lộ Physical Path ra client."
-          },
-          {
-            title: "Vòng đời tài liệu & Thùng rác an toàn 30 ngày",
-            desc: "Xóa mềm (Soft Delete) vào Recycle Bin 30 ngày, khôi phục an toàn chống xung đột trùng tên (Collision), hỗ trợ quản lý đa phiên bản (Versioning)."
-          }
-        ]
-      },
-      results: {
-        summary: "Dự án hoàn thiện đúng cam kết chất lượng, giải quyết triệt để bài toán quản lý tài liệu và tối ưu chi phí vận hành cho doanh nghiệp.",
-        items: [
-          "Phục vụ 30+ nhân viên doanh nghiệp vận hành trơn tru hàng ngày với độ trễ phản hồi API < 100ms.",
-          "Bảo mật dữ liệu tuyệt đối: 0 sự cố rò rỉ hay xóa nhầm dữ liệu, 100% thao tác nhạy cảm được truy vết kiểm toán.",
-          "Tối ưu 100% chi phí hạ tầng: Tận dụng hoàn toàn ~4TB dung lượng ổ cứng sẵn có, triển khai On-Premise qua Docker không tốn chi phí Cloud hàng tháng.",
-          "Nâng cao 40% hiệu suất tìm kiếm và luân chuyển tài liệu nội bộ giữa các phòng ban."
-        ]
-      }
+      "Applied AI": [
+        "RAG Architecture",
+        "pgvector (HNSW)",
+        "Hybrid Search (BM25)",
+        "AI Guardrails & Evals",
+        "Redis / RQ Pipeline"
+      ]
     },
-    {
-      id: "aivora-marketplace",
-      title: "Aivora — AI-Powered Freelance Marketplace",
-      category: "Fullstack Platform (Backend Lead)",
-      period: "May. 2026 – Present",
-      role: ".NET 10 Backend Lead (4-Member Team)",
-      tagline: "Sàn giao dịch việc làm chuyên gia AI tích hợp ví tạm giữ đa pha và trợ lý GenAI phân rã yêu cầu",
-      description: "Dẫn dắt nhóm 4 kỹ sư thiết kế và phát triển toàn bộ kiến trúc backend cho sàn giao dịch việc làm chuyên gia AI. Triển khai mô hình tài chính Treasury giải ngân 2 pha (30% cọc / 70% nghiệm thu), ứng dụng Pessimistic Locking (SELECT ... FOR UPDATE), thuật toán sắp xếp ID chống Deadlock và tích hợp VNPay IPN Idempotent Callback bảo vệ 100% dòng tiền giao dịch.",
-      techStack: [".NET 10", "C# 13", "PostgreSQL", "EF Core", "SignalR", "VNPay", "Gemini 2.5", "Docker"],
+    beyondCode: {
+      title: "Beyond Code: Community & Leadership",
+      role: "Project Lead — Media & Logistics",
+      projectName: "Tết Luôn Vui — Community Fundraising Project",
+      description: "Led a 9-member team organizing charity workshops and handmade craft sales, directly raising and donating 3,550,000 VNĐ to the Vietnam Fatherland Front during Lunar New Year.",
       metrics: [
-        "Bảo vệ 100% an toàn tài chính cho luồng thanh toán Escrow & Milestone",
-        "Trợ lý AI giúp làm rõ yêu cầu thô & phân rã Milestone tự động nhanh hơn 30%",
-        "24+ RESTful Controllers & SignalR Hub phục vụ kết nối thời gian thực"
-      ],
-      githubUrl: "https://github.com/qwan30/swp-2026",
-      nonTechImpact: "Tạo môi trường giao dịch minh bạch, an toàn tuyệt đối cho người thuê (Client) và chuyên gia (Expert); rút ngắn thời gian chốt hợp đồng và loại bỏ rủi ro quỵt tiền hay gian lận thanh toán.",
-      techHighlights: "Treasury Deep Module giải ngân 2 pha, Pessimistic Locking (SELECT ... FOR UPDATE) chống tranh chấp số dư ví, Deadlock Prevention, Concurrency Tokens, Hybrid Expert Recommendation Scorer + Gemini Flash Re-ranking.",
-      hoverPreviewImage: "/AIVORA-project (2).png",
-      quickSpecs: {
-        tech: ".NET 10 (C# 13) + React",
-        infra: "PostgreSQL 16 + SignalR + VNPay",
-        scale: "4-Member Team • 24+ Controllers"
-      },
-      gallery: [
-        { url: "/AIVORA-project (2).png", title: "Tổng quan Nền tảng Freelance Marketplace Aivora", badge: "Marketplace Core" }
-      ],
-      overview: {
-        purpose: "Dẫn dắt nhóm 4 kỹ sư xây dựng hệ thống backend cho sàn giao dịch việc làm chuyên sâu về AI & Công nghệ, quản lý trọn vẹn vòng đời từ tuyển dụng, ký kết, thực thi milestone đến thanh toán giải ngân an toàn.",
-        context: "Thị trường tuyển dụng tự do thường đối mặt với rủi ro tranh chấp tài chính, mô tả công việc mơ hồ gây bất đồng kỳ vọng giữa Client - Expert, và nguy cơ race condition / duplicate credit trong xử lý số dư ví khi có lưu lượng giao dịch đồng thời.",
-        problem: "Cần xây dựng hệ thống xử lý giao dịch tài chính với độ tin cậy tuyệt đối (chống double-spending, race condition, deadlock), tích hợp trợ lý AI chuẩn hóa yêu cầu tự động và động cơ chấm điểm khớp chuyên gia thông minh."
-      },
-      solution: {
-        architecture: "Clean Architecture 3 tầng (.NET 10 Web API → Domain Services → Repositories EF Core), ứng dụng Deep Module Pattern cho phân hệ Tài chính Treasury, Strategy Pattern cho GenAI Provider (Gemini 2.5 Flash / Mock fallback) và SignalR WebSocket Hub cho giao tiếp thời gian thực.",
-        coreFeatures: [
-          {
-            title: "Lõi tài chính Treasury & Giải ngân 2 pha (2-Phase Milestone Escrow)",
-            desc: "Quy trình thanh toán minh bạch: Fund cọc 30% khi bắt đầu milestone (Client → Expert) và giải ngân 70% còn lại khi Client nghiệm thu sản phẩm (tự động khấu trừ 10% hoa hồng nền tảng vào Platform Wallet)."
-          },
-          {
-            title: "Kiểm soát xung đột đồng thời & Chống Deadlock (Concurrency Control)",
-            desc: "Ứng dụng PostgreSQL row-level Pessimistic Locking (SELECT ... FOR UPDATE) trên bảng Wallets, thuật toán sắp xếp UserId tăng dần trước khi lock nhiều ví để triệt tiêu Deadlock, và Concurrency Token (DbUpdateConcurrencyException) ngăn chặn triệt để double-fund/approve."
-          },
-          {
-            title: "Cổng thanh toán VNPay & Xử lý Webhook Idempotency",
-            desc: "Tích hợp VNPay nạp tiền tự động với mã băm chữ ký số HMAC-SHA512 (vnp_SecureHash); cơ chế IPN Callback Idempotent dựa trên Unique Constraint của ExternalTxnRef bảo đảm không bao giờ nạp trùng giao dịch."
-          },
-          {
-            title: "Trợ lý GenAI Phân tích yêu cầu & Sinh Milestone (Gemini Flash Strategy)",
-            desc: "Tự động phân tích câu lệnh thô của Client để sinh mô tả dự án chuẩn hóa, đề xuất Skill, khoảng ngân sách, timeline và phân rã các Milestone Steps chi tiết; hỗ trợ đa vòng tinh chỉnh hội thoại (Multi-turn Refinement)."
-          },
-          {
-            title: "Động cơ gợi ý Chuyên gia lai (Hybrid Recommendation Engine)",
-            desc: "Lọc trước Top 50 chuyên gia ở tầng Database, kết hợp thuật toán chấm điểm đa trọng số (0.40 Skill + 0.20 Budget + 0.20 Rating + 0.10 Availability + 0.10 Completion - Dispute/Overdue Penalties) và AI Semantic Re-ranking."
-          },
-          {
-            title: "Giao tiếp thời gian thực & Phân vùng Rate Limiting",
-            desc: "SignalR ChatHub kết nối WebSocket quản lý chat 1-1, typing indicators, read receipts và phát broadcast sự kiện trạng thái dự án (JobStatusUpdated, MilestoneUpdated); cấu hình Fixed Window Rate Limiter 3 cấp (Strict, AI, General)."
-          }
-        ]
-      },
-      results: {
-        summary: "Hệ thống backend hoàn thiện đạt chuẩn enterprise, bảo đảm 100% tính toàn vẹn tài chính và vận hành ổn định cho toàn bộ vòng đời dự án.",
-        items: [
-          "Bảo vệ 100% dòng tiền giao dịch: 0 lỗi thất thoát số dư, loại bỏ hoàn toàn rủi ro Race Condition và Double-spending.",
-          "Chuẩn hóa 24+ RESTful API Controllers và SignalR Hub với chuẩn response đồng nhất { success, message, data, traceId }.",
-          "Trợ lý AI giúp rút ngắn 30% thời gian làm rõ yêu cầu và chốt phạm vi công việc giữa Client và Expert.",
-          "Hệ thống đạt chuẩn kiểm thử xUnit & Moq với độ bao phủ logic tài chính và nghiệp vụ cốt lõi cao."
-        ]
-      }
-    },
-    {
-      id: "flash-sale-reliability-lab",
-      title: "Flash Sale System & Reliability Lab",
-      category: "High-Concurrency Backend",
-      period: "Feb. 2026 – Present",
-      role: "Backend Reliability Engineer",
-      tagline: "Lõi bán hàng giờ vàng xử lý hàng ngàn giao dịch đồng thời với cam kết Zero Oversell và Zero Data Drift",
-      description: "Xây dựng hệ thống xử lý đơn hàng chịu tải lớn trong các đợt Flash Sale. Ứng dụng Redis Lua Script để khoá giữ tồn kho tức thì và cơ chế bù trừ tự động 2 lớp (SAGA-like Compensation & 30s Scheduled Reconciliation), loại bỏ hoàn toàn rủi ro bán vượt tồn (Zero Oversell) và triệt tiêu sai lệch dữ liệu giữa Cache và DB khi gặp truy cập bùng nổ.",
-      techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "MySQL", "JMeter", "Resilience4j", "OpenTelemetry", "Docker"],
-      metrics: [
-        "Chịu tải 5,000+ yêu cầu / 100 luồng đồng thời (Throughput 443.03 req/s)",
-        "0 sản phẩm bị bán lố (Zero oversell & Zero data drift)",
-        "Giảm 80% áp lực Row-Lock Contention trên MySQL"
-      ],
-      githubUrl: "https://github.com/qwan30/Flash-Sale-Concurrency-Engine",
-      nonTechImpact: "Đảm bảo hệ thống bán hàng luôn thông suốt và chính xác tuyệt đối trong các đợt mở bán giờ vàng chớp nhoáng, bảo vệ 100% doanh thu và mang lại trải nghiệm mua sắm tin cậy không gián đoạn cho khách hàng.",
-      techHighlights: "Redis Lua atomic pre-gate, Two-layer Compensation & Reconciliation, Transactional Outbox Pattern with Kafka, Java 21 Virtual Threads, DDD 5-Module Architecture.",
-      hoverPreviewImage: "/flashsale-screens/architecture-overview.png",
-      quickSpecs: {
-        tech: "Java 21 + Spring Boot 3.3",
-        infra: "Docker (MySQL + Redis + Kafka)",
-        scale: "5,000 Reqs / 100 Threads (443 req/s)"
-      },
-      gallery: [
-        { url: "/flashsale-screens/architecture-overview.png", title: "Tổng quan Kiến trúc Hệ thống: Redis Pre-gating, SAGA Compensation, Transactional Outbox & Kafka", badge: "Architecture Overview" },
-        { url: "/flashsale-screens/strategy-comparison.png", title: "So sánh 4 Chiến lược Trừ tồn kho & Cơ chế Dịch chuyển Điểm nghẽn (Bottleneck Shift)", badge: "Strategy Matrix" },
-        { url: "/flashsale-screens/strategy-comparison-flow.png", title: "Luồng Xử lý Chi tiết & Điều phối Chiến lược Trừ Tồn kho Phân tán", badge: "Strategy Flow" },
-        { url: "/flashsale-screens/strategy-routing-and-recovery.png", title: "Sơ đồ Điều hướng Chiến lược & Cơ chế Phục hồi Bù trừ Tự động", badge: "Routing & Recovery" },
-        { url: "/flashsale-screens/ddd-modules.png", title: "Kiến trúc Phân rã 5 Maven Modules chuẩn Domain-Driven Design (DDD Layout)", badge: "DDD Architecture" },
-        { url: "/flashsale-screens/ddd-module-layout.png", title: "Sơ đồ Phụ thuộc & Ranh giới Module (Ports & Adapters Hexagonal)", badge: "Module Boundaries" },
-        { url: "/flashsale-screens/jmeter_redis_lua_summary.png", title: "Báo cáo Tải JMeter: Error Rate 0.00% & Throughput 443 req/s Vượt trội", badge: "JMeter Summary" },
-        { url: "/flashsale-screens/jmeter_redis_lua_throughput.png", title: "Đồ thị Thông lượng Throughput: Duy trì Mức Tải cao Ổn định", badge: "Throughput Curve" },
-        { url: "/flashsale-screens/jmeter_redis_lua_latency.png", title: "Đồ thị Độ trễ Latency: Phẳng và Đồng đều Cực thấp trên Redis Lua", badge: "Latency Curve" },
-        { url: "/flashsale-screens/grafana_system_metrics.png", title: "Grafana Dashboard: Giám sát Realtime JVM, CPU, Memory & Custom Order Latency", badge: "Grafana Metrics" },
-        { url: "/flashsale-screens/elk_conditional_db_bottleneck.png", title: "Kibana ELK Logging: Bắt 833 lỗi DB Lock Wait Timeout khi chưa dùng Redis Gate", badge: "ELK Centralized Log" }
-      ],
-      overview: {
-        purpose: "Xây dựng nền tảng backend xử lý đơn hàng chịu tải cực lớn (Flash Sale Concurrency Engine), thử nghiệm thực nghiệm và so sánh các chiến lược trừ tồn kho dưới áp lực hàng ngàn request đồng thời.",
-        context: "Trong các đợt mở bán giờ vàng hoặc sự kiện vé hot, hàng chục ngàn người cùng bấm mua 1 lượng hàng hữu hạn trong 1 vài giây. Các giải pháp DB truyền thống lập tức sụp đổ vì nghẽn hàng đợi Row-Lock (Lock Wait Timeout) và rủi ro bán lố (Oversell) nghiêm trọng.",
-        problem: "Cần loại bỏ triệt để rủi ro bán vượt tồn kho (Oversell), giải tỏa 80%+ áp lực tranh chấp khóa hàng trên MySQL, đồng thời xử lý trọn vẹn rủi ro mất nhất quán dữ liệu (Dual-write drift) giữa Redis Cache và Database khi có sự cố mạng hoặc sập node giữa chừng."
-      },
-      solution: {
-        architecture: "Kiến trúc Domain-Driven Design (DDD) phân rã 5 Maven Modules độc lập, chạy trên Java 21 Virtual Threads (Project Loom), kết hợp Redis 7.x Lua Scripting, MySQL 8.0 với Transactional Outbox Pattern và Apache Kafka 3.9.",
-        coreFeatures: [
-          {
-            title: "Động cơ trừ tồn kho 4 chiến lược (Strategy Pattern)",
-            desc: "So sánh thực nghiệm 4 thuật toán: UNSAFE_DB (mô phỏng bán lố baseline -2,278 tồn), CONDITIONAL_DB (MySQL atomic update), REDIS_LUA (In-memory gate), và REDIS_LUA_WITH_COMPENSATION (Gating + Rollback bù trừ tự động đạt Zero Oversell)."
-          },
-          {
-            title: "Cổng chặn nguyên tử Redis Lua (Atomic Pre-gating)",
-            desc: "Thực thi kiểm tra và trừ tồn kho trực tiếp trên RAM bằng Redis Lua Scripting trong vài microsecond, loại bỏ tức thì 80%+ request dư thừa trước khi chạm tới cơ sở dữ liệu."
-          },
-          {
-            title: "Cơ chế bù trừ 2 lớp & Đối soát dữ liệu (Compensation & Reconciliation)",
-            desc: "Layer 1: Tự động rollback INCR trên Redis trong mili-giây khi DB commit thất bại. Layer 2: Job nền quét định kỳ mỗi 30s đối soát số bán thực tế trong MySQL và tự sửa chữa sai lệch (Drift) trên Redis."
-          },
-          {
-            title: "Phát sự kiện tin cậy (Transactional Outbox + Kafka)",
-            desc: "Lưu bản ghi đơn hàng và event vào bảng outbox_event trong cùng một DB transaction, relay bất đồng bộ sang Apache Kafka với cơ chế At-Least-Once Delivery chống mất mát thông điệp."
-          },
-          {
-            title: "Kiểm soát truy cập & Điều phối tải (Resilience4j Admission Control)",
-            desc: "Tích hợp Rate Limiter shed tải với mã lỗi HTTP 429 và phân làn ưu tiên (Priority Admission Lanes) bảo vệ hệ thống trước các đợt bùng nổ lưu lượng."
-          }
-        ]
-      },
-      results: {
-        summary: "Hệ thống đã được kiểm chứng tải nghiêm ngặt qua Apache JMeter (5,000 requests / 100 threads đồng thời) và trực quan hóa qua Grafana/ELK với kết quả vượt trội.",
-        items: [
-          "Throughput tăng 5.23 lần (từ 84.71 lên 443.03 req/s), độ trễ trung bình giảm 84.7% (từ 1,084ms xuống 165.95ms).",
-          "Đạt Zero Oversell tuyệt đối (0 sản phẩm bán lố) và Zero Data Drift (0 lệch dữ liệu giữa Redis và DB).",
-          "Giảm 80% tải truy vấn và triệt tiêu hoàn toàn nghẽn hàng đợi Row-Lock trên MySQL (xóa bỏ 833 lỗi lock timeout).",
-          "Tự phục hồi sau 5 kịch bản sự cố phân tán (Chaos Engineering: crash DB, timeout Redis, rớt mạng Kafka)."
-        ]
-      }
-    },
-    {
-      id: "ai-hospital-rag",
-      title: "AI Hospital Knowledge Assistant",
-      category: "AI & Data Engineering",
-      period: "Feb. 2026 – Present",
-      role: "AI & Data Engineer",
-      tagline: "Trợ lý AI tra cứu hồ sơ y tế thông minh với độ chính xác trích dẫn nguồn 95.2%",
-      description: "Xây dựng hệ thống xử lý và truy xuất dữ liệu bệnh án tự động cho bệnh viện. Ứng dụng công nghệ Graph RAG kết nối lịch sử khám chữa bệnh thành đồ thị tri thức, giúp câu trả lời của AI chính xác và có nguồn trích dẫn bằng chứng rõ ràng.",
-      techStack: ["FastAPI", "Python", "pgvector", "Redis/RQ", "RAG", "React"],
-      metrics: [
-        "Đạt 95.2% độ chính xác trích dẫn nguồn minh chứng (300 cases)",
-        "Đạt tiêu chuẩn bảo mật dữ liệu y tế (HIPAA-aligned)"
-      ],
-      githubUrl: "https://github.com/qwan30/chat-hospital-system",
-      nonTechImpact: "Giúp bác sĩ và nhân viên y tế tra cứu tiền sử bệnh, đơn thuốc và kết quả xét nghiệm của bệnh nhân tức thì với nguồn trích dẫn minh bạch, rút ngắn 80% thời gian tra cứu hồ sơ bệnh án.",
-      techHighlights: "Graph RAG liên kết dữ liệu y tế đa chiều (Longitudinal Patient Graph), Pipeline OCR-to-RAG bất đồng bộ qua Redis/RQ, Hybrid Search (pgvector HNSW + BM25), Cổng xác thực trích dẫn (Citation Verification Gate) chống ảo giác AI.",
-      hoverPreviewImage: "/hospital-screens/graph-rag-detail.png",
-      quickSpecs: {
-        tech: "FastAPI + pgvector + Redis/RQ",
-        infra: "On-Premise Docker & Local LLM (16GB RAM)",
-        scale: "300 Verified Cases (95.2% Citation)"
-      },
-      gallery: [
-        { url: "/hospital-screens/graph-rag-detail.png", title: "Chi tiết Đồ thị Thực thể, Quan hệ Lâm sàng & Bằng chứng Nguồn Trích dẫn", badge: "Graph RAG Detail" },
-        { url: "/hospital-screens/graph-rag.png", title: "Giao diện Trực quan hóa Đồ thị Tri thức Bệnh nhân (Knowledge Graph Explainability)", badge: "Graph RAG View" },
-        { url: "/hospital-screens/system-architecture.png", title: "Tổng quan Kiến trúc Hệ thống: Multi-layer BFF, pgvector, RQ Worker, CDSS Agent & HMS Bridge", badge: "System Architecture" },
-        { url: "/hospital-screens/chatbot-architecture.png", title: "Kiến trúc Clinical Chatbot: Permission-first RAG, Input/Output Guardrails & Citation Gate", badge: "Chatbot Architecture" },
-        { url: "/hospital-screens/graphrag-architecture.png", title: "Kiến trúc SQL-Backed GraphRAG: Bóc tách Thực thể, Quan hệ & Duyệt BFS 2-Hop", badge: "GraphRAG Architecture" },
-        { url: "/hospital-screens/ocr-architecture.png", title: "Kiến trúc Ingestion & OCR Pipeline: PyMuPDF + PaddleOCR, Hashing SHA-256 & Dead-Letter Queue", badge: "OCR Architecture" },
-        { url: "/hospital-screens/cicd-pipeline.png", title: "Quy trình CI/CD Pipeline: 8 Jobs, CodeQL, Benchmark 300 Cases & Release Gate Sentinel", badge: "CI/CD Pipeline" },
-        { url: "/hospital-screens/deployment-architecture.png", title: "Kiến trúc Triển khai On-Premise: Docker Compose, Nginx Reverse Proxy, Grafana & Loki", badge: "Deployment Architecture" },
-        { url: "/hospital-screens/chat.png", title: "Giao diện AI Chat Lâm sàng: Server-Sent Events Streaming & Thẻ Trích dẫn Nguồn", badge: "Clinical AI Chat" },
-        { url: "/hospital-screens/patient.png", title: "Quản lý Hồ sơ Bệnh nhân: Phân quyền RBAC 7 Roles & SQL Predicate Pre-Filtering", badge: "Patient EMR" },
-        { url: "/hospital-screens/time-line.png", title: "Dòng Thời gian Lịch sử Bệnh lý Đa chiều theo Trật tự Thời gian", badge: "Patient Timeline" },
-        { url: "/hospital-screens/dashboard.png", title: "Bảng Điều khiển Giám sát Vận hành & Phân tích Thời gian Tiết kiệm", badge: "Impact Dashboard" },
-        { url: "/hospital-screens/audit-screen-new.png", title: "Nhật ký Kiểm toán Truy vết Fail-Closed Bất biến Chuẩn HIPAA", badge: "Fail-Closed Audit" },
-        { url: "/hospital-screens/notification.png", title: "Thông báo & Cảnh báo Lâm sàng Tương tác Thuốc/Dị ứng Tự động (CDSS)", badge: "CDSS Alerts" },
-        { url: "/hospital-screens/screen-index.png", title: "Mục lục Điều hướng Toàn bộ 90+ Màn hình Nghiệp vụ Hệ thống", badge: "Screen Index" },
-        { url: "/hospital-screens/login-demo.png", title: "Cổng Đăng nhập Xác thực JWT Scoped Session", badge: "Auth & RBAC" }
-      ],
-      overview: {
-        purpose: "Xây dựng hệ thống trợ lý tri thức y tế và hỗ trợ quyết định lâm sàng (CDSS) ứng dụng AI, giúp bác sĩ tra cứu tức thì tiền sử bệnh, đơn thuốc, xét nghiệm từ hàng ngàn trang tài liệu bệnh án phân tán với nguồn trích dẫn bằng chứng xác thực 100%.",
-        context: "Trong môi trường bệnh viện, hồ sơ bệnh án tích lũy qua nhiều năm dưới các định dạng phức tạp (PDF quét, ảnh chụp kết quả, phiếu xét nghiệm, dữ liệu EMR). Việc tra cứu thủ công mất 10–15 phút/ca và tiềm ẩn nguy cơ bỏ sót các tương tác thuốc hoặc tiền sử dị ứng nguy hiểm.",
-        problem: "Các mô hình AI thông thường dễ mắc lỗi ảo giác (Hallucination), bịa đặt số liệu y khoa, thiếu khả năng liên kết dữ liệu theo thời gian (Longitudinal Context) và đối mặt với nguy cơ vi phạm bảo mật dữ liệu y tế (PHI/HIPAA) nếu rò rỉ dữ liệu qua các API đám mây công cộng."
-      },
-      solution: {
-        architecture: "Kiến trúc Hybrid Clean/Pipeline kết hợp FastAPI Asynchronous Backend, PostgreSQL 16 (pgvector HNSW + tsvector BM25), hàng đợi tác vụ Redis/RQ, mô hình LLM On-Premise nội bộ (Ollama Qwen2.5/Llama) và frontend React 19 / TanStack Start.",
-        coreFeatures: [
-          {
-            title: "Đồ thị tri thức y tế (SQL-Backed Graph RAG)",
-            desc: "Bóc tách thực thể (thuốc, bệnh lý, xét nghiệm) và mối quan hệ lâm sàng (treats, causes, contraindicates) vào bảng GraphEntity/GraphRelation; thực hiện duyệt BFS 2-hop theo phạm vi bệnh nhân để cung cấp ngữ cảnh đa chiều mà không phụ thuộc vào Graph DB rời bên ngoài."
-          },
-          {
-            title: "Tìm kiếm lai (Hybrid Retrieval: Dense Vector + Sparse BM25)",
-            desc: "Kết hợp tìm kiếm tương đồng vector pgvector (HNSW Cosine Distance) với tìm kiếm từ khóa y tế chính xác BM25 (tsvector). Áp dụng Reciprocal Rank Fusion (RRF) và Reranking để chọn lọc Top-K đoạn bằng chứng chuẩn xác nhất."
-          },
-          {
-            title: "Cổng xác thực trích dẫn & Từ chối an toàn (Anti-Hallucination Gate)",
-            desc: "Hậu xử lý đối chiếu từng mã trích dẫn trong câu trả lời với tập đoạn nguồn (Retrieved Chunks); tự động loại bỏ nguồn giả lập và kích hoạt Safe-Refusal Pipeline (NO_EVIDENCE_ANSWER) từ chối an toàn khi thiếu dữ liệu y khoa."
-          },
-          {
-            title: "Pipeline OCR & Indexing bất đồng bộ với Dead-Letter Queue",
-            desc: "Tự động phân tách PDF văn bản qua PyMuPDF và kích hoạt PaddleOCR cho tài liệu quét qua hàng đợi Redis/RQ. Kiểm soát tính toàn vẹn SHA-256, tự động retry và chuyển hướng tài liệu lỗi vào Dead-Letter Queue (DLQ) để API luôn phản hồi tức thì."
-          },
-          {
-            title: "Đại lý cảnh báo lâm sàng tự động (Autonomous CDSS Agent)",
-            desc: "Worker ngầm tự động kích hoạt ngay sau khi tài liệu bệnh án được index, gom toàn bộ đồ thị tri thức bệnh nhân đối chiếu với đơn thuốc mới để phát hiện sớm các nguy cơ dị ứng, tương tác thuốc và lưu cảnh báo vào ClinicalAlerts."
-          },
-          {
-            title: "Phân quyền 3 lớp & Kiểm toán Fail-Closed (HIPAA-Aligned)",
-            desc: "Phân quyền theo 7 vai trò lâm sàng (RBAC) kết hợp phạm vi bệnh nhân (ABAC), chèn điều kiện lọc quyền trực tiếp vào câu lệnh SQL (SQL Predicate Pre-Filtering) và lưu vết 100% nhật ký truy vấn bảo vệ dữ liệu PHI."
-          }
-        ]
-      },
-      results: {
-        summary: "Dự án hoàn thiện trọn vẹn toàn bộ chu trình xử lý dữ liệu và trợ lý lâm sàng, vượt qua bài đánh giá nghiệm thu nghiêm ngặt 300 ca bệnh thực tế với các chỉ số ấn tượng:",
-        items: [
-          "Đạt 95.2% độ chính xác trích dẫn nguồn minh chứng (Citation Precision) trên bộ dữ liệu kiểm thử 300 ca lâm sàng.",
-          "0% rò rỉ dữ liệu ngoài thẩm quyền (Zero Context Leakage) nhờ cơ chế SQL Predicate Pre-Filtering trước khi truy vấn vector.",
-          "Rút ngắn thời gian tổng hợp bệnh án từ 10–15 phút xuống < 30 giây (giảm > 80% thời gian tra cứu của bác sĩ).",
-          "Vận hành On-Premise mượt mà trên máy trạm 16GB RAM tiêu chuẩn bệnh viện, tuân thủ nghiêm ngặt chuẩn an toàn dữ liệu y tế (HIPAA-aligned)."
-        ]
-      }
-    },
-    {
-      id: "hospital-management-system",
-      title: "Enterprise Hospital Management System (HMS)",
-      category: "Fullstack Healthcare ERP & DDD Monolith",
-      period: "Jan. 2026 – Jun. 2026",
-      role: "Fullstack Backend Lead",
-      tagline: "Hệ thống ERP y tế đa phân hệ chuẩn DDD điều phối 7 quy trình lâm sàng và bảo vệ dữ liệu nhạy cảm PHI",
-      description: "Thiết kế và phát triển toàn diện hệ thống quản lý bệnh viện đa phân hệ (Healthcare ERP) hỗ trợ trọn vẹn 7 luồng nghiệp vụ lâm sàng: từ cổng đặt lịch trực tuyến, tiếp nhận phân luồng hàng đợi (Triage Queue), hồ sơ bệnh án điện tử (EHR), quản lý dược phẩm theo lô FIFO (Lot-level Traceability) đến xuất hóa đơn và báo cáo viện phí. Xây dựng theo kiến trúc Domain-Driven Design (DDD) Modular Monolith với 17 Bounded Contexts, cơ chế khóa giữ slot nguyên tử chống Double-booking, mã hóa dữ liệu nhạy cảm AES-GCM và phân quyền RBAC 34 quyền hạt nhân.",
-      techStack: ["Java 17", "Spring Boot 3.3", "PostgreSQL 15", "Next.js 16", "React 19", "Playwright", "Flyway", "Docker", "DDD", "Prometheus"],
-      metrics: [
-        "Tuân thủ bảo mật PHI (AES-GCM at rest + SHA-256 Indexing + 34 quyền RBAC)",
-        "Điều phối trọn vẹn 7 quy trình lâm sàng (Booking → Intake → EHR → Dược FIFO → Viện phí)",
-        "930+ E2E Playwright CI Gate + 148 Backend Tests + 80.48% Frontend Coverage"
-      ],
-      githubUrl: "https://github.com/qwan30/hospital-management-system",
-      nonTechImpact: "Số hóa 100% quy trình tiếp nhận và điều trị tại bệnh viện, xóa bỏ hoàn toàn tình trạng quá tải hàng đợi và đặt trùng lịch (Double-booking), đảm bảo bảo mật tuyệt đối hồ sơ sức khỏe người bệnh và minh bạch hóa doanh thu viện phí.",
-      techHighlights: "Kiến trúc DDD Modular Monolith 17 Bounded Contexts, Transactional Slot Locking OCC chống double-booking, Mã hóa AES-GCM bảo vệ PHI (CCCD/CMND), Finite State Machine điều phối hàng đợi khám bệnh, Quản lý kho dược phẩm theo lô FIFO (Lot Tracking).",
-      hoverPreviewImage: "/hms-screens/system-architecture-overview.png",
-      quickSpecs: {
-        tech: "Java 17 (Spring Boot 3.3) + Next.js 16 (React 19)",
-        infra: "Docker Compose + PostgreSQL 15 + Prometheus/Grafana",
-        scale: "17 Bounded Contexts • 118 APIs • 2,045 E2E Tests"
-      },
-      gallery: [
-        { url: "/hms-screens/system-architecture-overview.png", title: "Tổng quan Kiến trúc Hệ thống: Next.js 16, Spring Security Gateway, DDD Modular Monolith & Observability", badge: "Architecture Overview" },
-        { url: "/hms-screens/clinical-workflow.png", title: "Chu trình Lâm sàng 7 Bước: Booking → Check-in → Triage & Vitals → EHR → Dược FIFO → Viện phí", badge: "Clinical Lifecycle" },
-        { url: "/hms-screens/ddd-modular-monolith.png", title: "Kiến trúc Phân rã 5 Maven Modules & 17 Bounded Contexts chuẩn Domain-Driven Design", badge: "DDD Monolith" },
-        { url: "/hms-screens/home-page.png", title: "Cổng Thông tin Y tế & Đặt lịch Khám Trực tuyến Công khai", badge: "Public Web" },
-        { url: "/hms-screens/portal-overview.png", title: "Cổng Bệnh nhân Tự phục vụ: Theo dõi Lịch khám, Hồ sơ Bệnh án & Chỉ số Xét nghiệm", badge: "Patient Portal" },
-        { url: "/hms-screens/staff-login.png", title: "Cổng Đăng nhập Phân quyền Tập trung cho Nhân viên Y tế & Bác sĩ", badge: "Staff Auth" },
-        { url: "/hms-screens/nurse-overview.png", title: "Bảng Điều khiển Điều dưỡng: Quản lý Lịch trình, Trạng thái Lâm sàng & Phân luồng Hàng đợi", badge: "Nurse Triage" },
-        { url: "/hms-screens/nurse-appointment.png", title: "Tiếp nhận Bệnh nhân: Ghi nhận Chỉ số Sinh tồn (Vitals) & Khóa giữ Khung giờ Khám", badge: "Vitals Check-in" },
-        { url: "/hms-screens/pharmacy-inventory.png", title: "Quản lý Kho Dược Phẩm: Theo dõi Hạn sử dụng theo Lô (Lot FIFO) & Cảnh báo Tồn kho thấp", badge: "Pharmacy FIFO" },
-        { url: "/hms-screens/10-admin-dashboard.png", title: "Bảng Điều khiển Giám sát Quản trị Doanh nghiệp: Doanh thu, Lượt khám & Công suất Giường bệnh", badge: "Admin Dashboard" },
-        { url: "/hms-screens/admin-queue.png", title: "Bảng Giám sát Hàng đợi & Phân tích Thời gian Chờ Khám Thực tế", badge: "Queue Analytics" }
-      ],
-      overview: {
-        purpose: "Xây dựng hệ thống hoạch định tài nguyên bệnh viện (Healthcare ERP) toàn diện, chuẩn hóa và số hóa khép kín 7 luồng quy trình nghiệp vụ lâm sàng từ tiếp nhận ban đầu đến điều trị, cấp phát thuốc và thanh toán viện phí.",
-        context: "Tại các cơ sở y tế và bệnh viện đa khoa, quy trình vận hành thủ công hoặc phân mảnh dễ dẫn đến tình trạng quá tải hàng đợi, nguy cơ đặt trùng lịch khám của bác sĩ (Double-booking), thất thoát tồn kho dược phẩm do hết hạn và rủi ro rò rỉ dữ liệu thông tin sức khỏe cá nhân (PHI).",
-        problem: "Cần xây dựng hệ thống nguyên khối phân rã module rõ ràng (Modular Monolith) để tránh độ trễ và chi phí phân tán của Microservices, đồng thời phải đảm bảo tính nhất quán giao dịch tuyệt đối khi giữ slot khám, tuân thủ nghiêm ngặt chuẩn bảo mật PHI (AES-GCM) và điều phối hàng đợi mượt mà qua State Machine."
-      },
-      solution: {
-        architecture: "Kiến trúc Domain-Driven Design (DDD) Modular Monolith phân tách 5 Maven modules (domain, infrastructure, application, controller, start) với 17 Bounded Contexts độc lập. Lớp domain hoàn toàn không phụ thuộc ra ngoài (Dependency Inversion), kết hợp Frontend Next.js 16 (React 19) phân quyền theo vai trò (RBAC) và PostgreSQL 15.",
-        coreFeatures: [
-          {
-            title: "Động cơ Đặt lịch & Khóa giữ vị trí nguyên tử (Transactional Slot Locking)",
-            desc: "Ngăn chặn triệt để tình trạng đặt trùng lịch bác sĩ (Double-booking) thông qua cơ chế khóa giữ khung giờ với Optimistic Concurrency Control (OCC) và băm định danh bảo mật trong AppointmentWriteService."
-          },
-          {
-            title: "Cỗ máy Trạng thái Hàng đợi Tiếp nhận (Strict Queue State Machine)",
-            desc: "Điều phối luồng bệnh nhân theo máy trạng thái tuần tự: CHECKED_IN → VITAL_SIGNS → ASSIGNED → IN_CONSULTATION → COMPLETED. Bác bỏ domain-level mọi bước chuyển trạng thái sai quy trình."
-          },
-          {
-            title: "Hồ sơ Bệnh án Điện tử (EHR) & Tự động xuất Đơn thuốc PDF",
-            desc: "Số hóa toàn diện dữ liệu khám bệnh, tiền sử bệnh lý, chẩn đoán ICD; tích hợp động cơ sinh đơn thuốc điện tử dạng PDF chuẩn y khoa và gửi thư nhắc lịch khám qua Gmail API."
-          },
-          {
-            title: "Quản lý Kho Dược theo Lô & Xuất kho FIFO (Lot-Level Traceability)",
-            desc: "Quản lý từng lô nhập của biệt dược kèm hạn sử dụng (Lot/Batch Tracking), tự động đề xuất xuất kho theo nguyên tắc Hạn gần xuất trước (FIFO/FEFO), liên kết trực tiếp mã thuốc cấp phát với bệnh án và cảnh báo tồn kho tối thiểu."
-          },
-          {
-            title: "Bảo mật Dữ liệu Y tế PHI & Mã hóa AES-GCM (HIPAA-Aligned Security)",
-            desc: "Bảo vệ thông tin định danh bệnh nhân (CCCD/CMND, BHYT) ở tầng nghỉ bằng mã hóa khóa đối xứng AES-GCM, kết hợp cơ chế lập chỉ mục bằng mã băm SHA-256 (Hashed Indexing) giúp tra cứu nhanh chóng mà không cần giải mã plaintext trên database."
-          },
-          {
-            title: "Phân quyền RBAC 34 Quyền Hạt nhân & Kiểm toán Viện phí Tự động",
-            desc: "Kiểm soát truy cập phương thức ở cấp độ @PreAuthorize cho 7 nhóm vai trò (Admin, Doctor, Nurse, Receptionist, Pharmacist, Accountant, Patient); tự động kết xuất hóa đơn chi tiết dịch vụ khám/thuốc và báo cáo tài chính định kỳ."
-          }
-        ]
-      },
-      results: {
-        summary: "Dự án đạt trạng thái Release Candidate 1.0 với chất lượng kiểm thử toàn diện từ backend đến frontend, đáp ứng đầy đủ tiêu chuẩn vận hành lâm sàng khắt khe:",
-        items: [
-          "Vận hành khép kín và thông suốt 7 quy trình lâm sàng cốt lõi với 118 REST API endpoints trên 32 controllers.",
-          "Đạt 100% tuân thủ bảo mật PHI: mã hóa AES-GCM + SHA-256 Indexing, triệt tiêu nguy cơ lộ dữ liệu CCCD/CMND trên DB.",
-          "Hệ thống kiểm thử toàn diện: 930 kịch bản E2E Playwright trong CI gate (tổng 2,045 E2E tests), 148 backend integration tests và độ bao phủ frontend 80.48%.",
-          "Triệt tiêu 100% rủi ro Double-booking và xuất kho dược phẩm quá hạn nhờ thuật toán FIFO Lot Tracking."
-        ]
-      }
-    },
-    {
-      id: "inventory-flashsale-system",
-      title: "Inventory & Flash Sale Concurrency Engine",
-      category: "Distributed Backend & Inventory",
-      period: "Jan. 2026 – Present",
-      role: "Backend Engineer",
-      tagline: "Hệ thống quản lý tồn kho và khóa giữ hàng chịu tải cao cho môi trường mua sắm bùng nổ",
-      description: "Nghiên cứu và triển khai giải pháp khoán giữ tồn kho thời gian thực cho hệ thống E-commerce. Áp dụng kỹ thuật khóa phân tán (Distributed Lock) và hàng đợi thông điệp bất đồng bộ để bảo đảm tính nhất quán dữ liệu giữa kho và đơn hàng.",
-      techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "PostgreSQL"],
-      metrics: [
-        "Kiểm soát tồn kho thời gian thực với độ trễ phản hồi cực thấp (<10ms)",
-        "Đảm bảo 100% tính nhất quán dữ liệu tồn kho đa kho hàng"
-      ],
-      githubUrl: "https://github.com/qwan30/inventory-flashsale-system",
-      nonTechImpact: "Giúp doanh nghiệp tự tin triển khai các đợt mở bán lớn mà không lo nghẽn kho, bán lố số lượng hay gây gián đoạn trải nghiệm người dùng.",
-      techHighlights: "Distributed Locking với Redis, Asynchronous Event-Driven updates qua Kafka, Idempotent Transaction Handlers.",
-      hoverPreviewImage: "/08-admin-benchmark.png"
-    },
-    {
-      id: "ledger-credit-system",
-      title: "Ledger Credit & Double-Entry Accounting System",
-      category: "Financial Infrastructure & Ledger",
-      period: "Dec. 2025 – Present",
-      role: "Backend Infrastructure Engineer",
-      tagline: "Lõi sổ kế toán kép ghi nợ/có xử lý giao dịch tài chính với tính toàn vẹn và bất biến dữ liệu 100%",
-      description: "Thiết kế và phát triển hệ thống sổ cái tài chính (Double-Entry Ledger) cho các giao dịch tín dụng và ví điện tử. Triển khai cơ chế Ghi sổ kép (Debit/Credit), đảm bảo tổng nợ luôn cân bằng tổng có (Zero Sum Balance) và nhật ký giao dịch bất biến (Immutable Audit Log).",
-      techStack: ["Java 21", "Spring Boot", "PostgreSQL", "Redis", "Docker"],
-      metrics: [
-        "100% tính toán chính xác số dư theo chuẩn kế toán kép (Zero balance drift)",
-        "Bảo vệ toàn vẹn lịch sử giao dịch bất biến với Hash Chain Validation"
-      ],
-      githubUrl: "https://github.com/qwan30/ledger-credit-system",
-      nonTechImpact: "Tạo nền tảng quản lý tài khoản tín dụng và ví tiền minh bạch, loại bỏ hoàn toàn rủi ro sai lệch số dư hay gian lận chỉnh sửa lịch sử giao dịch.",
-      techHighlights: "Double-Entry Bookkeeping Ledger Engine, Strict ACID Concurrency Controls, Immutable Audit Log với Hash Validation."
-    },
-    {
-      id: "mini-digital-banking-platform",
-      title: "Mini Digital Banking Platform",
-      category: "Fintech Backend System",
-      period: "Nov. 2025 – Dec. 2025",
-      role: "Backend Software Engineer",
-      tagline: "Hệ thống ngân hàng số thu nhỏ tích hợp giao dịch tài khoản, chuyển tiền nội bộ và xác thực OTP 2FA",
-      description: "Xây dựng dịch vụ ngân hàng kỹ thuật số mô phỏng quy trình giao dịch thực tế. Triển khai kiến trúc backend phân tầng bảo mật, xử lý giao dịch chuyển tiền an toàn với giao thức kiểm tra tài khoản, mã hóa mật khẩu BCrypt và mã OTP xác thực thời gian thực.",
-      techStack: ["Java", "Spring Boot", "Spring Security", "PostgreSQL", "JWT", "REST API"],
-      metrics: [
-        "Đảm bảo xác thực 2FA OTP & JWT Token bảo mật nhiều lớp",
-        "Xử lý luồng giao dịch nạp/rút/chuyển tiền chuẩn ACID hoàn toàn mượt mà"
-      ],
-      githubUrl: "https://github.com/qwan30/mini-digital-banking-platform",
-      nonTechImpact: "Cung cấp trải nghiệm ngân hàng số an toàn, tiện lợi cho người dùng thực hiện giao dịch chuyển tiền và quản lý tài khoản cá nhân mọi lúc mọi nơi.",
-      techHighlights: "Transactional Banking Engine, Spring Security JWT & OTP 2FA, Transaction History & Balance Audit, Data Encryption."
-    }
-  ],
-  activities: [
-    {
-      id: "tet-luon-vui",
-      title: "Tết Luôn Vui — Dự Án Gây Quỹ Cộng Đồng",
-      role: "Trưởng Nhóm Dự Án, Quản Lý Truyền Thông & Logistics",
-      description: "Dự án cộng đồng do sinh viên ĐH FPT tổ chức nhằm gây quỹ ủng hộ Ủy ban Trung ương Mặt trận Tổ quốc Việt Nam nhân dịp Tết. Tổ chức thành công các hoạt động bán hàng thủ công và workshop trải nghiệm sáng tạo.",
-      metrics: [
-        "Gây quỹ ủng hộ 3,550,000 VNĐ cho Mặt trận Tổ quốc Việt Nam",
-        "Phát triển Fanpage đạt 934 lượt theo dõi tự nhiên",
-        "Dẫn dắt nhóm 9 thành viên hoàn thành xuất sắc mục tiêu đề ra"
+        "3,550,000 VNĐ raised for Vietnam Fatherland Front",
+        "9-member team organized and led",
+        "934 organic community followers"
       ],
       images: [
         "/activities/poster.jpg",
         "/activities/hoa.jpg",
         "/activities/SE1905_Group3_UngHoMTTQ.jpg"
       ]
+    }
+  },
+
+  featuredProjects: [
+    {
+      id: "vijaco-doc-mgmt",
+      number: "01",
+      title: "Vijaco — Internal Document Management System",
+      category: "Enterprise Security & Storage",
+      status: "Production Deployment",
+      role: "Solo Software Engineer (Freelance)",
+      period: "Jun. 2026 – Present",
+      thesis: "Centralized document platform replacing unmanaged physical network shares with multi-tier RBAC/ABAC authorization and fail-closed audit trails.",
+      problem: "Enterprise operations across 30+ staff relied on ~4TB shared network drives (Y:/, Z:), creating severe risks of file accidental deletion, untracked modifications, and unauthorized document access.",
+      engineeredDecisions: [
+        {
+          technique: "Canonical Precedence Engine",
+          mechanism: "Evaluates Resource Rank (File → Folder) over Subject Rank (User → Role → Dept) with strict DENY dominance",
+          property: "Deterministic authorization with zero permission ambiguity"
+        },
+        {
+          technique: "Fail-Closed Audit Trail",
+          mechanism: "Synchronously records access telemetry before initiating file streaming",
+          property: "Immutable operation history covering 100% of sensitive actions"
+        },
+        {
+          technique: "Storage Root Abstraction",
+          mechanism: "Encapsulates physical disk paths behind virtual root identifiers with strict path containment checks",
+          property: "Zero physical path exposure to client applications"
+        }
+      ],
+      proofChips: [
+        "30+ daily active staff",
+        "~4TB managed on-premise storage",
+        "Fail-closed audit logging"
+      ],
+      techStack: ["NestJS", "TypeScript", "Flutter", "PostgreSQL", "Docker", "TypeORM"],
+      // NOTE: githubUrl is omitted because Vijaco is a private freelance project
+      githubUrl: undefined,
+      liveUrl: "https://vijaco.vn",
+      featuredImage: "/vijaco-screens/18_user_list.png",
+      thumbnails: [
+        {
+          url: "/vijaco-screens/19_access_permissions.png",
+          title: "Multi-level RBAC/ABAC Permission Matrix",
+          badge: "Security Engine"
+        },
+        {
+          url: "/vijaco-screens/11_audit_logs.png",
+          title: "Fail-Closed Immutable Audit Logging",
+          badge: "Audit Trail"
+        },
+        {
+          url: "/vijaco-screens/14_upload_files.png",
+          title: "Resumable Chunked File Upload with SHA-256 Checksums",
+          badge: "Storage Pipeline"
+        }
+      ],
+      caseStudy: {
+        executiveSummary: "Designed and independently implemented a production document management platform for Vijaco, transitioning 30+ corporate staff from unmanaged physical network shares into a secure, multi-role digital ecosystem.",
+        businessContext: "The enterprise operated with ~4TB of critical engineering and administrative documentation stored across physical network drives (Y:/, Z:). Unrestricted LAN access caused recurrent accidental file overwrites, missing revisions, and untracked document exposure.",
+        problemStatement: "The business required an on-premise document management system that eliminates permission leaks, records 100% of document interactions, supports chunked resumable transfers for massive files, and runs on existing on-premise infrastructure without ongoing cloud storage costs.",
+        systemConstraints: [
+          "Zero recurring cloud storage expenditure — must run on on-premise Docker infrastructure.",
+          "Strict physical isolation — physical disk paths must never be exposed over API payloads.",
+          "Network resilience — multi-gigabyte engineering uploads must survive network interruptions.",
+          "Compliance — all file reads, downloads, and lifecycle transitions must be auditable."
+        ],
+        architecture: "Modular Monolith architecture built on NestJS and TypeScript following Hexagonal (Ports & Adapters) principles, coupled with a cross-platform Flutter application for desktop and mobile clients, PostgreSQL 16 for metadata, and Docker Compose for deployment.",
+        architectureHighlights: [
+          "Hexagonal Ports & Adapters isolating Storage Adapter from domain business rules.",
+          "Dual-token authentication with short-lived JWTs and rotating refresh tokens in secure HTTP-only cookies.",
+          "Chunked staging directory with scheduled background cleanup for orphaned upload parts."
+        ],
+        deepDecisions: [
+          {
+            title: "Multi-tier RBAC/ABAC Precedence Resolution",
+            technique: "Canonical Precedence Resolver",
+            mechanism: "Resolves conflicting permission rules through a two-dimensional priority hierarchy: Resource Rank (File > Folder > Ancestor) intersected with Subject Rank (User Override > Role > Department). Explicit DENY immediately aborts evaluation.",
+            impact: "Eliminates authorization race conditions and guarantees predictable security boundaries."
+          },
+          {
+            title: "Fail-Closed Audit Trail Enforcement",
+            technique: "Synchronous Audit Interceptor",
+            mechanism: "File read and download streams are bound to an audit transaction. If the audit logger fails to persist the access entry, the file stream is immediately severed before byte transmission.",
+            impact: "Guarantees zero unrecorded document access events across the entire system."
+          },
+          {
+            title: "Chunked Resumable Upload Engine",
+            technique: "SHA-256 Verified Chunk Staging",
+            mechanism: "Large files are sliced client-side into 5MB chunks. Each chunk is uploaded with offset tracking and merged upon final chunk delivery after verifying whole-file SHA-256 integrity.",
+            impact: "Enables seamless recovery from network drops without restarting large multi-gigabyte uploads."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Storage Disk Full / IO Stalling",
+            mitigation: "Pre-allocation checks reject uploads exceeding remaining storage capacity with HTTP 507.",
+            tradeOff: "Small processing overhead before file streaming begins."
+          },
+          {
+            failureMode: "Orphaned Chunk Leakage on Aborted Uploads",
+            mitigation: "Automated cron job scans staging directories and purges chunks older than 24 hours.",
+            tradeOff: "Aborted uploads cannot be resumed after the 24-hour expiration window."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Security & Authorization Testing",
+            details: "120+ unit and integration test suites validating permission conflict resolution matrices.",
+            result: "100% of tested permission edge cases resolved to the expected allow/deny outcome."
+          },
+          {
+            type: "Resilience & Network Interrupt Testing",
+            details: "Simulated 50% packet drop and socket disconnects during 500MB chunked file transfers.",
+            result: "100% successful reassembly with matching SHA-256 hashes."
+          }
+        ],
+        deploymentAndObservability: [
+          "On-Premise Docker Compose stack with volume mounts to physical storage arrays.",
+          "Healthcheck probes on PostgreSQL and NestJS container services.",
+          "Structured JSON logging outputting to rotating local log files with retention policies."
+        ],
+        operationalOutcomes: [
+          "30+ daily active staff operating the system across engineering and administration departments.",
+          "Zero reported data leaks or unauthorized document accesses since production deployment.",
+          "Sub-100ms API response latency for search, metadata browsing, and permission validation."
+        ],
+        gallery: [
+          { url: "/vijaco-screens/18_user_list.png", title: "User & Role Management Dashboard", badge: "User Directory" },
+          { url: "/vijaco-screens/19_access_permissions.png", title: "Granular Access Control Matrix (RBAC/ABAC)", badge: "Security Engine" },
+          { url: "/vijaco-screens/11_audit_logs.png", title: "Fail-Closed Immutable Audit Trail Log", badge: "Audit Trail" },
+          { url: "/vijaco-screens/14_upload_files.png", title: "Resumable Chunked Upload Interface", badge: "Chunked Transfer" },
+          { url: "/vijaco-screens/05_file_version_history.png", title: "Document Version History & Reversion", badge: "Version Control" },
+          { url: "/vijaco-screens/16_trash.png", title: "30-Day Safe Retention Recycle Bin", badge: "Recycle Bin" },
+          { url: "/vijaco-screens/10_pdf_preview.png", title: "In-Browser PDF Viewer & Secure Stream", badge: "Secure Stream" },
+          { url: "/vijaco-screens/08_mfa_verification.png", title: "TOTP 2-Factor Authentication Gate", badge: "MFA 2FA Gate" },
+          { url: "/vijaco-screens/15_admin_dashboard.png", title: "System Administration & Metric Overview", badge: "Admin Dashboard" },
+          { url: "/vijaco-screens/01_department_position_list.png", title: "Department & Position Hierarchy Manager", badge: "Organization" }
+        ]
+      }
+    },
+    {
+      id: "flash-sale-concurrency-engine",
+      number: "02",
+      title: "Flash Sale Concurrency Engine",
+      category: "High-Concurrency & Distributed Systems",
+      status: "Benchmark Verified",
+      role: "Backend Reliability Engineer",
+      period: "Feb. 2026 – Present",
+      thesis: "High-throughput inventory reservation engine utilizing Redis Lua atomic pre-gating, transactional outbox event relays, and two-layer compensation reconciliation.",
+      problem: "Surges of thousands of concurrent shoppers during flash-sale events cause severe database row-lock contention, lock wait timeouts, and devastating overselling when using conventional database transactions.",
+      engineeredDecisions: [
+        {
+          technique: "Redis Lua Atomic Pre-Gating",
+          mechanism: "Executes stock verification and decrement inside a single atomic script in memory",
+          property: "Shields database from 80%+ invalid demand spikes with microsecond latency"
+        },
+        {
+          technique: "Two-Layer Compensation Reconciliation",
+          mechanism: "Triggers immediate in-memory rollback on commit failure paired with 30s scheduled drift correction",
+          property: "Eliminates cache/database state drift across distributed failures"
+        },
+        {
+          technique: "Transactional Outbox with Apache Kafka",
+          mechanism: "Persists order state and event records in the same ACID transaction before asynchronous relay",
+          property: "Guarantees at-least-once message delivery without distributed 2PC locks"
+        }
+      ],
+      proofChips: [
+        "0 oversells across 5,000 requests",
+        "443 req/s throughput (5.2x baseline)",
+        "0 Redis/MySQL data drift"
+      ],
+      techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "MySQL", "JMeter"],
+      githubUrl: "https://github.com/qwan30/Flash-Sale-Concurrency-Engine",
+      featuredImage: "/flashsale-screens/architecture-overview.png",
+      thumbnails: [
+        {
+          url: "/flashsale-screens/strategy-comparison.png",
+          title: "4-Strategy Inventory Reservation Matrix",
+          badge: "Strategy Matrix"
+        },
+        {
+          url: "/flashsale-screens/jmeter_redis_lua_summary.png",
+          title: "JMeter Concurrency Benchmark (5,000 Reqs / 100 Threads)",
+          badge: "Load Benchmark"
+        },
+        {
+          url: "/flashsale-screens/grafana_system_metrics.png",
+          title: "Grafana Realtime Telemetry: JVM & Latency",
+          badge: "Observability"
+        }
+      ],
+      caseStudy: {
+        executiveSummary: "Engineered a high-concurrency flash sale backend in Java 21 and Spring Boot, systematically benchmarking 4 inventory decrement strategies under intense traffic to achieve absolute zero overselling and zero data drift.",
+        businessContext: "E-commerce platforms experience severe traffic spikes during flash sales, where tens of thousands of buyers attempt to purchase limited inventory within seconds. Standard database architectures collapse due to row-lock contention and lock wait timeouts.",
+        problemStatement: "The system must process thousands of concurrent purchase attempts without overselling inventory, prevent cascading database deadlocks, maintain strict consistency between in-memory caches and relational databases, and recover gracefully from service crashes.",
+        systemConstraints: [
+          "Absolute zero overselling under all concurrent load scenarios.",
+          "Sub-200ms p95 latency under high thread saturation.",
+          "Dual-write consistency between Redis cache and MySQL database.",
+          "Asynchronous order processing without data loss during broker downtime."
+        ],
+        architecture: "Domain-Driven Design (DDD) modular monolith split across 5 Maven modules, running on Java 21 Virtual Threads (Project Loom), Redis 7.x Lua scripts for atomic in-memory gating, MySQL 8.0 for transactional persistence, and Apache Kafka 3.9 for reliable asynchronous event processing.",
+        architectureHighlights: [
+          "5 DDD Maven modules: domain, application, infrastructure, bootstrap, and benchmark.",
+          "Project Loom Virtual Threads handling high concurrent IO without thread-pool exhaustion.",
+          "Resilience4j adaptive rate limiting rejecting excess traffic with HTTP 429."
+        ],
+        deepDecisions: [
+          {
+            title: "In-Memory Atomic Pre-Gating via Redis Lua",
+            technique: "Single-Threaded Lua Script Execution",
+            mechanism: "Executes stock check and deduction atomically in Redis memory. If available inventory is insufficient, the request is rejected immediately without generating any database load.",
+            impact: "Filters out 80%+ of failing traffic before touching MySQL, eliminating lock contention."
+          },
+          {
+            title: "Two-Layer Compensation & Scheduled Reconciliation",
+            technique: "SAGA-Style Rollback + 30s Drift Healer",
+            mechanism: "Layer 1: When a MySQL transaction fails after a Redis decrement, an immediate asynchronous INCR compensation restores Redis stock. Layer 2: A scheduled background worker checks actual settled orders against Redis stock every 30 seconds and repairs discrepancies.",
+            impact: "Ensures total data convergence between memory and persistent storage even across node crashes."
+          },
+          {
+            title: "Transactional Outbox Pattern for Asynchronous Ordering",
+            technique: "Database-Coupled Event Publishing",
+            mechanism: "Order records and corresponding order_created events are written within the same local database transaction. An outbox polling worker then streams events to Apache Kafka with retry policies.",
+            impact: "Eliminates dual-write anomalies and guarantees at-least-once message delivery without distributed two-phase commit protocols."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Redis Instance Network Partition",
+            mitigation: "Circuit breaker switches to conditional database updates with strict rate limiting.",
+            tradeOff: "Throughput temporarily decreases to preserve absolute transactional correctness."
+          },
+          {
+            failureMode: "Kafka Broker Unavailability",
+            mitigation: "Events remain safely persisted in the outbox table until the broker reconnects.",
+            tradeOff: "Downstream asynchronous notifications experience temporary delivery delay."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Apache JMeter Concurrency Benchmark",
+            details: "5,000 total requests executed by 100 concurrent threads against 100 available items.",
+            result: "Exactly 100 items sold, 0 oversells, 443.03 req/s throughput (vs 84.7 req/s on naive DB)."
+          },
+          {
+            type: "Chaos Engineering & Network Injection",
+            details: "Simulated MySQL socket timeouts and killed worker processes during active flash-sale runs.",
+            result: "Compensation workers recovered 100% of stranded stock reservations with zero data drift."
+          }
+        ],
+        deploymentAndObservability: [
+          "Docker Compose orchestration running Spring Boot, Redis, Kafka, and MySQL 8.0.",
+          "Micrometer integration exposing metrics to Prometheus and Grafana dashboards.",
+          "ELK centralized logging tracing transaction correlation IDs across services."
+        ],
+        operationalOutcomes: [
+          "Zero oversells achieved across all benchmark and chaos engineering test runs.",
+          "Throughput increased by 5.23x compared to conditional database locking baselines.",
+          "Average transaction latency dropped from 1,084ms to 165.95ms under heavy concurrent load."
+        ],
+        gallery: [
+          { url: "/flashsale-screens/architecture-overview.png", title: "Complete System Architecture & Gating Flow", badge: "Architecture Overview" },
+          { url: "/flashsale-screens/strategy-comparison.png", title: "Strategy Matrix & Bottleneck Shift Analysis", badge: "Strategy Matrix" },
+          { url: "/flashsale-screens/strategy-comparison-flow.png", title: "Distributed Inventory Decrement Sequence", badge: "Strategy Flow" },
+          { url: "/flashsale-screens/strategy-routing-and-recovery.png", title: "Automated Compensation & Recovery Routing", badge: "Routing & Recovery" },
+          { url: "/flashsale-screens/ddd-modules.png", title: "DDD 5-Maven-Module Structural Layout", badge: "DDD Architecture" },
+          { url: "/flashsale-screens/ddd-module-layout.png", title: "Ports & Adapters Boundary Dependencies", badge: "Module Boundaries" },
+          { url: "/flashsale-screens/jmeter_redis_lua_summary.png", title: "JMeter Benchmark: 443 req/s with 0.00% Error", badge: "JMeter Summary" },
+          { url: "/flashsale-screens/jmeter_redis_lua_throughput.png", title: "Throughput Distribution under 100 Threads", badge: "Throughput Curve" },
+          { url: "/flashsale-screens/jmeter_redis_lua_latency.png", title: "Flat Latency Distribution Profile", badge: "Latency Curve" },
+          { url: "/flashsale-screens/grafana_system_metrics.png", title: "Grafana JVM & Order Metric Monitoring", badge: "Grafana Metrics" },
+          { url: "/flashsale-screens/elk_conditional_db_bottleneck.png", title: "Centralized Kibana Logging capturing Lock Timeouts", badge: "ELK Centralized Log" }
+        ]
+      }
+    },
+    {
+      id: "hospital-management-system",
+      number: "03",
+      title: "Enterprise Hospital Management System (HMS)",
+      category: "Healthcare ERP & DDD Architecture",
+      status: "Release Candidate 1.0",
+      role: "Fullstack Backend Lead",
+      period: "Jan. 2026 – Jun. 2026",
+      thesis: "Modular monolith healthcare ERP coordinating 7 clinical lifecycles with strict queue state machines, AES-GCM encryption for PHI, and lot-level FIFO pharmacy tracking.",
+      problem: "Fragmented hospital workflows led to recurring doctor double-booking, clinical triage delays, drug expiration losses in pharmacy storage, and non-compliance risks regarding patient Protected Health Information (PHI).",
+      engineeredDecisions: [
+        {
+          technique: "Transactional Slot Locking",
+          mechanism: "Combines optimistic concurrency control (OCC) with hashed slot identity constraints",
+          property: "Completely eliminates doctor double-booking across concurrent booking attempts"
+        },
+        {
+          technique: "Strict Queue State Machine",
+          mechanism: "Enforces deterministic progression across 5 clinical stages with domain-level transition guards",
+          property: "Prevents out-of-order triage and patient workflow corruption"
+        },
+        {
+          technique: "AES-GCM at Rest + SHA-256 Indexing",
+          mechanism: "Encrypts national IDs with AES-256-GCM while storing blinded SHA-256 hashes for lookups",
+          property: "HIPAA-aligned PHI privacy without compromising database search indexing"
+        }
+      ],
+      proofChips: [
+        "17 DDD Bounded Contexts",
+        "930+ CI Playwright tests",
+        "100% PHI AES-GCM encrypted"
+      ],
+      techStack: ["Java 17", "Spring Boot 3.3", "PostgreSQL 15", "Next.js 16", "React 19", "Playwright"],
+      githubUrl: "https://github.com/qwan30/hospital-management-system",
+      featuredImage: "/hms-screens/system-architecture-overview.png",
+      thumbnails: [
+        {
+          url: "/hms-screens/clinical-workflow.png",
+          title: "7-Stage End-to-End Clinical Workflow Lifecycle",
+          badge: "Clinical Workflow"
+        },
+        {
+          url: "/hms-screens/ddd-modular-monolith.png",
+          title: "17 Bounded Contexts DDD Modular Monolith Layout",
+          badge: "DDD Architecture"
+        },
+        {
+          url: "/hms-screens/pharmacy-inventory.png",
+          title: "Pharmacy Lot Tracking & FIFO Expiration Automation",
+          badge: "Pharmacy FIFO"
+        }
+      ],
+      caseStudy: {
+        executiveSummary: "Led the architecture and fullstack engineering of an enterprise Healthcare ERP system supporting 7 complete clinical lifecycles, structured as a Domain-Driven Design (DDD) modular monolith with comprehensive automated testing.",
+        businessContext: "Hospital outpatient operations faced persistent queue delays, doctor scheduling collisions, unmonitored drug expiration risks in pharmacy stockrooms, and legal exposure from unencrypted patient identification data.",
+        problemStatement: "The institution required a unified clinical platform that orchestrates appointments, nurse triage, medical records (EHR), pharmacy dispensation, and billing while adhering to rigorous HIPAA-aligned data privacy standards.",
+        systemConstraints: [
+          "Zero scheduling collisions during simultaneous appointment bookings.",
+          "HIPAA-aligned data protection for patient identifiers (National IDs, insurance cards).",
+          "Automated FIFO drug dispensation based on manufacturing lot expiration dates.",
+          "Strict separation of concerns without the operational complexity of microservices."
+        ],
+        architecture: "Domain-Driven Design Modular Monolith with 5 Maven modules (domain, application, infrastructure, controller, bootstrap) encapsulating 17 Bounded Contexts, paired with a Next.js 16 (React 19) frontend, PostgreSQL 15, and comprehensive CI test gates.",
+        architectureHighlights: [
+          "Pure domain layer with zero framework dependencies (Dependency Inversion).",
+          "Granular method security via Spring Security @PreAuthorize across 34 distinct permissions.",
+          "Automated Flyway database migrations ensuring zero-downtime schema evolution."
+        ],
+        deepDecisions: [
+          {
+            title: "Transactional Slot Locking & OCC",
+            technique: "Optimistic Concurrency Control with Slot Hashing",
+            mechanism: "Each appointment time window is assigned a deterministic slot hash. During booking, the system verifies slot availability using OCC version tokens and transactional isolation.",
+            impact: "Completely prevents double-booking without blocking database rows during user browsing."
+          },
+          {
+            title: "Protected Health Information (PHI) Security Architecture",
+            technique: "AES-256-GCM Encryption with Blinded SHA-256 Hashes",
+            mechanism: "Sensitive fields (National ID, medical history) are encrypted with symmetric AES-GCM keys before database write. A one-way HMAC/SHA-256 hash is stored alongside to permit instant indexed lookups.",
+            impact: "Ensures plaintext patient identities are never exposed in database dumps or storage layers."
+          },
+          {
+            title: "Pharmacy Lot-Level FIFO Dispatch Engine",
+            technique: "Automated FEFO / FIFO Allocation",
+            mechanism: "Prescription fulfillment orders query active drug inventory sorted by nearest expiration date (First-Expired, First-Out), automatically generating pick-lists for pharmacists.",
+            impact: "Eliminates expired medication dispensation and reduces pharmaceutical waste."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Concurrent Prescription Dispensation Conflict",
+            mitigation: "Pessimistic row-locking on drug inventory rows during the checkout phase.",
+            tradeOff: "Slight serialization of checkout operations on the exact same medication SKU."
+          },
+          {
+            failureMode: "Notification Service Delivery Failure",
+            mitigation: "Asynchronous retry queue with exponential backoff for patient SMS/email alerts.",
+            tradeOff: "Alert delivery may occur with minor delay during upstream gateway outages."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Automated E2E Playwright CI Suite",
+            details: "930 automated end-to-end user journeys executed across Chromium, Firefox, and WebKit.",
+            result: "100% passing rate in GitHub Actions CI release gate."
+          },
+          {
+            type: "Backend Integration & Security Tests",
+            details: "148 Spring Boot slice tests validating RBAC permissions and encryption filters.",
+            result: "Zero unauthorized endpoint accesses detected across 34 role permutations."
+          }
+        ],
+        deploymentAndObservability: [
+          "Dockerized deployment with multi-stage image optimization.",
+          "Prometheus metrics scraping JVM memory, HTTP response latencies, and database pool utilization.",
+          "Grafana dashboards monitoring queue wait times and appointment volume."
+        ],
+        operationalOutcomes: [
+          "118 REST API endpoints operating across 32 controllers with sub-150ms average latency.",
+          "Zero reported double-booking incidents across all integration and stress testing scenarios.",
+          "Complete HIPAA-aligned encryption covering 100% of stored patient identifiers."
+        ],
+        gallery: [
+          { url: "/hms-screens/system-architecture-overview.png", title: "Complete System Architecture & Gateways", badge: "Architecture Overview" },
+          { url: "/hms-screens/clinical-workflow.png", title: "7-Stage End-to-End Clinical Lifecycle", badge: "Clinical Lifecycle" },
+          { url: "/hms-screens/ddd-modular-monolith.png", title: "17 Bounded Contexts DDD Modular Monolith", badge: "DDD Monolith" },
+          { url: "/hms-screens/home-page.png", title: "Public Hospital Web Portal & Online Booking", badge: "Public Web" },
+          { url: "/hms-screens/portal-overview.png", title: "Patient Self-Service Health Portal", badge: "Patient Portal" },
+          { url: "/hms-screens/staff-login.png", title: "Role-Based Central Staff Authentication", badge: "Staff Auth" },
+          { url: "/hms-screens/nurse-overview.png", title: "Nurse Triage & Patient Queue Coordinator", badge: "Nurse Triage" },
+          { url: "/hms-screens/nurse-appointment.png", title: "Vitals Check-in & Examination Intake", badge: "Vitals Check-in" },
+          { url: "/hms-screens/pharmacy-inventory.png", title: "Pharmacy Inventory with FIFO Lot Tracking", badge: "Pharmacy FIFO" },
+          { url: "/hms-screens/10-admin-dashboard.png", title: "Executive Healthcare Administration Dashboard", badge: "Admin Dashboard" },
+          { url: "/hms-screens/admin-queue.png", title: "Realtime Queue Telemetry & Wait-Time Analytics", badge: "Queue Analytics" }
+        ]
+      }
+    },
+    {
+      id: "ai-hospital-knowledge-assistant",
+      number: "04",
+      title: "AI Hospital Knowledge Assistant",
+      category: "Applied AI & Knowledge Retrieval",
+      status: "In-House Benchmark Verified",
+      role: "AI & Data Engineer",
+      period: "Feb. 2026 – Present",
+      thesis: "Permission-aware Graph RAG assistant synthesizing longitudinal patient medical records with citation verification guardrails and async OCR processing.",
+      problem: "Clinicians spend 10–15 minutes per consultation parsing hundreds of pages of fragmented medical records, while standard LLMs pose severe risks of medical hallucinations and HIPAA context leakage.",
+      engineeredDecisions: [
+        {
+          technique: "SQL-Backed Graph RAG",
+          mechanism: "Traverses clinical entity relations (treats, causes, contraindicates) via 2-hop BFS queries",
+          property: "Provides longitudinal medical context without third-party graph database overhead"
+        },
+        {
+          technique: "Anti-Hallucination Citation Gate",
+          mechanism: "Validates every response citation tag against retrieved chunks before streaming output",
+          property: "Achieves 95.2% citation precision across 300 clinical evaluation cases"
+        },
+        {
+          technique: "SQL Predicate Pre-Filtering",
+          mechanism: "Injects clinical role and patient scope predicates directly into vector search queries",
+          property: "Guarantees zero context leakage across patient authorization boundaries"
+        }
+      ],
+      proofChips: [
+        "95.2% citation precision (300 cases)",
+        "0% cross-patient context leakage",
+        "On-Premise 16GB RAM deployable"
+      ],
+      techStack: ["FastAPI", "Python", "pgvector", "Redis / RQ", "RAG", "React"],
+      githubUrl: "https://github.com/qwan30/chat-hospital-system",
+      featuredImage: "/hospital-screens/graph-rag-detail.png",
+      thumbnails: [
+        {
+          url: "/hospital-screens/system-architecture.png",
+          title: "Multi-layer BFF, pgvector, and CDSS Agent Architecture",
+          badge: "System Architecture"
+        },
+        {
+          url: "/hospital-screens/chatbot-architecture.png",
+          title: "Clinical Chatbot with Citation Verification Gate",
+          badge: "RAG Pipeline"
+        },
+        {
+          url: "/hospital-screens/chat.png",
+          title: "Clinical AI Chat with SSE Streaming & Citation Badges",
+          badge: "Clinical AI Chat"
+        }
+      ],
+      caseStudy: {
+        executiveSummary: "Built an on-premise clinical knowledge retrieval engine utilizing SQL-backed Graph RAG and hybrid vector search, enabling physicians to synthesize longitudinal medical histories with transparent, auditable citations.",
+        businessContext: "Hospital medical records accumulate across unstructured formats (scanned test reports, discharge summaries, prescription slips). Manual review consumes critical clinician time and risks missing subtle drug allergies or drug-drug contraindications.",
+        problemStatement: "The assistant must extract and index unstructured medical documents, answer complex clinical queries with 100% cited source evidence, enforce strict patient privacy boundaries, and operate on local workstation hardware.",
+        systemConstraints: [
+          "Zero hallucinated medical facts — missing data must trigger safe refusal.",
+          "Strict data sovereignty — patient data must never leave on-premise hardware.",
+          "Sub-30 second end-to-end record synthesis (vs 10–15 min manual lookup).",
+          "Workstation deployability — must run efficiently within 16GB RAM constraints."
+        ],
+        architecture: "Hybrid Clean/Pipeline architecture featuring an asynchronous FastAPI backend, PostgreSQL 16 with pgvector (HNSW) and BM25 full-text indexing, Redis/RQ background workers, local LLM orchestration (Ollama), and a modern React interface.",
+        architectureHighlights: [
+          "Hybrid Retrieval combining dense pgvector embeddings with sparse BM25 keyword matching via Reciprocal Rank Fusion (RRF).",
+          "Asynchronous OCR pipeline using PyMuPDF and PaddleOCR with Dead-Letter Queue handling.",
+          "Server-Sent Events (SSE) streaming with progressive citation badge rendering."
+        ],
+        deepDecisions: [
+          {
+            title: "SQL-Backed Graph RAG Architecture",
+            technique: "Relational Entity-Graph Traversal",
+            mechanism: "Clinical entities (medications, conditions, lab tests) and relationships are stored in indexed PostgreSQL tables. Queries trigger a 2-hop BFS traversal scoped to the specific patient ID.",
+            impact: "Delivers connected longitudinal patient history without managing a dedicated external graph database."
+          },
+          {
+            title: "Anti-Hallucination Citation Verification Gate",
+            technique: "Post-Generation Evidence Verification",
+            mechanism: "A post-processing sentinel parses every bracketed citation tag `[Doc#Page]` in the generated response and matches it against the retrieved text chunks. Unverified claims trigger the Safe-Refusal pipeline.",
+            impact: "Achieved 95.2% citation precision across a rigorous 300-case clinical evaluation suite."
+          },
+          {
+            title: "SQL Predicate Pre-Filtering for Data Isolation",
+            technique: "Authorization-Enforced Vector Search",
+            mechanism: "Vector similarity searches in pgvector embed SQL WHERE clauses enforcing the authenticated clinician's role and patient assignment before similarity ranking.",
+            impact: "Ensures mathematical impossibility of cross-patient information leakage during retrieval."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Unclear / Ambiguous Medical Query",
+            mitigation: "Safe-Refusal pipeline returns explicit notification that evidence is insufficient.",
+            tradeOff: "Refuses to answer when evidence is borderline rather than guessing."
+          },
+          {
+            failureMode: "Corrupt or Unreadable Scanned PDF",
+            mitigation: "Dead-Letter Queue flags document for administrative review with failure reason.",
+            tradeOff: "Requires manual document re-upload when source scan resolution is below OCR threshold."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Clinical Retrieval Benchmark (300 Cases)",
+            details: "Evaluated across 300 curated clinical questions testing entity recall and citation validity.",
+            result: "95.2% verified citation accuracy with 0% unauthorized context bleed."
+          },
+          {
+            type: "Local Hardware Load & Memory Profiling",
+            details: "Monitored memory consumption during continuous document ingestion and streaming chat.",
+            result: "Sustained peak memory utilization under 12GB on a standard 16GB RAM workstation."
+          }
+        ],
+        deploymentAndObservability: [
+          "Docker Compose configuration with localized Ollama LLM runtime.",
+          "Prometheus metrics tracking query response latencies and token generation speed.",
+          "Structured audit log recording all retrieval queries for HIPAA compliance."
+        ],
+        operationalOutcomes: [
+          "Reduced patient record synthesis time from 10–15 minutes down to < 30 seconds.",
+          "100% on-premise execution with zero external cloud API dependencies.",
+          "Zero detected patient context leaks across all automated security test suites."
+        ],
+        gallery: [
+          { url: "/hospital-screens/graph-rag-detail.png", title: "Clinical Entity Graph & Evidence Citations", badge: "Graph RAG Detail" },
+          { url: "/hospital-screens/graph-rag.png", title: "Patient Knowledge Graph Visualization", badge: "Graph RAG View" },
+          { url: "/hospital-screens/system-architecture.png", title: "System Architecture: BFF, Vector DB, and Workers", badge: "System Architecture" },
+          { url: "/hospital-screens/chatbot-architecture.png", title: "Clinical Chatbot Guardrails & Citation Flow", badge: "Chatbot Architecture" },
+          { url: "/hospital-screens/graphrag-architecture.png", title: "SQL-Backed GraphRAG Entity Relations", badge: "GraphRAG Architecture" },
+          { url: "/hospital-screens/ocr-architecture.png", title: "Asynchronous OCR Pipeline & Dead-Letter Queue", badge: "OCR Architecture" },
+          { url: "/hospital-screens/cicd-pipeline.png", title: "CI/CD Pipeline with 300-Case Evaluation Gate", badge: "CI/CD Pipeline" },
+          { url: "/hospital-screens/deployment-architecture.png", title: "On-Premise Docker Deployment Topology", badge: "Deployment Topology" },
+          { url: "/hospital-screens/chat.png", title: "Clinical AI Chat with SSE Streaming & Citation Badges", badge: "Clinical AI Chat" },
+          { url: "/hospital-screens/patient.png", title: "Patient Profile with Predicate Authorization Filtering", badge: "Patient Directory" },
+          { url: "/hospital-screens/time-line.png", title: "Longitudinal Medical History Timeline", badge: "Medical Timeline" },
+          { url: "/hospital-screens/dashboard.png", title: "Operational Impact & Clinical Telemetry Dashboard", badge: "Impact Dashboard" },
+          { url: "/hospital-screens/audit-screen-new.png", title: "Immutable PHI Query Audit Trail", badge: "Fail-Closed Audit" },
+          { url: "/hospital-screens/notification.png", title: "Automated CDSS Allergy & Contraindication Alerts", badge: "CDSS Alerts" }
+        ]
+      }
+    }
+  ],
+
+  secondaryProjects: [
+    {
+      id: "aivora-marketplace",
+      title: "Aivora — AI Freelance Marketplace",
+      category: "Fullstack Platform & Fintech",
+      statusBadge: "Backend Lead (.NET 10)",
+      role: ".NET 10 Backend Lead (4-Member Team)",
+      period: "May. 2026 – Present",
+      thesis: "Freelance marketplace backend featuring 2-phase milestone escrow, pessimistic concurrency control, deadlock prevention algorithms, and VNPay IPN idempotency.",
+      representativeImage: "/AIVORA-project (2).png",
+      techStack: [".NET 10", "C# 13", "PostgreSQL", "EF Core", "SignalR", "Docker"],
+      proofChip: "100% financial transaction integrity (0 balance drift)",
+      // NOTE: Aivora is a private repository as requested by user
+      githubUrl: undefined,
+      caseStudy: {
+        executiveSummary: "Led a 4-engineer team developing the backend architecture for an AI-focused freelance marketplace, creating a resilient Treasury subsystem with 2-phase milestone escrow and deadlock-free wallet locking.",
+        businessContext: "Freelance platforms face financial disputes, double-spending vulnerabilities in wallet transfers, and deadlock timeouts when multiple transactions update user balances concurrently.",
+        problemStatement: "Build a reliable financial backend that manages project escrow, guarantees transactional balance integrity, standardizes requirement decomposition via GenAI, and delivers realtime WebSocket messaging.",
+        systemConstraints: [
+          "Strict ACID compliance for wallet top-ups, milestone escrows, and disbursement.",
+          "Zero double-spend risk during payment gateway webhook callbacks.",
+          "Realtime bidirectional communication for messaging and project state transitions."
+        ],
+        architecture: "Clean Architecture in .NET 10 and C# 13 with Domain Services, EF Core with PostgreSQL 16, SignalR Hubs for realtime events, and Strategy Pattern for AI providers.",
+        architectureHighlights: [
+          "Treasury Deep Module encapsulating financial state transitions.",
+          "Deterministic wallet ID sorting algorithm eliminating deadlock cycles.",
+          "VNPay IPN idempotency filter based on unique transaction references."
+        ],
+        deepDecisions: [
+          {
+            title: "2-Phase Milestone Escrow Architecture",
+            technique: "State-Gated Wallet Escrow",
+            mechanism: "Locks 30% initial deposit in platform escrow upon milestone start, releasing the remaining 70% upon client acceptance while deducting 10% platform commission.",
+            impact: "Eliminates payment default risks for both clients and experts."
+          },
+          {
+            title: "Deadlock Prevention via Ascending Key Sorting",
+            technique: "Deterministic Lock Acquisition Ordering",
+            mechanism: "Transfers involving multiple wallets sort all target wallet IDs in ascending order before executing SELECT ... FOR UPDATE queries in PostgreSQL.",
+            impact: "Mathematically eliminates circular wait conditions and deadlock exceptions."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Duplicate Payment Gateway Webhook Deliveries",
+            mitigation: "Database-level unique constraint on gateway transaction references.",
+            tradeOff: "Duplicate webhook attempts are rejected with idempotent HTTP 200 responses."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Financial Concurrency Tests",
+            details: "xUnit multi-threaded simulation of concurrent top-ups and simultaneous escrows.",
+            result: "Zero balance discrepancies detected across all execution runs."
+          }
+        ],
+        deploymentAndObservability: [
+          "Containerized .NET 10 services deployed with Docker Compose and Nginx reverse proxy.",
+          "Centralized Serilog logging with trace correlation IDs."
+        ],
+        operationalOutcomes: [
+          "Standardized 24+ RESTful API controllers with uniform response envelopes.",
+          "100% verified financial integrity across all escrow and disbursement flows."
+        ],
+        gallery: [
+          { url: "/AIVORA-project (2).png", title: "Aivora Freelance Platform Core Overview", badge: "Marketplace Core" }
+        ]
+      }
+    },
+    {
+      id: "ledger-credit-system",
+      title: "Ledger Credit & Double-Entry System",
+      category: "Financial Infrastructure",
+      statusBadge: "Financial Core",
+      role: "Backend Infrastructure Engineer",
+      period: "Dec. 2025 – Present",
+      thesis: "Double-entry bookkeeping engine enforcing immutable debit/credit zero-sum balance equations, idempotent workflow orchestration, and audit trails.",
+      representativeImage: "/coinbase-bg.png",
+      techStack: ["TypeScript", "NestJS", "PostgreSQL", "Prisma", "Docker"],
+      proofChip: "Zero-sum ledger balance validation (0 drift)",
+      githubUrl: "https://github.com/qwan30/ledger-credit-system",
+      caseStudy: {
+        executiveSummary: "Engineered a double-entry accounting ledger in NestJS and PostgreSQL enforcing strict balance equations, immutable journal entries, and durable financial workflow orchestration.",
+        businessContext: "Fintech services require rigorous bookkeeping where every financial movement is matched across debit and credit accounts, preventing hidden balance inflation or unrecorded monetary leaks.",
+        problemStatement: "Implement a ledger service guaranteeing zero-sum balance invariants, concurrent transfer safety, and tamper-resistant audit logs.",
+        systemConstraints: [
+          "Every journal entry must balance: SUM(Debits) - SUM(Credits) = 0.",
+          "Journal records are immutable (append-only architecture).",
+          "Transfers must be idempotent with idempotency-key enforcement."
+        ],
+        architecture: "Modular NestJS service with Prisma ORM, PostgreSQL transactions, and strict schema-level checks.",
+        architectureHighlights: [
+          "Atomic transaction boundaries wrapping journal entries and balance updates.",
+          "Check constraints in PostgreSQL preventing negative account balances where prohibited."
+        ],
+        deepDecisions: [
+          {
+            title: "Double-Entry Balance Enforcement",
+            technique: "Zero-Sum Constraint Interceptor",
+            mechanism: "Validates that sum of debits strictly equals sum of credits before persisting any financial journal batch.",
+            impact: "Ensures mathematical integrity across all account balances."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Unbalanced Transaction Attempt",
+            mitigation: "Transaction is rejected at domain boundary with HTTP 422 Unprocessable Entity.",
+            tradeOff: "Requires clients to explicitly specify balanced leg pairs."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Accounting Invariant Unit Suite",
+            details: "100+ tests verifying zero-sum calculations and concurrency safety.",
+            result: "100% passing rate with zero balance divergence."
+          }
+        ],
+        deploymentAndObservability: [
+          "Dockerized service with PostgreSQL healthchecks and structured transaction logs."
+        ],
+        operationalOutcomes: [
+          "Immutable journal trail enabling comprehensive auditing of all fund movements."
+        ],
+        gallery: [
+          { url: "/coinbase-bg.png", title: "Double-Entry Ledger Architecture & Financial Model", badge: "Ledger Model" }
+        ]
+      }
+    },
+    {
+      id: "mini-digital-banking-platform",
+      title: "Mini Digital Banking Platform",
+      category: "Fintech & Banking",
+      statusBadge: "Fintech MVP",
+      role: "Backend Software Engineer",
+      period: "Nov. 2025 – Dec. 2025",
+      thesis: "Modular digital banking service with multi-factor OTP 2FA, JWT token authentication, and ACID transaction transfer workflows.",
+      representativeImage: "/hero-bg.png",
+      techStack: ["Java", "Spring Boot", "Spring Security", "PostgreSQL", "JWT"],
+      proofChip: "ACID compliant internal transfer workflows",
+      githubUrl: "https://github.com/qwan30/mini-digital-banking-platform",
+      caseStudy: {
+        executiveSummary: "Developed a secure transactional digital banking service implementing account lifecycle management, inter-account transfers, and multi-factor authentication.",
+        businessContext: "Demonstrates core banking transaction processing, secure authentication gates, and ACID data integrity.",
+        problemStatement: "Build a robust banking API preventing concurrent overdrafts, verifying identity via OTP, and recording auditable statement records.",
+        systemConstraints: [
+          "No overdraft beyond authorized balance limits.",
+          "Mandatory OTP verification for sensitive outgoing transfers.",
+          "Secure BCrypt password hashing and scoped JWT tokens."
+        ],
+        architecture: "Layered Spring Boot application with Spring Security, PostgreSQL relational storage, and RESTful API endpoints.",
+        architectureHighlights: [
+          "Pessimistic locking during fund transfers preventing concurrent double-withdrawals.",
+          "Time-based OTP token generation with expiration limits."
+        ],
+        deepDecisions: [
+          {
+            title: "Transactional Fund Transfer Engine",
+            technique: "Isolated Database Transactions with Balance Checks",
+            mechanism: "Deducts sender balance, credits receiver balance, and logs transfer audit in a single atomic transaction.",
+            impact: "Guarantees zero fund loss during network or server interruptions."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Expired OTP Submission",
+            mitigation: "Rejects expired codes and prompts for new OTP token generation.",
+            tradeOff: "Slight user friction for enhanced transfer security."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Banking Transfer Integration Suite",
+            details: "Simulated simultaneous transfer attempts from single account.",
+            result: "Overdraft attempts blocked with zero balance leakage."
+          }
+        ],
+        deploymentAndObservability: [
+          "Spring Boot containerized on Docker with standard logging."
+        ],
+        operationalOutcomes: [
+          "Complete digital banking lifecycle implemented with comprehensive security controls."
+        ],
+        gallery: [
+          { url: "/hero-bg.png", title: "Banking API Architecture & Transfer Lifecycles", badge: "Banking Core" }
+        ]
+      }
+    },
+    {
+      id: "inventory-flashsale-system",
+      title: "Inventory & Flash Sale System (Prototype)",
+      category: "Distributed Systems & Prototype",
+      statusBadge: "Engineering Prototype",
+      role: "Backend Engineer",
+      period: "Jan. 2026 – Present",
+      thesis: "Earlier exploratory prototype researching distributed locking and Kafka event updates for multi-warehouse inventory systems.",
+      representativeImage: "/08-admin-benchmark.png",
+      techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "PostgreSQL"],
+      proofChip: "Distributed lock exploration (<10ms)",
+      githubUrl: "https://github.com/qwan30/inventory-flashsale-system",
+      caseStudy: {
+        executiveSummary: "Initial research prototype investigating distributed locking techniques and asynchronous inventory event updates prior to the production-grade Flash Sale Concurrency Engine.",
+        businessContext: "Served as an exploratory architecture spike to compare distributed locking vs in-memory pre-gating.",
+        problemStatement: "Evaluate how distributed locks (Redisson / Redis locks) behave under high contention compared to atomic Lua scripts.",
+        systemConstraints: [
+          "Explore latency trade-offs of distributed locks vs Lua scripts."
+        ],
+        architecture: "Spring Boot service with Redis distributed locking and Kafka event publisher.",
+        architectureHighlights: [
+          "Exploration of Redisson distributed locks under thread saturation.",
+          "Asynchronous event dispatching to Apache Kafka."
+        ],
+        deepDecisions: [
+          {
+            title: "Distributed Lock Exploration",
+            technique: "Redis Distributed Locking Spike",
+            mechanism: "Acquires mutex locks across distributed instances to serialize inventory decrements.",
+            impact: "Provided benchmark baseline proving Lua scripts offer 5x superior throughput."
+          }
+        ],
+        failureModesAndTradeoffs: [
+          {
+            failureMode: "Lock Contention Overhead",
+            mitigation: "Led to the architectural pivot towards Redis Lua Pre-gating in V2 engine.",
+            tradeOff: "Valuable research artifact informing final engine architecture."
+          }
+        ],
+        testingAndVerification: [
+          {
+            type: "Lock Contention Latency Benchmark",
+            details: "Measured lock wait overhead under increasing concurrency.",
+            result: "Directly inspired the zero-lock Redis Lua architecture."
+          }
+        ],
+        deploymentAndObservability: [
+          "Local Docker testbed for benchmarking."
+        ],
+        operationalOutcomes: [
+          "Delivered foundational research that enabled the zero-oversell Flash Sale Concurrency Engine."
+        ],
+        gallery: [
+          { url: "/08-admin-benchmark.png", title: "Distributed Lock Benchmark Analysis", badge: "Research Baseline" }
+        ]
+      }
     }
   ]
 };

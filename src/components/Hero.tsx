@@ -1,104 +1,204 @@
 import React from 'react';
+import { ExternalLink, FileText, ArrowDown, Terminal } from 'lucide-react';
+import { portfolioData } from '../data/portfolioData';
 
 interface HeroProps {
   onOpenContact?: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
+  const { personal } = portfolioData;
+
+  const scrollToProjects = () => {
+    const el = document.getElementById('projects');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="bg-canvas mt-24 px-6 md:px-12 lg:px-24 py-24 min-h-screen flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto w-full">
-        {/* Top center greeting with profile photo avatar */}
-        <div className="flex flex-col items-center justify-center mb-10">
-          <div className="relative group mb-6">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-accent rounded-full blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
-            <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-canvas shadow-2xl bg-white">
-              <img 
-                src="/anh_the.png" 
-                alt="Tran Thanh Quan" 
-                width={176}
-                height={176}
-                fetchPriority="high"
-                decoding="async"
-                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" 
-              />
-            </div>
-            {/* Active Status Badge */}
-            <div className="absolute bottom-2 right-2 bg-emerald-500 w-5 h-5 rounded-full border-2 border-canvas shadow-md flex items-center justify-center" title="Available for backend engineering opportunities">
-              <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
-            </div>
-          </div>
-          <h1 className="font-serif italic text-4xl md:text-6xl text-ink/60 text-center">
-            Hi, I'm <span className="font-display not-italic text-ink">Tran Thanh Quan</span>
-          </h1>
-        </div>
+    <section className="bg-canvas pt-32 md:pt-36 pb-20 px-6 md:px-12 lg:px-20 min-h-[92vh] flex flex-col justify-between border-b border-black/5">
+      <div className="max-w-7xl mx-auto w-full flex flex-col gap-14 md:gap-16">
         
-        {/* 3-column grid layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center mb-24">
-          {/* Left column */}
-          <div className="flex flex-col">
-            <div className="w-12 h-1 bg-blue-600 mb-6"></div>
-            <h2 className="font-display text-7xl uppercase leading-none text-ink">
-              I BUILD RELIABLE SYSTEMS
-            </h2>
+        {/* Top Eyebrow & Status Row */}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-black/5 pb-4">
+          <div className="flex items-center gap-3">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="font-mono text-xs font-bold uppercase tracking-widest text-ink/70">
+              {personal.eyebrow}
+            </span>
           </div>
+          <span className="font-mono text-xs text-ink/60 font-medium">
+            Based in Ho Chi Minh City, Vietnam
+          </span>
+        </div>
+
+        {/* Hero Main Grid (3 Columns on Desktop) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           
-          {/* Middle column (Terminal) */}
-          <div className="bg-surface-dark text-green-400 font-mono text-sm p-6 rounded-2xl aspect-square flex flex-col justify-start overflow-hidden shadow-2xl relative shadow-blue-500/10">
-            <div className="flex gap-2 absolute top-4 left-4">
-               <div className="w-3 h-3 rounded-full bg-red-500"></div>
-               <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-               <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          {/* Left Column (5 Cols): Identity & Primary Statement */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            <div className="flex items-center gap-4">
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-black/10 shadow-md flex-shrink-0 bg-white">
+                <img
+                  src="/anh_the.png"
+                  alt="Tran Thanh Quan"
+                  width={80}
+                  height={80}
+                  fetchPriority="high"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div>
+                <h1 className="font-sans text-xl sm:text-2xl font-bold text-ink tracking-tight">
+                  {personal.name}
+                </h1>
+                <span className="font-mono text-xs text-blue-700 font-semibold uppercase tracking-wider block">
+                  {personal.title}
+                </span>
+              </div>
             </div>
-            <div className="mt-8 flex flex-col gap-2 opacity-80 leading-relaxed">
-              <p>{">"} Initialize core services...</p>
-              <p className="text-blue-400">[OK] Vijaco Doc-Mgmt System (30+ staff active)</p>
-              <p className="text-blue-400">[OK] Redis Lua Stock Gate active</p>
-              <p className="text-blue-400">[OK] Transactional Outbox worker ready</p>
-              <p>{">"} Graph RAG Medical Engine initialized</p>
-              <p className="text-blue-400">[OK] 95.2% Citation Score verified</p>
-              <p className="mt-2 text-white font-bold">{">"} System operational.</p>
-              <p className="animate-pulse">{">"} Ready for production traffic<span className="animate-ping">_</span></p>
+
+            <div>
+              <div className="w-12 h-1 bg-blue-600 mb-4 rounded-full"></div>
+              <h2 className="font-display text-5xl sm:text-6xl md:text-7xl uppercase leading-[0.95] text-ink tracking-tight">
+                {personal.heroStatement}
+              </h2>
             </div>
-          </div>
-          
-          {/* Right column */}
-          <div className="flex flex-col lg:items-end text-right">
-            <h2 className="font-display text-4xl uppercase text-ink mb-8 text-right">
-              SOFTWARE ENGINEER
-            </h2>
-            <div className="flex flex-col gap-3 lg:items-end w-full lg:w-auto">
-              <a href="https://github.com/qwan30" target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white w-full lg:w-48 px-6 py-4 rounded-full font-sans text-sm tracking-wide font-medium hover:bg-blue-700 hover:shadow-[0_4px_14px_0_rgba(0,82,255,0.39)] hover:-translate-y-0.5 transition-all duration-300 text-center">
-                View GitHub
-              </a>
-              <a href="https://www.linkedin.com/in/tran-thanh-quan-eric-78842b326/" target="_blank" rel="noopener noreferrer" className="bg-transparent border border-ink/20 text-ink w-full lg:w-48 px-6 py-4 rounded-full font-sans text-sm tracking-wide font-medium hover:bg-ink hover:text-white transition-all duration-300 text-center">
-                LinkedIn Profile
-              </a>
-              <button 
-                onClick={onOpenContact} 
-                className="bg-transparent border border-ink/20 text-ink w-full lg:w-48 px-6 py-4 rounded-full font-sans text-sm tracking-wide font-medium hover:bg-blue-600 hover:border-transparent hover:text-white transition-all duration-300 text-center cursor-pointer"
+
+            <p className="font-sans text-base sm:text-lg text-ink/75 leading-relaxed font-normal max-w-xl">
+              {personal.heroSubstatement}
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                onClick={scrollToProjects}
+                className="h-12 px-7 rounded-full bg-ink hover:bg-blue-600 text-white font-sans text-sm font-semibold transition-all shadow-md flex items-center gap-2 cursor-pointer group"
               >
-                Contact Me
+                <span>View Engineering Work</span>
+                <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
               </button>
+
+              <a
+                href={personal.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-12 px-6 rounded-full bg-white hover:bg-gray-100 text-ink border border-black/15 font-sans text-sm font-semibold transition-all flex items-center gap-2 shadow-xs"
+              >
+                <FileText className="w-4 h-4 text-blue-600" />
+                <span>Resume (PDF)</span>
+              </a>
+
+              <a
+                href={personal.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-12 px-4 rounded-full text-ink/70 hover:text-ink font-mono text-xs font-semibold transition-colors flex items-center gap-1.5"
+              >
+                <span>GitHub</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
+
+          {/* Center Column (4 Cols): Decorative Engineering Status Terminal */}
+          <div className="lg:col-span-4">
+            <div className="bg-[#14161b] text-green-400 font-mono text-xs p-6 rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                <div className="flex items-center gap-1.5 text-gray-400 text-[10px]">
+                  <Terminal className="w-3 h-3 text-blue-400" />
+                  <span>runtime.telemetry</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2.5 leading-relaxed">
+                {personal.heroTerminalLines.map((line, idx) => (
+                  <p
+                    key={idx}
+                    className={
+                      line.startsWith('[OK]')
+                        ? 'text-blue-400'
+                        : line.includes('operational')
+                        ? 'text-emerald-400 font-bold'
+                        : 'text-gray-300'
+                    }
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-gray-500">
+                <span>STATUS: HEALTHY</span>
+                <span className="animate-pulse text-emerald-400">● LIVE</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column (3 Cols): Quick Connect & Direct Action */}
+          <div className="lg:col-span-3 flex flex-col justify-between gap-6 p-6 rounded-2xl bg-white/70 border border-black/8 backdrop-blur-xs">
+            <div>
+              <span className="font-mono text-[11px] uppercase font-bold text-blue-700 tracking-wider block mb-2">
+                ENGINEERING PROFILE
+              </span>
+              <h3 className="font-display text-2xl uppercase text-ink leading-tight">
+                BACKEND & SYSTEMS ENGINEER
+              </h3>
+              <p className="font-sans text-xs text-ink/75 mt-2 leading-relaxed">
+                Focused on scalable APIs, distributed state consistency, fail-closed security, and rigorous automated testing.
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-black/5">
+              <button
+                onClick={onOpenContact}
+                className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-sans text-xs font-semibold transition-colors shadow-xs cursor-pointer text-center"
+              >
+                Get In Touch
+              </button>
+              <a
+                href={personal.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-ink font-sans text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+              >
+                <span>LinkedIn Profile</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+
         </div>
-        
-        {/* Bottom of Hero */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-t border-neutral-200/50 pt-12">
-          <div className="flex flex-col items-center">
-            <span className="font-display text-4xl text-ink">30+ STAFF</span>
-            <span className="text-blue-500 text-sm font-sans mt-2 font-medium">Vijaco Daily Active Users</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="font-display text-4xl text-ink">0 OVERSELLS</span>
-            <span className="text-blue-500 text-sm font-sans mt-2 font-medium">Flash Sale Concurrency Integrity</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="font-display text-4xl text-ink">95.2% ACCURACY</span>
-            <span className="text-blue-500 text-sm font-sans mt-2 font-medium">RAG Clinical Citation Score</span>
-          </div>
+
+        {/* Bottom Hero Proof Strip (Max 3 Evidence Items) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 border-t border-black/10">
+          {personal.heroProofMetrics.map((item, idx) => (
+            <div
+              key={idx}
+              className="p-5 rounded-2xl bg-white border border-black/8 shadow-xs flex flex-col justify-between gap-3 group hover:border-blue-500/40 hover:shadow-md transition-all"
+            >
+              <div>
+                <div className="font-display text-3xl sm:text-4xl text-blue-600 tracking-tight">
+                  {item.metric}
+                </div>
+                <div className="font-sans text-xs sm:text-sm font-semibold text-ink mt-1 leading-snug">
+                  {item.context}
+                </div>
+              </div>
+              <div className="font-mono text-[11px] font-bold text-ink/50 uppercase tracking-wider flex items-center gap-1.5 pt-2 border-t border-black/5">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                <span>{item.source}</span>
+              </div>
+            </div>
+          ))}
         </div>
+
       </div>
     </section>
   );
