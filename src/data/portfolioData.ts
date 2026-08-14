@@ -247,7 +247,7 @@ export const portfolioData = {
       role: "Backend Reliability Engineer",
       tagline: "Lõi bán hàng giờ vàng xử lý hàng ngàn giao dịch đồng thời với cam kết Zero Oversell và Zero Data Drift",
       description: "Xây dựng hệ thống xử lý đơn hàng chịu tải lớn trong các đợt Flash Sale. Ứng dụng Redis Lua Script để khoá giữ tồn kho tức thì và cơ chế bù trừ tự động 2 lớp (SAGA-like Compensation & 30s Scheduled Reconciliation), loại bỏ hoàn toàn rủi ro bán vượt tồn (Zero Oversell) và triệt tiêu sai lệch dữ liệu giữa Cache và DB khi gặp truy cập bùng nổ.",
-      techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "MySQL", "JMeter", "Resilience4j", "OpenTelemetry", "Next.js"],
+      techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "MySQL", "JMeter", "Resilience4j", "OpenTelemetry", "Docker"],
       metrics: [
         "Chịu tải 5,000+ yêu cầu / 100 luồng đồng thời (Throughput 443.03 req/s)",
         "0 sản phẩm bị bán lố (Zero oversell & Zero data drift)",
@@ -265,18 +265,15 @@ export const portfolioData = {
       gallery: [
         { url: "/flashsale-screens/architecture-overview.png", title: "Tổng quan Kiến trúc Hệ thống: Redis Pre-gating, SAGA Compensation, Transactional Outbox & Kafka", badge: "Architecture Overview" },
         { url: "/flashsale-screens/strategy-comparison.png", title: "So sánh 4 Chiến lược Trừ tồn kho & Cơ chế Dịch chuyển Điểm nghẽn (Bottleneck Shift)", badge: "Strategy Matrix" },
-        { url: "/flashsale-screens/ddd-modules.png", title: "Kiến trúc Phân rã 5 Maven Modules chuẩn Domain-Driven Design (DDD)", badge: "DDD Layout" },
-        { url: "/flashsale-screens/jmeter_redis_lua_summary.png", title: "Báo cáo JMeter: Error Rate 0.00% & Throughput 443 req/s Vượt trội", badge: "JMeter Summary" },
+        { url: "/flashsale-screens/strategy-comparison-flow.png", title: "Luồng Xử lý Chi tiết & Điều phối Chiến lược Trừ Tồn kho Phân tán", badge: "Strategy Flow" },
+        { url: "/flashsale-screens/strategy-routing-and-recovery.png", title: "Sơ đồ Điều hướng Chiến lược & Cơ chế Phục hồi Bù trừ Tự động", badge: "Routing & Recovery" },
+        { url: "/flashsale-screens/ddd-modules.png", title: "Kiến trúc Phân rã 5 Maven Modules chuẩn Domain-Driven Design (DDD Layout)", badge: "DDD Architecture" },
+        { url: "/flashsale-screens/ddd-module-layout.png", title: "Sơ đồ Phụ thuộc & Ranh giới Module (Ports & Adapters Hexagonal)", badge: "Module Boundaries" },
+        { url: "/flashsale-screens/jmeter_redis_lua_summary.png", title: "Báo cáo Tải JMeter: Error Rate 0.00% & Throughput 443 req/s Vượt trội", badge: "JMeter Summary" },
         { url: "/flashsale-screens/jmeter_redis_lua_throughput.png", title: "Đồ thị Thông lượng Throughput: Duy trì Mức Tải cao Ổn định", badge: "Throughput Curve" },
         { url: "/flashsale-screens/jmeter_redis_lua_latency.png", title: "Đồ thị Độ trễ Latency: Phẳng và Đồng đều Cực thấp trên Redis Lua", badge: "Latency Curve" },
         { url: "/flashsale-screens/grafana_system_metrics.png", title: "Grafana Dashboard: Giám sát Realtime JVM, CPU, Memory & Custom Order Latency", badge: "Grafana Metrics" },
-        { url: "/flashsale-screens/elk_conditional_db_bottleneck.png", title: "Kibana ELK Logging: Bắt 833 lỗi DB Lock Wait Timeout khi chưa dùng Redis Gate", badge: "ELK Centralized Log" },
-        { url: "/flashsale-screens/admin-control-desk.png", title: "Bàn Điều khiển Quản trị: Reset, Nạp Tồn kho (Warmup) & Điều phối Lab", badge: "Admin Control Desk" },
-        { url: "/flashsale-screens/admin-consistency.png", title: "Bảng Đối soát Nhất quán: Phát hiện Lệch (Drift) giữa Redis vs MySQL", badge: "Consistency Checker" },
-        { url: "/flashsale-screens/order-traces.png", title: "Truy vết Luồng tạo Đơn: Idempotency → Strategy → Outbox → Kafka", badge: "Distributed Tracing" },
-        { url: "/flashsale-screens/events.png", title: "Nhật ký Sự kiện Outbox & Kích hoạt Bù trừ Tự động (Compensation)", badge: "Event Timeline" },
-        { url: "/flashsale-screens/04-booking.png", title: "Giao diện Đặt vé Flash Sale & Chọn Chiến lược Mô phỏng Tải", badge: "Booking Client" },
-        { url: "/flashsale-screens/home.png", title: "Bảng Tổng quan Hệ thống & Trạng thái Vận hành Real-time", badge: "Dashboard Home" }
+        { url: "/flashsale-screens/elk_conditional_db_bottleneck.png", title: "Kibana ELK Logging: Bắt 833 lỗi DB Lock Wait Timeout khi chưa dùng Redis Gate", badge: "ELK Centralized Log" }
       ],
       overview: {
         purpose: "Xây dựng nền tảng backend xử lý đơn hàng chịu tải cực lớn (Flash Sale Concurrency Engine), thử nghiệm thực nghiệm và so sánh các chiến lược trừ tồn kho dưới áp lực hàng ngàn request đồng thời.",

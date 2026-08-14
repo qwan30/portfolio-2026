@@ -198,7 +198,9 @@ const Projects = () => {
                     {project.gallery && project.gallery.length > 0 && (
                       <div className="flex flex-col gap-2">
                         <span className="font-mono text-[11px] font-bold text-ink/60 uppercase tracking-wider">
-                          Màn hình & Tính năng ({project.gallery.length}):
+                          {project.category.toLowerCase().includes('backend') || project.category.toLowerCase().includes('infrastructure') || project.category.toLowerCase().includes('engineering')
+                            ? 'Kiến trúc & Minh chứng Kỹ thuật' 
+                            : 'Màn hình & Tính năng'} ({project.gallery.length}):
                         </span>
                         
                         <div className="flex gap-2.5 overflow-x-auto pb-2 pt-1 scrollbar-thin scrollbar-thumb-black/10">
