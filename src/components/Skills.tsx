@@ -1,51 +1,7 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolioData';
-import {
-  Coffee,
-  FileCode,
-  Hash,
-  Database,
-  Code2,
-  Server,
-  Leaf,
-  Zap,
-  Layers,
-  Package,
-  Cpu,
-  BrainCircuit,
-  Lock,
-  TestTube,
-  Activity,
-  GitBranch,
-  Search,
-  CheckCircle,
-  ShieldCheck,
-  Compass
-} from 'lucide-react';
-
-const getIconForSkill = (skill: string) => {
-  const s = skill.toLowerCase();
-  if (s.includes('java')) return <Coffee className="w-4 h-4 text-orange-600" />;
-  if (s.includes('spring')) return <Leaf className="w-4 h-4 text-emerald-600" />;
-  if (s.includes('c#') || s.includes('.net')) return <Hash className="w-4 h-4 text-purple-600" />;
-  if (s.includes('python')) return <FileCode className="w-4 h-4 text-blue-500" />;
-  if (s.includes('fastapi')) return <Zap className="w-4 h-4 text-teal-600" />;
-  if (s.includes('typescript') || s.includes('nestjs')) return <Code2 className="w-4 h-4 text-blue-600" />;
-  if (s.includes('sql') || s.includes('postgres') || s.includes('mysql')) return <Database className="w-4 h-4 text-blue-500" />;
-  if (s.includes('docker')) return <Package className="w-4 h-4 text-blue-600" />;
-  if (s.includes('redis')) return <Layers className="w-4 h-4 text-red-600" />;
-  if (s.includes('kafka')) return <Activity className="w-4 h-4 text-ink" />;
-  if (s.includes('nginx') || s.includes('linux')) return <Server className="w-4 h-4 text-emerald-600" />;
-  if (s.includes('prometheus') || s.includes('grafana')) return <Activity className="w-4 h-4 text-amber-600" />;
-  if (s.includes('github') || s.includes('git')) return <GitBranch className="w-4 h-4 text-orange-600" />;
-  if (s.includes('playwright')) return <TestTube className="w-4 h-4 text-emerald-600" />;
-  if (s.includes('security') || s.includes('guardrails') || s.includes('evals')) return <ShieldCheck className="w-4 h-4 text-purple-600" />;
-  if (s.includes('rag') || s.includes('ai')) return <BrainCircuit className="w-4 h-4 text-purple-600" />;
-  if (s.includes('pgvector') || s.includes('vector')) return <Compass className="w-4 h-4 text-indigo-600" />;
-  if (s.includes('search') || s.includes('bm25')) return <Search className="w-4 h-4 text-blue-600" />;
-  if (s.includes('lock')) return <Lock className="w-4 h-4 text-green-600" />;
-  return <Cpu className="w-4 h-4 text-blue-600" />;
-};
+import { CheckCircle } from 'lucide-react';
+import TechIcon from './TechIcon';
 
 export const Skills: React.FC = () => {
   const { technicalSkills } = portfolioData.personal;
@@ -94,10 +50,10 @@ export const Skills: React.FC = () => {
                   {skills.map((skill, sIdx) => (
                     <div
                       key={sIdx}
-                      className="flex items-center gap-2 bg-[#fbf9f5] px-3.5 py-2 rounded-xl border border-black/8 hover:border-blue-500/50 hover:bg-blue-50/40 hover:shadow-xs transition-all"
+                      className="flex items-center gap-2.5 bg-[#fbf9f5] px-3.5 py-2.5 rounded-xl border border-black/8 hover:border-blue-500/50 hover:bg-blue-50/40 hover:shadow-xs transition-all group"
                     >
-                      {getIconForSkill(skill)}
-                      <span className="font-sans text-xs sm:text-sm font-medium text-ink">
+                      <TechIcon name={skill} className="w-4 h-4 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                      <span className="font-sans text-xs sm:text-sm font-semibold text-ink">
                         {skill}
                       </span>
                     </div>
