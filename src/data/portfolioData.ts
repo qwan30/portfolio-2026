@@ -256,23 +256,27 @@ export const portfolioData = {
       githubUrl: "https://github.com/qwan30/Flash-Sale-Concurrency-Engine",
       nonTechImpact: "Đảm bảo hệ thống bán hàng luôn thông suốt và chính xác tuyệt đối trong các đợt mở bán giờ vàng chớp nhoáng, bảo vệ 100% doanh thu và mang lại trải nghiệm mua sắm tin cậy không gián đoạn cho khách hàng.",
       techHighlights: "Redis Lua atomic pre-gate, Two-layer Compensation & Reconciliation, Transactional Outbox Pattern with Kafka, Java 21 Virtual Threads, DDD 5-Module Architecture.",
-      hoverPreviewImage: "/flashsale-screens/07-admin-control-desk.png",
+      hoverPreviewImage: "/flashsale-screens/architecture-overview.png",
       quickSpecs: {
         tech: "Java 21 + Spring Boot 3.3",
         infra: "Docker (MySQL + Redis + Kafka)",
         scale: "5,000 Reqs / 100 Threads (443 req/s)"
       },
       gallery: [
-        { url: "/flashsale-screens/07-admin-control-desk.png", title: "Bàn Điều khiển Quản trị & Điều phối Lab", badge: "Admin Control Desk" },
-        { url: "/flashsale-screens/08-admin-benchmark.png", title: "Bộ điều khiển Benchmark & Nạp trước Tồn kho (Warmup)", badge: "Benchmark Suite" },
-        { url: "/flashsale-screens/09-admin-consistency.png", title: "Bảng kiểm tra Nhất quán Redis vs DB Real-time", badge: "Consistency Checker" },
-        { url: "/flashsale-screens/order-traces.png", title: "Truy vết Luồng tạo Đơn End-to-End Tracing", badge: "Distributed Tracing" },
-        { url: "/flashsale-screens/jmeter_redis_lua_summary.png", title: "Báo cáo JMeter: Error Rate 0.00% & 443 req/s", badge: "JMeter Verified" },
-        { url: "/flashsale-screens/grafana_system_metrics.png", title: "Giám sát Tài nguyên Hệ thống & Độ trễ qua Grafana", badge: "Grafana Metrics" },
-        { url: "/flashsale-screens/elk_conditional_db_bottleneck.png", title: "Phát hiện 833 lỗi DB Lock Timeout trên ELK/Kibana", badge: "ELK Centralized Log" },
-        { url: "/flashsale-screens/04-booking.png", title: "Giao diện Đặt vé Flash Sale & Chọn Strategy", badge: "Booking Client" },
-        { url: "/flashsale-screens/05-my-orders.png", title: "Danh sách Đơn hàng & Phân vùng theo Tháng", badge: "Order Management" },
-        { url: "/flashsale-screens/events.png", title: "Nhật ký Sự kiện & Vòng đời Outbox Kafka", badge: "Event Timeline" }
+        { url: "/flashsale-screens/architecture-overview.png", title: "Tổng quan Kiến trúc Hệ thống: Redis Pre-gating, SAGA Compensation, Transactional Outbox & Kafka", badge: "Architecture Overview" },
+        { url: "/flashsale-screens/strategy-comparison.png", title: "So sánh 4 Chiến lược Trừ tồn kho & Cơ chế Dịch chuyển Điểm nghẽn (Bottleneck Shift)", badge: "Strategy Matrix" },
+        { url: "/flashsale-screens/ddd-modules.png", title: "Kiến trúc Phân rã 5 Maven Modules chuẩn Domain-Driven Design (DDD)", badge: "DDD Layout" },
+        { url: "/flashsale-screens/jmeter_redis_lua_summary.png", title: "Báo cáo JMeter: Error Rate 0.00% & Throughput 443 req/s Vượt trội", badge: "JMeter Summary" },
+        { url: "/flashsale-screens/jmeter_redis_lua_throughput.png", title: "Đồ thị Thông lượng Throughput: Duy trì Mức Tải cao Ổn định", badge: "Throughput Curve" },
+        { url: "/flashsale-screens/jmeter_redis_lua_latency.png", title: "Đồ thị Độ trễ Latency: Phẳng và Đồng đều Cực thấp trên Redis Lua", badge: "Latency Curve" },
+        { url: "/flashsale-screens/grafana_system_metrics.png", title: "Grafana Dashboard: Giám sát Realtime JVM, CPU, Memory & Custom Order Latency", badge: "Grafana Metrics" },
+        { url: "/flashsale-screens/elk_conditional_db_bottleneck.png", title: "Kibana ELK Logging: Bắt 833 lỗi DB Lock Wait Timeout khi chưa dùng Redis Gate", badge: "ELK Centralized Log" },
+        { url: "/flashsale-screens/admin-control-desk.png", title: "Bàn Điều khiển Quản trị: Reset, Nạp Tồn kho (Warmup) & Điều phối Lab", badge: "Admin Control Desk" },
+        { url: "/flashsale-screens/admin-consistency.png", title: "Bảng Đối soát Nhất quán: Phát hiện Lệch (Drift) giữa Redis vs MySQL", badge: "Consistency Checker" },
+        { url: "/flashsale-screens/order-traces.png", title: "Truy vết Luồng tạo Đơn: Idempotency → Strategy → Outbox → Kafka", badge: "Distributed Tracing" },
+        { url: "/flashsale-screens/events.png", title: "Nhật ký Sự kiện Outbox & Kích hoạt Bù trừ Tự động (Compensation)", badge: "Event Timeline" },
+        { url: "/flashsale-screens/04-booking.png", title: "Giao diện Đặt vé Flash Sale & Chọn Chiến lược Mô phỏng Tải", badge: "Booking Client" },
+        { url: "/flashsale-screens/home.png", title: "Bảng Tổng quan Hệ thống & Trạng thái Vận hành Real-time", badge: "Dashboard Home" }
       ],
       overview: {
         purpose: "Xây dựng nền tảng backend xử lý đơn hàng chịu tải cực lớn (Flash Sale Concurrency Engine), thử nghiệm thực nghiệm và so sánh các chiến lược trừ tồn kho dưới áp lực hàng ngàn request đồng thời.",
