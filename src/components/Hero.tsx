@@ -48,7 +48,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             </div>
             <div className="mt-8 flex flex-col gap-2 opacity-80 leading-relaxed">
               <p>{">"} Initialize core services...</p>
-              <p className="text-blue-400">[OK] Vijaco Doc-Mgmt System (50+ staff active)</p>
+              <p className="text-blue-400">[OK] Vijaco Doc-Mgmt System (30+ staff active)</p>
               <p className="text-blue-400">[OK] Redis Lua Stock Gate active</p>
               <p className="text-blue-400">[OK] Transactional Outbox worker ready</p>
               <p>{">"} Graph RAG Medical Engine initialized</p>
@@ -83,7 +83,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
         {/* Bottom of Hero */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-t border-neutral-200/50 pt-12">
           <div className="flex flex-col items-center">
-            <span className="font-display text-4xl text-ink">50+ STAFF</span>
+            <span className="font-display text-4xl text-ink">30+ STAFF</span>
             <span className="text-blue-500 text-sm font-sans mt-2 font-medium">Vijaco Daily Active Users</span>
           </div>
           <div className="flex flex-col items-center">

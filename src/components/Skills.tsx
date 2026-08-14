@@ -108,7 +108,7 @@ const Skills: React.FC = () => {
   const technicalSkills = (portfolioData.personal as any).technicalSkills || {};
 
   const stats = [
-    { number: "50+", label: "ACTIVE STAFF USERS" },
+    { number: "30+", label: "ACTIVE STAFF USERS" },
     { number: "5,000", label: "REQ LOAD (0 OVERSELL)" },
     { number: "95.2%", label: "RAG CITATION SCORE" },
     { number: "100%", label: "ESCROW ACCURACY" }

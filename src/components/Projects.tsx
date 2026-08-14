@@ -240,19 +240,19 @@ const Projects = () => {
                       <div className="flex items-center justify-between border-b border-black/5 pb-1.5">
                         <span className="text-ink/60">Công nghệ:</span>
                         <span className="font-bold text-blue-700">
-                          {project.id === 'vijaco-doc-mgmt' ? 'NestJS (TS) + Flutter (Dart)' : project.techStack.slice(0, 2).join(' + ')}
+                          {project.quickSpecs?.tech || project.techStack.slice(0, 2).join(' + ')}
                         </span>
                       </div>
                       <div className="flex items-center justify-between border-b border-black/5 pb-1.5">
                         <span className="text-ink/60">Hạ tầng:</span>
                         <span className="font-bold text-ink">
-                          {project.id === 'vijaco-doc-mgmt' ? 'On-Premise Docker (~4TB)' : 'Docker & Cloud Native'}
+                          {project.quickSpecs?.infra || 'Docker & Cloud Native'}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-ink/60">Quy mô / Tải:</span>
                         <span className="font-bold text-green-700">
-                          {project.id === 'vijaco-doc-mgmt' ? '50+ Nhân sự vận hành' : 'High Reliability'}
+                          {project.quickSpecs?.scale || 'High Reliability'}
                         </span>
                       </div>
                     </div>
