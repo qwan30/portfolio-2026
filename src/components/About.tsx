@@ -28,6 +28,10 @@ const About = () => {
                 <img 
                   src="/anh_the.png" 
                   alt="Tran Thanh Quan Profile Photo" 
+                  loading="lazy"
+                  decoding="async"
+                  width={176}
+                  height={224}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
@@ -81,7 +85,13 @@ const About = () => {
                         onClick={() => setSelectedCert({ name: cert.name, image: cert.image })}
                         className="rounded-xl overflow-hidden border border-black/5 cursor-zoom-in relative group/cert"
                       >
-                        <img src={cert.image} alt={cert.name} className="w-full h-auto object-cover group-hover/cert:scale-105 transition-transform duration-500" />
+                        <img 
+                          src={cert.image} 
+                          alt={cert.name} 
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-auto object-cover group-hover/cert:scale-105 transition-transform duration-500" 
+                        />
                         <div className="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] font-mono px-2.5 py-1 rounded-full opacity-80 group-hover/cert:opacity-100 transition-opacity">
                           🔍 Phóng to
                         </div>

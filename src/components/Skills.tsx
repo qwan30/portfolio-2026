@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import anime from "animejs";
 import { portfolioData } from '../data/portfolioData';
 import {
   Coffee,
@@ -93,16 +92,28 @@ const Skills: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (containerRef.current) {
-      anime({
-        targets: '.fade-up',
-        translateY: [20, 0],
-        opacity: [0, 1],
-        delay: anime.stagger(100, { start: 100 }),
-        easing: 'easeOutExpo',
-        duration: 800
-      });
-    }
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const items = el.querySelectorAll('.reveal-init');
+            items.forEach((item, index) => {
+              setTimeout(() => {
+                item.classList.add('reveal-visible');
+              }, index * 80);
+            });
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const technicalSkills = (portfolioData.personal as any).technicalSkills || {};
@@ -119,7 +130,7 @@ const Skills: React.FC = () => {
       
       {/* Top Tagline Banner */}
       <div className="bg-canvas py-20 px-6 md:px-12 border-t border-hairline">
-        <div className="max-w-6xl mx-auto text-left fade-up opacity-0">
+        <div className="max-w-6xl mx-auto text-left reveal-init">
           <h2 className="text-4xl md:text-6xl lg:text-7xl leading-tight text-ink font-display uppercase tracking-tight">
             TURNING <span className="text-accent font-serif italic normal-case">complex systems</span> INTO <span className="whitespace-nowrap">RELIABLE PRODUCTS</span>
           </h2>
@@ -129,10 +140,10 @@ const Skills: React.FC = () => {
       {/* PROOF OF ENGINEERING Banner */}
       <div className="w-full bg-ink text-white py-16 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
-          <h3 className="font-display text-xl uppercase tracking-widest text-gray-400 mb-12 text-center fade-up opacity-0">
+          <h3 className="font-display text-xl uppercase tracking-widest text-gray-400 mb-12 text-center reveal-init">
             PROOF OF ENGINEERING & METRICS
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center fade-up opacity-0">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal-init">
             {stats.map((stat, idx) => (
               <div key={idx} className="flex flex-col items-center">
                 <div className="text-accent font-display text-4xl md:text-5xl mb-2">{stat.number}</div>
@@ -145,7 +156,7 @@ const Skills: React.FC = () => {
 
       {/* TECHNICAL SKILLS MATRIX Section (7 CV Categories) */}
       <div id="skills" className="bg-canvas py-24 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto fade-up opacity-0">
+        <div className="max-w-5xl mx-auto reveal-init">
           <div className="flex items-center gap-3 mb-16">
             <Cpu className="w-6 h-6 text-blue-600" />
             <h3 className="font-display text-2xl uppercase tracking-widest text-ink">

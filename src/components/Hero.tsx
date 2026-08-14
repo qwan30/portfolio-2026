@@ -16,6 +16,10 @@ const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
               <img 
                 src="/anh_the.png" 
                 alt="Tran Thanh Quan" 
+                width={176}
+                height={176}
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" 
               />
             </div>

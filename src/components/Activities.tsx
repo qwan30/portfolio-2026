@@ -47,7 +47,13 @@ const Activities = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
                   {activity.images.map((img, idx) => (
                     <div key={idx} className="rounded-3xl overflow-hidden border border-black/5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group">
-                      <img src={img} alt={`${activity.title} image ${idx + 1}`} className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <img 
+                        src={img} 
+                        alt={`${activity.title} image ${idx + 1}`} 
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700" 
+                      />
                     </div>
                   ))}
                 </div>
