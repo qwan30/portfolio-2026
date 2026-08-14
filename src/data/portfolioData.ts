@@ -159,7 +159,7 @@ export const portfolioData: PortfolioData = {
     phone: "+84 974 426 058",
     phoneRaw: "0974426058",
     location: "Ho Chi Minh City, Vietnam",
-    resumeUrl: "/Tran_Thanh_Quan_Java_Software_Engineer_Kms.pdf",
+    resumeUrl: "/SE196734_Tran_Thanh_Quan_CV.pdf",
     socials: {
       github: "https://github.com/qwan30",
       linkedin: "https://www.linkedin.com/in/tran-thanh-quan-eric-78842b326/",
