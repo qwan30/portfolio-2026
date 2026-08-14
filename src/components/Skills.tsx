@@ -22,7 +22,7 @@ export const Skills: React.FC = () => {
             TECHNICAL SKILLS MATRIX
           </h2>
           <p className="mt-2 font-sans text-ink/75 text-base md:text-lg leading-relaxed">
-            Curated software stack organized into three core engineering tiers: backend runtime & persistence, delivery infrastructure, and applied AI retrieval.
+            Comprehensive software engineering stack across languages, backend frameworks, data systems, testing & observability, DevOps pipelines, and code security.
           </p>
         </div>
 

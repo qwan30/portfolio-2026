@@ -251,34 +251,54 @@ export const portfolioData: PortfolioData = {
       }
     ],
     technicalSkills: {
-      "Core Backend": [
-        "Java 21 / 17",
+      "Languages": [
+        "Java",
+        "Python",
+        "SQL",
+        "TypeScript"
+      ],
+      "Backend": [
         "Spring Boot",
         "Spring Security",
-        "C# / .NET 10",
-        "Python",
         "FastAPI",
-        "TypeScript",
-        "NestJS",
-        "PostgreSQL",
-        "MySQL"
+        "JPA/Hibernate",
+        "REST APIs",
+        "Redis/RQ"
       ],
-      "Systems & Delivery": [
-        "Docker / Compose",
+      "Data & Messaging": [
+        "PostgreSQL",
+        "MySQL",
         "Redis",
-        "Apache Kafka",
-        "Linux / Nginx",
-        "Prometheus & Grafana",
-        "GitHub Actions CI/CD",
-        "Playwright E2E",
+        "pgvector",
+        "Kafka",
         "Flyway"
       ],
-      "Applied AI": [
-        "RAG Architecture",
-        "pgvector (HNSW)",
-        "Hybrid Search (BM25)",
-        "AI Guardrails & Evals",
-        "Redis / RQ Pipeline"
+      "Testing & Observability": [
+        "JUnit",
+        "Testcontainers",
+        "JMeter",
+        "k6",
+        "Prometheus",
+        "Playwright",
+        "Grafana",
+        "Loki",
+        "ELK"
+      ],
+      "DevOps & Cloud": [
+        "Docker",
+        "Docker Compose",
+        "Dokploy Traefik",
+        "Nginx",
+        "Git",
+        "GitHub Actions",
+        "AWS"
+      ],
+      "Code Quality & Security": [
+        "AI-assisted PR Review",
+        "SonarCloud",
+        "CodeQL",
+        "Trivy",
+        "Dependabot"
       ]
     },
     beyondCode: {

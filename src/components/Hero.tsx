@@ -38,22 +38,22 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
           
           {/* Left Column (5 Cols): Identity & Primary Statement */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            <div className="flex items-center gap-4">
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-black/10 shadow-md flex-shrink-0 bg-white">
+            <div className="flex items-center gap-5 sm:gap-6">
+              <div className="relative w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full overflow-hidden border-3 border-black/10 shadow-lg flex-shrink-0 bg-white group">
                 <img
                   src="/anh_the.png"
                   alt="Tran Thanh Quan"
-                  width={80}
-                  height={80}
+                  width={160}
+                  height={160}
                   fetchPriority="high"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div>
-                <h1 className="font-sans text-xl sm:text-2xl font-bold text-ink tracking-tight">
+                <h1 className="font-sans text-2xl sm:text-3xl md:text-4xl font-bold text-ink tracking-tight">
                   {personal.name}
                 </h1>
-                <span className="font-mono text-xs text-blue-700 font-semibold uppercase tracking-wider block">
+                <span className="font-mono text-xs sm:text-sm text-blue-700 font-semibold uppercase tracking-wider block mt-1">
                   {personal.title}
                 </span>
               </div>
