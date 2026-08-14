@@ -401,21 +401,83 @@ export const portfolioData = {
     },
     {
       id: "hospital-management-system",
-      title: "Hospital Management System",
-      category: "Enterprise Java Backend",
-      period: "Jan. 2026 – Feb. 2026",
-      role: "Backend Developer",
-      tagline: "Hệ thống quản lý bệnh viện tổng thể xử lý quy trình tiếp nhận, hồ sơ bệnh án và lịch khám bác sĩ",
-      description: "Thiết kế và xây dựng dịch vụ backend cho hệ thống quản lý bệnh viện đa phân hệ. Tối ưu hóa mô hình dữ liệu quan hệ, số hóa hồ sơ khám bệnh điện tử và triển khai phân quyền truy cập chặt chẽ cho đội ngũ y bác sĩ.",
-      techStack: ["Java", "Spring Boot", "MySQL", "JPA/Hibernate", "REST API", "Tailwind CSS"],
+      title: "Enterprise Hospital Management System (HMS)",
+      category: "Fullstack Healthcare ERP & DDD Monolith",
+      period: "Jan. 2026 – Jun. 2026",
+      role: "Fullstack Backend Lead",
+      tagline: "Hệ thống ERP y tế đa phân hệ chuẩn DDD điều phối 7 quy trình lâm sàng và bảo vệ dữ liệu nhạy cảm PHI",
+      description: "Thiết kế và phát triển toàn diện hệ thống quản lý bệnh viện đa phân hệ (Healthcare ERP) hỗ trợ trọn vẹn 7 luồng nghiệp vụ lâm sàng: từ cổng đặt lịch trực tuyến, tiếp nhận phân luồng hàng đợi (Triage Queue), hồ sơ bệnh án điện tử (EHR), quản lý dược phẩm theo lô FIFO (Lot-level Traceability) đến xuất hóa đơn và báo cáo viện phí. Xây dựng theo kiến trúc Domain-Driven Design (DDD) Modular Monolith với 17 Bounded Contexts, cơ chế khóa giữ slot nguyên tử chống Double-booking, mã hóa dữ liệu nhạy cảm AES-GCM và phân quyền RBAC 34 quyền hạt nhân.",
+      techStack: ["Java 17", "Spring Boot 3.3", "PostgreSQL 15", "Next.js 16", "React 19", "Playwright", "Flyway", "Docker", "DDD", "Prometheus"],
       metrics: [
-        "Quản lý tập trung toàn bộ hồ sơ bệnh án và lịch khám bệnh nhân",
-        "Tối ưu truy vấn dữ liệu y tế với đánh chỉ mục Indexing chính xác"
+        "Tuân thủ bảo mật PHI (AES-GCM at rest + SHA-256 Indexing + 34 quyền RBAC)",
+        "Điều phối trọn vẹn 7 quy trình lâm sàng (Booking → Intake → EHR → Dược FIFO → Viện phí)",
+        "930+ E2E Playwright CI Gate + 148 Backend Tests + 80.48% Frontend Coverage"
       ],
       githubUrl: "https://github.com/qwan30/hospital-management-system",
-      nonTechImpact: "Giúp bệnh viện tự động hóa quy trình quản lý hồ sơ khám bệnh, giảm thiểu sai sót thủ công và nâng cao tốc độ phục vụ bệnh nhân.",
-      techHighlights: "Architecture Spring Boot Layered Architecture, Schema Relational Database MySQL chuẩn hóa, phân quyền chi tiết RBAC.",
-      hoverPreviewImage: "/hospital-system.png"
+      nonTechImpact: "Số hóa 100% quy trình tiếp nhận và điều trị tại bệnh viện, xóa bỏ hoàn toàn tình trạng quá tải hàng đợi và đặt trùng lịch (Double-booking), đảm bảo bảo mật tuyệt đối hồ sơ sức khỏe người bệnh và minh bạch hóa doanh thu viện phí.",
+      techHighlights: "Kiến trúc DDD Modular Monolith 17 Bounded Contexts, Transactional Slot Locking OCC chống double-booking, Mã hóa AES-GCM bảo vệ PHI (CCCD/CMND), Finite State Machine điều phối hàng đợi khám bệnh, Quản lý kho dược phẩm theo lô FIFO (Lot Tracking).",
+      hoverPreviewImage: "/hms-screens/system-architecture-overview.png",
+      quickSpecs: {
+        tech: "Java 17 (Spring Boot 3.3) + Next.js 16 (React 19)",
+        infra: "Docker Compose + PostgreSQL 15 + Prometheus/Grafana",
+        scale: "17 Bounded Contexts • 118 APIs • 2,045 E2E Tests"
+      },
+      gallery: [
+        { url: "/hms-screens/system-architecture-overview.png", title: "Tổng quan Kiến trúc Hệ thống: Next.js 16, Spring Security Gateway, DDD Modular Monolith & Observability", badge: "Architecture Overview" },
+        { url: "/hms-screens/clinical-workflow.png", title: "Chu trình Lâm sàng 7 Bước: Booking → Check-in → Triage & Vitals → EHR → Dược FIFO → Viện phí", badge: "Clinical Lifecycle" },
+        { url: "/hms-screens/ddd-modular-monolith.png", title: "Kiến trúc Phân rã 5 Maven Modules & 17 Bounded Contexts chuẩn Domain-Driven Design", badge: "DDD Monolith" },
+        { url: "/hms-screens/home-page.png", title: "Cổng Thông tin Y tế & Đặt lịch Khám Trực tuyến Công khai", badge: "Public Web" },
+        { url: "/hms-screens/portal-overview.png", title: "Cổng Bệnh nhân Tự phục vụ: Theo dõi Lịch khám, Hồ sơ Bệnh án & Chỉ số Xét nghiệm", badge: "Patient Portal" },
+        { url: "/hms-screens/staff-login.png", title: "Cổng Đăng nhập Phân quyền Tập trung cho Nhân viên Y tế & Bác sĩ", badge: "Staff Auth" },
+        { url: "/hms-screens/nurse-overview.png", title: "Bảng Điều khiển Điều dưỡng: Quản lý Lịch trình, Trạng thái Lâm sàng & Phân luồng Hàng đợi", badge: "Nurse Triage" },
+        { url: "/hms-screens/nurse-appointment.png", title: "Tiếp nhận Bệnh nhân: Ghi nhận Chỉ số Sinh tồn (Vitals) & Khóa giữ Khung giờ Khám", badge: "Vitals Check-in" },
+        { url: "/hms-screens/pharmacy-inventory.png", title: "Quản lý Kho Dược Phẩm: Theo dõi Hạn sử dụng theo Lô (Lot FIFO) & Cảnh báo Tồn kho thấp", badge: "Pharmacy FIFO" },
+        { url: "/hms-screens/10-admin-dashboard.png", title: "Bảng Điều khiển Giám sát Quản trị Doanh nghiệp: Doanh thu, Lượt khám & Công suất Giường bệnh", badge: "Admin Dashboard" },
+        { url: "/hms-screens/admin-queue.png", title: "Bảng Giám sát Hàng đợi & Phân tích Thời gian Chờ Khám Thực tế", badge: "Queue Analytics" }
+      ],
+      overview: {
+        purpose: "Xây dựng hệ thống hoạch định tài nguyên bệnh viện (Healthcare ERP) toàn diện, chuẩn hóa và số hóa khép kín 7 luồng quy trình nghiệp vụ lâm sàng từ tiếp nhận ban đầu đến điều trị, cấp phát thuốc và thanh toán viện phí.",
+        context: "Tại các cơ sở y tế và bệnh viện đa khoa, quy trình vận hành thủ công hoặc phân mảnh dễ dẫn đến tình trạng quá tải hàng đợi, nguy cơ đặt trùng lịch khám của bác sĩ (Double-booking), thất thoát tồn kho dược phẩm do hết hạn và rủi ro rò rỉ dữ liệu thông tin sức khỏe cá nhân (PHI).",
+        problem: "Cần xây dựng hệ thống nguyên khối phân rã module rõ ràng (Modular Monolith) để tránh độ trễ và chi phí phân tán của Microservices, đồng thời phải đảm bảo tính nhất quán giao dịch tuyệt đối khi giữ slot khám, tuân thủ nghiêm ngặt chuẩn bảo mật PHI (AES-GCM) và điều phối hàng đợi mượt mà qua State Machine."
+      },
+      solution: {
+        architecture: "Kiến trúc Domain-Driven Design (DDD) Modular Monolith phân tách 5 Maven modules (domain, infrastructure, application, controller, start) với 17 Bounded Contexts độc lập. Lớp domain hoàn toàn không phụ thuộc ra ngoài (Dependency Inversion), kết hợp Frontend Next.js 16 (React 19) phân quyền theo vai trò (RBAC) và PostgreSQL 15.",
+        coreFeatures: [
+          {
+            title: "Động cơ Đặt lịch & Khóa giữ vị trí nguyên tử (Transactional Slot Locking)",
+            desc: "Ngăn chặn triệt để tình trạng đặt trùng lịch bác sĩ (Double-booking) thông qua cơ chế khóa giữ khung giờ với Optimistic Concurrency Control (OCC) và băm định danh bảo mật trong AppointmentWriteService."
+          },
+          {
+            title: "Cỗ máy Trạng thái Hàng đợi Tiếp nhận (Strict Queue State Machine)",
+            desc: "Điều phối luồng bệnh nhân theo máy trạng thái tuần tự: CHECKED_IN → VITAL_SIGNS → ASSIGNED → IN_CONSULTATION → COMPLETED. Bác bỏ domain-level mọi bước chuyển trạng thái sai quy trình."
+          },
+          {
+            title: "Hồ sơ Bệnh án Điện tử (EHR) & Tự động xuất Đơn thuốc PDF",
+            desc: "Số hóa toàn diện dữ liệu khám bệnh, tiền sử bệnh lý, chẩn đoán ICD; tích hợp động cơ sinh đơn thuốc điện tử dạng PDF chuẩn y khoa và gửi thư nhắc lịch khám qua Gmail API."
+          },
+          {
+            title: "Quản lý Kho Dược theo Lô & Xuất kho FIFO (Lot-Level Traceability)",
+            desc: "Quản lý từng lô nhập của biệt dược kèm hạn sử dụng (Lot/Batch Tracking), tự động đề xuất xuất kho theo nguyên tắc Hạn gần xuất trước (FIFO/FEFO), liên kết trực tiếp mã thuốc cấp phát với bệnh án và cảnh báo tồn kho tối thiểu."
+          },
+          {
+            title: "Bảo mật Dữ liệu Y tế PHI & Mã hóa AES-GCM (HIPAA-Aligned Security)",
+            desc: "Bảo vệ thông tin định danh bệnh nhân (CCCD/CMND, BHYT) ở tầng nghỉ bằng mã hóa khóa đối xứng AES-GCM, kết hợp cơ chế lập chỉ mục bằng mã băm SHA-256 (Hashed Indexing) giúp tra cứu nhanh chóng mà không cần giải mã plaintext trên database."
+          },
+          {
+            title: "Phân quyền RBAC 34 Quyền Hạt nhân & Kiểm toán Viện phí Tự động",
+            desc: "Kiểm soát truy cập phương thức ở cấp độ @PreAuthorize cho 7 nhóm vai trò (Admin, Doctor, Nurse, Receptionist, Pharmacist, Accountant, Patient); tự động kết xuất hóa đơn chi tiết dịch vụ khám/thuốc và báo cáo tài chính định kỳ."
+          }
+        ]
+      },
+      results: {
+        summary: "Dự án đạt trạng thái Release Candidate 1.0 với chất lượng kiểm thử toàn diện từ backend đến frontend, đáp ứng đầy đủ tiêu chuẩn vận hành lâm sàng khắt khe:",
+        items: [
+          "Vận hành khép kín và thông suốt 7 quy trình lâm sàng cốt lõi với 118 REST API endpoints trên 32 controllers.",
+          "Đạt 100% tuân thủ bảo mật PHI: mã hóa AES-GCM + SHA-256 Indexing, triệt tiêu nguy cơ lộ dữ liệu CCCD/CMND trên DB.",
+          "Hệ thống kiểm thử toàn diện: 930 kịch bản E2E Playwright trong CI gate (tổng 2,045 E2E tests), 148 backend integration tests và độ bao phủ frontend 80.48%.",
+          "Triệt tiêu 100% rủi ro Double-booking và xuất kho dược phẩm quá hạn nhờ thuật toán FIFO Lot Tracking."
+        ]
+      }
     },
     {
       id: "inventory-flashsale-system",
