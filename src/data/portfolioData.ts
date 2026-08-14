@@ -97,7 +97,7 @@ export const portfolioData = {
       role: "Freelance (Solo Developer)",
       tagline: "Hệ thống quản lý tài liệu nội bộ tích hợp phân quyền bảo mật cho 50+ nhân viên",
       description: "Thiết kế và phát triển độc lập hệ thống quản lý tài liệu tập trung cho doanh nghiệp Vijaco. Đảm bảo an toàn thông tin với phân quyền chi tiết tới từng vai trò và tài nguyên (RBAC/ABAC), lưu vết lịch sử thao tác (Audit Trail) chống rò rỉ hay xóa nhầm dữ liệu.",
-      techStack: ["C#", ".NET 9", "PostgreSQL", "Docker", "REST API", "Clean Architecture", "EF Core"],
+      techStack: ["NestJS", "TypeScript", "Flutter", "PostgreSQL", "Docker", "TypeORM", "REST API"],
       metrics: [
         "Phục vụ 50+ nhân viên doanh nghiệp vận hành hàng ngày",
         "Bảo mật tài liệu nhiều cấp với Audit History đầy đủ",
@@ -125,7 +125,7 @@ export const portfolioData = {
         problem: "Cần xóa bỏ nguy cơ rò rỉ dữ liệu nội bộ, ngăn chặn tình trạng vô tình xóa/ghi đè file, kiểm soát phân quyền chi tiết theo phòng ban/vị trí và lưu vết 100% hành vi truy cập mà vẫn tối ưu chi phí hạ tầng."
       },
       solution: {
-        architecture: "Xây dựng theo kiến trúc C# / .NET 9 Clean Architecture (Modular Monolith) kết hợp PostgreSQL 16 và đóng gói trọn gói qua Docker Compose.",
+        architecture: "Xây dựng theo kiến trúc NestJS / TypeScript Modular Monolith (Hexagonal Ports & Adapters) kết hợp ứng dụng mobile Flutter (Dart) cho Android & iOS, PostgreSQL 16 và đóng gói trọn gói qua Docker Compose.",
         coreFeatures: [
           {
             title: "Động cơ phân quyền RBAC/ABAC đa cấp",
