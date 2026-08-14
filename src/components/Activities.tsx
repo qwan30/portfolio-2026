@@ -21,7 +21,7 @@ export const Activities: React.FC<ActivitiesProps> = ({ onExpandImage }) => {
           <div className="flex items-center gap-2 mb-2">
             <span className="w-2 h-2 rounded-full bg-blue-600"></span>
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-blue-700">
-              COMMUNITY & LEADERSHIP
+              COMMUNITY
             </span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl uppercase tracking-tight text-ink">

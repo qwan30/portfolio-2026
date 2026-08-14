@@ -282,7 +282,7 @@ export const portfolioData: PortfolioData = {
       ]
     },
     beyondCode: {
-      title: "Beyond Code: Community & Leadership",
+      title: "Beyond Code: Community",
       role: "Project Lead — Media & Logistics",
       projectName: "Tết Luôn Vui — Community Fundraising Project",
       description: "Led a 9-member team organizing charity workshops and handmade craft sales, directly raising and donating 3,550,000 VNĐ to the Vietnam Fatherland Front during Lunar New Year.",
