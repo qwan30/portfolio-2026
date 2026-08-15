@@ -162,7 +162,7 @@ export const portfolioData: PortfolioData = {
     resumeUrl: "/SE196734_Tran_Thanh_Quan_CV.pdf",
     socials: {
       github: "https://github.com/qwan30",
-      linkedin: "https://www.linkedin.com/in/tran-thanh-quan-eric-78842b326/",
+      linkedin: "https://www.linkedin.com/in/quan-tran-78842b326/",
       facebook: "https://www.facebook.com/tran.quan.182591/?locale=vi_VN"
     },
     heroStatement: "I BUILD RELIABLE SYSTEMS.",

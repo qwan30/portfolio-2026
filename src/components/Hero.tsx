@@ -171,6 +171,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 <span>LinkedIn Profile</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
+              <a
+                href={personal.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-ink font-sans text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+              >
+                <span>GitHub Profile</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
 
