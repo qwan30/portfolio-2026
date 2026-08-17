@@ -950,52 +950,84 @@ export const portfolioData: PortfolioData = {
       statusBadge: "Financial Core",
       role: "Backend Infrastructure Engineer",
       period: "Dec. 2025 – Present",
-      thesis: "Double-entry bookkeeping engine enforcing immutable debit/credit zero-sum balance equations, idempotent workflow orchestration, and audit trails.",
+      thesis: "Append-only double-entry ledger with BigInt-exact money arithmetic, Stripe-style idempotency-key replay, and adapter-based external rails — every financial movement traceable via immutable journal entries.",
       representativeImage: "/coinbase-bg.png",
-      techStack: ["TypeScript", "NestJS", "PostgreSQL", "Prisma", "Docker"],
-      proofChip: "Zero-sum ledger balance validation (0 drift)",
+      techStack: ["TypeScript", "NestJS 11", "Fastify", "PostgreSQL", "Prisma 6", "Vitest"],
+      proofChip: "BigInt-exact money — zero rounding drift",
       githubUrl: "https://github.com/qwan30/ledger-credit-system",
       caseStudy: {
-        executiveSummary: "Engineered a double-entry accounting ledger in NestJS and PostgreSQL enforcing strict balance equations, immutable journal entries, and durable financial workflow orchestration.",
-        businessContext: "Fintech services require rigorous bookkeeping where every financial movement is matched across debit and credit accounts, preventing hidden balance inflation or unrecorded monetary leaks.",
-        problemStatement: "Implement a ledger service guaranteeing zero-sum balance invariants, concurrent transfer safety, and tamper-resistant audit logs.",
+        executiveSummary: "Built a finance-domain backend that models correctness under retry: exact BigInt money, append-only journal/posting records, idempotent transfer submission, adapter-isolated external rails with automatic compensation, and a versioned credit-scoring policy.",
+        businessContext: "Finance systems fail silently when money is stored as float, when a duplicated request double-charges, or when a journal entry can be written without equal debits and credits. This reference backend demonstrates each concern solved at the domain boundary.",
+        problemStatement: "Guarantee that every journal entry balances to zero, that money arithmetic never loses precision, that a retried transfer never double-posts, and that every state-changing action is reconstructable from an immutable audit trail.",
         systemConstraints: [
-          "Every journal entry must balance: SUM(Debits) - SUM(Credits) = 0.",
-          "Journal records are immutable (append-only architecture).",
-          "Transfers must be idempotent with idempotency-key enforcement."
+          "Every journal entry must balance: SUM(debits) === SUM(credits), enforced before persistence.",
+          "Money is exact: minor units as bigint, never float/double.",
+          "Transfers require an Idempotency-Key header with SHA-256 request hashing.",
+          "External settlement adapters are swappable without touching the ledger core."
         ],
-        architecture: "Modular NestJS service with Prisma ORM, PostgreSQL transactions, and strict schema-level checks.",
+        architecture: "NestJS + Fastify modular monolith with a framework-free domain core (Money, state machine, scoring policy), Prisma 6 over PostgreSQL for append-only JournalEntry/Posting records plus read-model projections, and an adapter registry abstracting external rail providers.",
         architectureHighlights: [
-          "Atomic transaction boundaries wrapping journal entries and balance updates.",
-          "Check constraints in PostgreSQL preventing negative account balances where prohibited."
+          "Append-only ledger: JournalEntry/Posting are immutable history while BalanceProjection/AccountStatementProjection serve reads.",
+          "Money value object enforcing same-currency constraints and safe-integer serialization.",
+          "ExternalRailAdapter + ExternalRailRegistry following Ports & Adapters, isolating simulator/mock-bank providers."
         ],
         deepDecisions: [
           {
-            title: "Double-Entry Balance Enforcement",
-            technique: "Zero-Sum Constraint Interceptor",
-            mechanism: "Validates that sum of debits strictly equals sum of credits before persisting any financial journal batch.",
-            impact: "Ensures mathematical integrity across all account balances."
+            title: "BigInt-Exact Money Value Object",
+            technique: "Money Minor Units as bigint",
+            mechanism: "All amounts are carried as minor units in bigint. Addition/subtraction are exact integers; currency mismatches throw, and JSON serialization rejects values beyond safe integer range.",
+            impact: "Eliminates floating-point rounding that silently corrupts balances over time."
+          },
+          {
+            title: "Double-Entry Balance Enforcement with Compensation Journal",
+            technique: "Zero-Sum Invariant + Auto-Compensation",
+            mechanism: "postJournalEntry rejects any journal entry whose debit total does not equal credit total. When an external rail fails an interbank transfer, a compensating journal entry (clearing debit → source credit) is written automatically.",
+            impact: "Every financial state transition remains balanced to zero and reconstructable."
+          },
+          {
+            title: "Stripe-Style Idempotency with Response Replay",
+            technique: "Persisted IdempotencyRecord + requestHash",
+            mechanism: "A unique (operationType, key) record stores a SHA-256 request hash; a replay with a mismatching hash is a 409 conflict, a completed operation returns the original response body, and in-progress keys are correctly rejected.",
+            impact: "Retries and duplicate submissions never double-post or repeat side effects under any network ambiguity."
+          },
+          {
+            title: "Domain State Machine & Adapter Registry",
+            technique: "Explicit Transfer Transitions + Swappable Rail Adapters",
+            mechanism: "A transfer-state-machine enumerates legal status transitions; external rail providers register as typed adapters normalized through a single event application path.",
+            impact: "Deterministic transfer lifecycle and zero coupling between the ledger core and real settlement."
           }
         ],
         failureModesAndTradeoffs: [
           {
-            failureMode: "Unbalanced Transaction Attempt",
-            mitigation: "Transaction is rejected at domain boundary with HTTP 422 Unprocessable Entity.",
-            tradeOff: "Requires clients to explicitly specify balanced leg pairs."
+            failureMode: "Idempotency key reused with a different payload",
+            mitigation: "requestHash mismatch returns 409 idempotency_conflict instead of silently recharging.",
+            tradeOff: "Clients must keep key/payload pairs content-stable or fetch a fresh key for each payload."
+          },
+          {
+            failureMode: "External rail rejects an interbank transfer after funds left the source account",
+            mitigation: "Automatic compensating journal entry restores the source account via the clearing ledger account.",
+            tradeOff: "Compensation is model-level; real provider reconciliation is simulator/mock-bank only in the current source."
           }
         ],
         testingAndVerification: [
           {
-            type: "Accounting Invariant Unit Suite",
-            details: "100+ tests verifying zero-sum calculations and concurrency safety.",
-            result: "100% passing rate with zero balance divergence."
+            type: "Ledger & Money Invariant Suite",
+            details: "Unit coverage across money, ledger balance enforcement, currency mismatch, and overflow-safe serialization.",
+            result: "Balanced-journal and same-currency invariants held across all covered cases."
+          },
+          {
+            type: "Test File Inventory (source-verified)",
+            details: "27 test/spec files alongside 24 route methods, 21 Prisma models, 15 enums, and 5 migrations.",
+            result: "Fastify modular monolith in a source-truth state — every claim refreshed from source before reuse."
           }
         ],
         deploymentAndObservability: [
-          "Dockerized service with PostgreSQL healthchecks and structured transaction logs."
+          "Fastify helmet, rate limiting, and CORS via bootstrap setup; correlation IDs attached per request.",
+          "Structured logging with authorization/cookie redaction paths.",
+          "OpenAPI/Swagger contract at /docs with /api/v1 global prefix."
         ],
         operationalOutcomes: [
-          "Immutable journal trail enabling comprehensive auditing of all fund movements."
+          "Append-only journal + audit trail enabling reconstruction of every transfer (internal, interbank, and automated compensation)."
         ],
         gallery: [
           { url: "/coinbase-bg.png", title: "Double-Entry Ledger Architecture & Financial Model", badge: "Ledger Model" }
