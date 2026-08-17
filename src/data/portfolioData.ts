@@ -1089,56 +1089,101 @@ export const portfolioData: PortfolioData = {
       id: "inventory-flashsale-system",
       title: "Inventory & Flash Sale System",
       category: "Distributed Systems & Inventory",
-      statusBadge: "Distributed Architecture",
-      role: "Backend Engineer",
-      period: "Jan. 2026 – Present",
-      thesis: "High-performance inventory reservation service researching distributed locking and Kafka event updates for multi-warehouse inventory systems.",
+      statusBadge: "Correctness-First",
+      role: "Backend Engineer (Solo)",
+      period: "Mar. 2026 – Present",
+      thesis: "Correctness-first omnichannel inventory & flash-sale platform that guarantees zero overselling under contention through layered locking, durable idempotency, and an evidence-gated load-testing program.",
       representativeImage: "/08-admin-benchmark.png",
-      techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "PostgreSQL"],
-      proofChip: "Distributed lock exploration (<10ms)",
+      techStack: ["Java 21", "Spring Boot 3", "MySQL 8.4", "Redis 7.4", "Kafka", "Testcontainers", "Flyway", "React", "Playwright"],
+      proofChip: "0 oversells under 50-VU / 5.7K-request contention test",
       githubUrl: "https://github.com/qwan30/inventory-flashsale-system",
       caseStudy: {
-        executiveSummary: "Initial research prototype investigating distributed locking techniques and asynchronous inventory event updates prior to the production-grade Flash Sale Concurrency Engine.",
-        businessContext: "Served as an exploratory architecture spike to compare distributed locking vs in-memory pre-gating.",
-        problemStatement: "Evaluate how distributed locks (Redisson / Redis locks) behave under high contention compared to atomic Lua scripts.",
+        executiveSummary: "A modular-monolith Java 21 / Spring Boot 3 backend that makes inventory correctness the product: layered concurrency control, durable idempotency, transactional outbox, and channel reconciliation — validated by a promoted K6 suite whose invariants gate every release claim.",
+        businessContext: "Omnichannel commerce sells the same physical stock across web, app, Shopee, and TikTok Shop. Without serialized mutation and durable eventing, flash-sale bursts oversell and channels drift from central truth.",
+        problemStatement: "Guarantee zero overselling and consistent multi-channel stock views under flash-sale contention, while keeping event delivery reliable and every result reproducible through measured evidence rather than asserted claims.",
         systemConstraints: [
-          "Explore latency trade-offs of distributed locks vs Lua scripts."
+          "Strict stock conservation under concurrent reserve/confirm/release requests.",
+          "Idempotent external ingestion so webhook retries never double-apply an effect.",
+          "Exactly-once state transitions per operation preserved even across crashes.",
+          "Performance only claimed once a promoted invariants-gated benchmark passes."
         ],
-        architecture: "Spring Boot service with Redis distributed locking and Kafka event publisher.",
+        architecture: "Six Maven modules (common, inventory, flashsale, order, outbox, channel) deployed through one Spring Boot app, with MySQL/Flyway state, Redis SKU locks, Kafka outbox events, and a React operator UI.",
         architectureHighlights: [
-          "Exploration of Redisson distributed locks under thread saturation.",
-          "Asynchronous event dispatching to Apache Kafka."
+          "Three-layer oversell defense: Redis SET-NX lock, transaction-scoped quota checks, and @Version optimistic locking.",
+          "Transactional outbox writes state and Kafka events atomically in one MySQL transaction.",
+          "Scheduled channel sync + reconciliation keeps marketplace views honest without letting channels overwrite central inventory."
         ],
         deepDecisions: [
           {
-            title: "Distributed Lock Exploration",
-            technique: "Redis Distributed Locking Spike",
-            mechanism: "Acquires mutex locks across distributed instances to serialize inventory decrements.",
-            impact: "Provided benchmark baseline proving Lua scripts offer 5x superior throughput."
+            title: "Three-Layer Oversell Defense",
+            technique: "Redis Lock → Transaction → Optimistic Lock",
+            mechanism: "Serialize per-SKU mutation with a Redis SET-NX lock, run quota/inventory changes inside a relational transaction, and let @Version + unique constraints reject any raced commit.",
+            impact: "Zero oversells across a 50-VU / ~185 req/s hot-SKU run with stock conservation holding (available+reserved+sold=100)."
+          },
+          {
+            title: "Three-Tier Durable Idempotency",
+            technique: "Unique Keys + Operation Ledger + Response Replay",
+            mechanism: "Reservation uniqueness keys prevent duplicate creation, an operation_idempotency ledger replays the original response, and ingress receipts dedupe external callbacks.",
+            impact: "Buyer retries and webhook replays return the original result instead of repeating side effects."
+          },
+          {
+            title: "Transactional Outbox",
+            technique: "DB Transaction + Scheduled Kafka Publish",
+            mechanism: "Every state change writes a versioned event envelope in the same transaction as its data mutation; a scheduler publishes PENDING events and marks PUBLISHED only after Kafka ack.",
+            impact: "Database state and downstream events cannot diverge on partial failure."
+          },
+          {
+            title: "Evidence-Gated K6 Program",
+            technique: "Promoted Artifacts + Business Invariants",
+            mechanism: "A K6 suite runs scenarios, asserts inventory invariants post-run, and only promotes passing evidence into a curated catalog served by typed backend APIs.",
+            impact: "Every performance claim is backed by a reproducible, invariant-checked artifact — a deliberate antidote to marketing-layer benchmark numbers."
           }
         ],
         failureModesAndTradeoffs: [
           {
-            failureMode: "Lock Contention Overhead",
-            mitigation: "Led to the architectural pivot towards Redis Lua Pre-gating in V2 engine.",
-            tradeOff: "Valuable research artifact informing final engine architecture."
+            failureMode: "Per-SKU lock serialization under extreme contention",
+            mitigation: "Bounds correctness by serializing each SKU; documented as the trade-off that motivated the throughput-first Lua pre-gating in the companion Flash Sale Concurrency Engine.",
+            tradeOff: "Sacrifices raw throughput for guaranteed correctness — the inverse trade-off of the featured engine, giving a complete before/after story across both projects."
+          },
+          {
+            failureMode: "Lock lease expiry vs long transaction",
+            mitigation: "Fixed TTL with release token limits exposure; watchdog renewal and a SELECT FOR UPDATE fallback are logged follow-ups.",
+            tradeOff: "Crash safety over risk of early expiry, which the optimistic lock still catches."
+          },
+          {
+            failureMode: "Outbox assumes single-instance polling",
+            mitigation: "Safe for a single deployable; row-level claim/lease is the documented next step for horizontal scale.",
+            tradeOff: "At-least-once delivery requires consumer-side idempotency as a compensating control."
           }
         ],
         testingAndVerification: [
           {
-            type: "Lock Contention Latency Benchmark",
-            details: "Measured lock wait overhead under increasing concurrency.",
-            result: "Directly inspired the zero-lock Redis Lua architecture."
+            type: "Concurrency integration test",
+            details: "100 requests / 20 threads against a singleton Testcontainers stack (MySQL + Redis + Kafka).",
+            result: "No oversell; stock conservation and quotas held under contention."
+          },
+          {
+            type: "Promoted K6 evidence run",
+            details: "Five scenarios at commit e2e3644: hot-sku 164ms avg / 920ms p95, down to 5.6ms avg for outbox recovery.",
+            result: "0% failed requests, stock conservation passed, outbox backlog 0, reconciliation drifts 0."
+          },
+          {
+            type: "Unit + browser coverage",
+            details: "27 Java test files (75 methods), 6 Vitest files (25 tests), and 7 Playwright e2e tests.",
+            result: "Green on the last full backend compile plus a fresh admin-ui unit/e2e run."
           }
         ],
         deploymentAndObservability: [
-          "Local Docker testbed for benchmarking."
+          "CI/CD on GitHub Actions: path-filtered jobs, container image builds, and a gated rollback workflow with health checks.",
+          "Micrometer counters/gauges on reservations, outbox, and channel sync; Spring Actuator health/info/metrics endpoints.",
+          "Operational alerting evaluates backlog and drift thresholds against persisted delivery state."
         ],
         operationalOutcomes: [
-          "Delivered foundational research that enabled the zero-oversell Flash Sale Concurrency Engine."
+          "Delivered a correctness-first inventory backbone whose oversell defense transfers directly to the throughput-first Flash Sale Concurrency Engine.",
+          "Established an evidence-gated release discipline: no performance claim ships without a promoted, invariant-checked benchmark artifact."
         ],
         gallery: [
-          { url: "/08-admin-benchmark.png", title: "Distributed Lock Benchmark Analysis", badge: "Research Baseline" }
+          { url: "/08-admin-benchmark.png", title: "K6 Benchmark Evidence Dashboard", badge: "Invariants-Gated" }
         ]
       }
     }
