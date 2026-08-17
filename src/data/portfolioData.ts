@@ -951,7 +951,7 @@ export const portfolioData: PortfolioData = {
       role: "Backend Infrastructure Engineer",
       period: "Dec. 2025 – Present",
       thesis: "Append-only double-entry ledger with BigInt-exact money arithmetic, Stripe-style idempotency-key replay, and adapter-based external rails — every financial movement traceable via immutable journal entries.",
-      representativeImage: "/coinbase-bg.png",
+      representativeImage: "/ledger-screens/double-entry-architecture.svg",
       techStack: ["TypeScript", "NestJS 11", "Fastify", "PostgreSQL", "Prisma 6", "Vitest"],
       proofChip: "BigInt-exact money — zero rounding drift",
       githubUrl: "https://github.com/qwan30/ledger-credit-system",
@@ -1030,7 +1030,7 @@ export const portfolioData: PortfolioData = {
           "Append-only journal + audit trail enabling reconstruction of every transfer (internal, interbank, and automated compensation)."
         ],
         gallery: [
-          { url: "/coinbase-bg.png", title: "Double-Entry Ledger Architecture & Financial Model", badge: "Ledger Model" }
+          { url: "/ledger-screens/double-entry-architecture.svg", title: "Double-Entry Ledger Architecture & Money Movement", badge: "Ledger Model" }
         ]
       }
     },
