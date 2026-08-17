@@ -1009,52 +1009,76 @@ export const portfolioData: PortfolioData = {
       statusBadge: "Fintech MVP",
       role: "Backend Software Engineer",
       period: "Nov. 2025 – Dec. 2025",
-      thesis: "Modular digital banking service with multi-factor OTP 2FA, JWT token authentication, and ACID transaction transfer workflows.",
+      thesis: "Modular digital banking service enforcing double-entry ledger integrity, deterministic deadlock-free transfer locking, client idempotency-key replay, and DB-backed refresh-token rotation.",
       representativeImage: "/hero-bg.png",
-      techStack: ["Java", "Spring Boot", "Spring Security", "PostgreSQL", "JWT"],
-      proofChip: "ACID compliant internal transfer workflows",
+      techStack: ["Java 17", "Spring Boot", "Spring Security", "PostgreSQL 15", "Flyway", "Next.js 16", "Playwright"],
+      proofChip: "ACID transfers — 0 balance drift under 100-iteration concurrency",
       githubUrl: "https://github.com/qwan30/mini-digital-banking-platform",
       caseStudy: {
-        executiveSummary: "Developed a secure transactional digital banking service implementing account lifecycle management, inter-account transfers, and multi-factor authentication.",
-        businessContext: "Demonstrates core banking transaction processing, secure authentication gates, and ACID data integrity.",
-        problemStatement: "Build a robust banking API preventing concurrent overdrafts, verifying identity via OTP, and recording auditable statement records.",
+        executiveSummary: "Built a hexagonal modular monolith (domain / application / infrastructure / controller / start) with a framework-free domain, immutable double-entry ledger, and retry-safe money movement.",
+        businessContext: "A source-backed fintech portfolio project demonstrating what demo banking systems often underbuild: decimal money handling, immutable transaction evidence, ownership boundaries, session lifecycle, and a handover-ready verification gate.",
+        problemStatement: "Build a banking API that survives concurrent transfers without deadlock or balance drift and replays duplicate requests without double-charging.",
         systemConstraints: [
           "No overdraft beyond authorized balance limits.",
-          "Mandatory OTP verification for sensitive outgoing transfers.",
-          "Secure BCrypt password hashing and scoped JWT tokens."
+          "Balances are decimal-exact (DECIMAL(19,4)) — no float/double for money.",
+          "BCrypt password hashing, JWT access tokens, DB-backed rotating refresh tokens."
         ],
-        architecture: "Layered Spring Boot application with Spring Security, PostgreSQL relational storage, and RESTful API endpoints.",
+        architecture: "Spring Boot modular monolith with strict dependency direction (start → controller → application → domain); domain module has zero Spring imports, enforcing ports-and-adapters boundaries.",
         architectureHighlights: [
-          "Pessimistic locking during fund transfers preventing concurrent double-withdrawals.",
-          "Time-based OTP token generation with expiration limits."
+          "Pessimistic write locks with deterministic UUID lock ordering to prevent transfer deadlocks.",
+          "PostgreSQL + Flyway migrations (V1–V7) with CHECK/UNIQUE business-rule constraints.",
+          "Correlation-ID and structured request logging for end-to-end traceability."
         ],
         deepDecisions: [
           {
-            title: "Transactional Fund Transfer Engine",
-            technique: "Isolated Database Transactions with Balance Checks",
-            mechanism: "Deducts sender balance, credits receiver balance, and logs transfer audit in a single atomic transaction.",
-            impact: "Guarantees zero fund loss during network or server interruptions."
+            title: "Deadlock-Free Transfer Engine",
+            technique: "Deterministic Lock Ordering + Pessimistic Write Locks",
+            mechanism: "Both accounts are locked via findByIdForUpdate in UUID order (smaller first), so A→B and B→A reverse transfers acquire locks in the same sequence.",
+            impact: "100-iteration reverse-transfer concurrency test reconciles balances exactly with zero deadlocks and zero drift."
+          },
+          {
+            title: "Idempotency-Key Replay",
+            technique: "Persisted Idempotency Log with Response Replay",
+            mechanism: "Transfers require a client X-Idempotency-Key; a duplicate key returns the previously serialized response instead of executing a second debit/credit.",
+            impact: "Retries and double-submits never double-charge — each side is debited/credited exactly once."
+          },
+          {
+            title: "Immutable Double-Entry Ledger",
+            technique: "Append-Only Ledger with Before/After Snapshots",
+            mechanism: "A transfer writes linked TRANSFER_DEBIT and TRANSFER_CREDIT rows sharing a correlation group, each capturing balanceBefore / balanceAfter.",
+            impact: "An audit-friendly, append-only history with full reconciliation between any two accounts."
           }
         ],
         failureModesAndTradeoffs: [
           {
-            failureMode: "Expired OTP Submission",
-            mitigation: "Rejects expired codes and prompts for new OTP token generation.",
-            tradeOff: "Slight user friction for enhanced transfer security."
+            failureMode: "Duplicate transfer retry (network timeout after commit)",
+            mitigation: "Idempotency log detects the reused key and replays the saved response.",
+            tradeOff: "Adds a log write per transfer in exchange for retry safety."
+          },
+          {
+            failureMode: "Concurrent reverse transfers on the same two accounts",
+            mitigation: "Deterministic lock ordering prevents the classic deadlock cycle.",
+            tradeOff: "Single global lock order reduces lock granularity but guarantees progress."
           }
         ],
         testingAndVerification: [
           {
-            type: "Banking Transfer Integration Suite",
-            details: "Simulated simultaneous transfer attempts from single account.",
-            result: "Overdraft attempts blocked with zero balance leakage."
+            type: "Transfer Concurrency IT",
+            details: "100 reverse A→B / B→A transfers across 4 threads against real Postgres Testcontainer.",
+            result: "Total balance conserved at 20000.0000; no deadlock; no negative balances."
+          },
+          {
+            type: "Backend Verification Gate",
+            details: "mvn verify across all 5 modules (unit + @WebMvcTest slices + Testcontainers integration tests).",
+            result: "224 tests, 0 failures, 0 errors; 7 Flyway migrations validated."
           }
         ],
         deploymentAndObservability: [
-          "Spring Boot containerized on Docker with standard logging."
+          "Multi-stage Docker build running as a non-root user with actuator healthcheck.",
+          "CI gates backend verify, frontend lint/type/unit/build, mocked Playwright, and Docker Compose smoke."
         ],
         operationalOutcomes: [
-          "Complete digital banking lifecycle implemented with comprehensive security controls."
+          "Complete banking lifecycle (auth, accounts, transfer, history, audit, admin) with a documented 224-test verification gate."
         ],
         gallery: [
           { url: "/hero-bg.png", title: "Banking API Architecture & Transfer Lifecycles", badge: "Banking Core" }
