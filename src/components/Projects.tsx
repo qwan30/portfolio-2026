@@ -22,7 +22,11 @@ interface FeaturedProjectCardProps {
 const FeaturedProjectCard = memo(
   ({ project, index, onExpandImage, onSelectProject }: FeaturedProjectCardProps) => {
     const allImages = [
-      { url: project.featuredImage, title: `${project.title} - Main Overview`, badge: 'Overview' },
+      {
+        url: project.featuredImage,
+        title: `${project.title} - ${project.featuredImageBadge || 'Main Overview'}`,
+        badge: project.featuredImageBadge || 'Overview',
+      },
       ...project.thumbnails,
     ].slice(0, 4);
 

@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrow-amber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="860" fill="#0f172a"/>
+
+  <!-- Title & Subtitle -->
+  <text x="640" y="45" text-anchor="middle" font-size="26" font-weight="800" fill="#f8fafc">Mini Digital Banking Platform — Hexagonal Architecture &amp; Transfer Flow</text>
+  <text x="640" y="72" text-anchor="middle" font-size="14" fill="#94a3b8">Java 17 · Spring Boot 3 · PostgreSQL 15 + Flyway · Deterministic Lock Ordering · Immutable Double-Entry Ledger</text>
+
+  <!-- Client Layer -->
+  <rect x="50" y="110" width="220" height="150" rx="14" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="160" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="#38bdf8">Next.js 16 Client</text>
+  <text x="160" y="172" text-anchor="middle" font-size="12" fill="#cbd5e1">POST /api/v1/transfers</text>
+  <text x="160" y="195" text-anchor="middle" font-size="12" fill="#93c5fd">Header: Authorization (JWT)</text>
+  <text x="160" y="218" text-anchor="middle" font-size="12" fill="#fbbf24">Header: X-Idempotency-Key</text>
+  <text x="160" y="240" text-anchor="middle" font-size="11" fill="#64748b">React 19 · Zod Validated</text>
+
+  <!-- Controller Module -->
+  <rect x="360" y="110" width="260" height="150" rx="14" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  <text x="490" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="#a5b4fc">controller module</text>
+  <text x="490" y="172" text-anchor="middle" font-size="12" fill="#cbd5e1">TransferController</text>
+  <text x="490" y="195" text-anchor="middle" font-size="11.5" fill="#94a3b8">• Validates TransferRequest payload</text>
+  <text x="490" y="215" text-anchor="middle" font-size="11.5" fill="#94a3b8">• Extracts JWT Subject (User UUID)</text>
+  <text x="490" y="238" text-anchor="middle" font-size="11.5" fill="#34d399">• Wraps in ApiResponse&lt;TransferDto&gt;</text>
+
+  <!-- Application Module (Service Layer) -->
+  <rect x="710" y="110" width="280" height="230" rx="14" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+  <text x="850" y="142" text-anchor="middle" font-size="16" font-weight="700" fill="#34d399">application module</text>
+  <text x="850" y="166" text-anchor="middle" font-size="12.5" font-weight="600" fill="#e2e8f0">TransferServiceImpl (@Transactional)</text>
+  <text x="850" y="194" text-anchor="middle" font-size="11.5" fill="#94a3b8">1. IdempotencyService.checkOrLock(key)</text>
+  <text x="850" y="216" text-anchor="middle" font-size="11.5" fill="#38bdf8">2. Sort UUIDs: min(A,B) → max(A,B)</text>
+  <text x="850" y="238" text-anchor="middle" font-size="11.5" fill="#34d399">3. findByIdForUpdate(UUID_1)</text>
+  <text x="850" y="260" text-anchor="middle" font-size="11.5" fill="#34d399">4. findByIdForUpdate(UUID_2)</text>
+  <text x="850" y="282" text-anchor="middle" font-size="11.5" fill="#f59e0b">5. Execute debit &amp; credit</text>
+  <text x="850" y="304" text-anchor="middle" font-size="11.5" fill="#e2e8f0">6. Write Double-Entry Transaction</text>
+  <text x="850" y="324" text-anchor="middle" font-size="11.5" fill="#a855f7">7. AuditService.logAction(tx)</text>
+
+  <!-- Idempotency Module / Table -->
+  <rect x="1050" y="110" width="180" height="150" rx="14" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="1140" y="145" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24">Idempotency Log</text>
+  <text x="1140" y="172" text-anchor="middle" font-size="12" fill="#cbd5e1">(user_id, key) unique</text>
+  <text x="1140" y="195" text-anchor="middle" font-size="11.5" fill="#94a3b8">SHA-256 request_hash</text>
+  <text x="1140" y="218" text-anchor="middle" font-size="11.5" fill="#34d399">Replay cached body</text>
+  <text x="1140" y="238" text-anchor="middle" font-size="11" fill="#f87171">409 on hash clash</text>
+
+  <!-- Domain Module (Pure Core) -->
+  <rect x="360" y="380" width="260" height="200" rx="14" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+  <text x="490" y="415" text-anchor="middle" font-size="16" font-weight="700" fill="#c7d2fe">domain module (Pure Java)</text>
+  <text x="490" y="438" text-anchor="middle" font-size="11.5" fill="#a5b4fc">Zero Spring Dependencies</text>
+  <text x="490" y="468" text-anchor="middle" font-size="12.5" fill="#ffffff">• Account (Aggregate Root)</text>
+  <text x="490" y="490" text-anchor="middle" font-size="12" fill="#94a3b8">  - BigDecimal balance (19,4)</text>
+  <text x="490" y="510" text-anchor="middle" font-size="12" fill="#94a3b8">  - debit(amount) / credit(amount)</text>
+  <text x="490" y="535" text-anchor="middle" font-size="12.5" fill="#ffffff">• AccountRepository (Port Interface)</text>
+  <text x="490" y="558" text-anchor="middle" font-size="12.5" fill="#ffffff">• TransactionRepository (Port)</text>
+
+  <!-- Infrastructure Module (PostgreSQL & Flyway) -->
+  <rect x="710" y="380" width="280" height="200" rx="14" fill="#022c22" stroke="#059669" stroke-width="2"/>
+  <text x="850" y="415" text-anchor="middle" font-size="16" font-weight="700" fill="#34d399">infrastructure module</text>
+  <text x="850" y="438" text-anchor="middle" font-size="12" fill="#a7f3d0">Spring Data JPA + PostgreSQL 15</text>
+  <text x="850" y="468" text-anchor="middle" font-size="12" fill="#cbd5e1">• AccountJpaRepository (Lock Adapter)</text>
+  <text x="850" y="490" text-anchor="middle" font-size="11.5" fill="#34d399">  @Lock(LockModeType.PESSIMISTIC_WRITE)</text>
+  <text x="850" y="510" text-anchor="middle" font-size="11.5" fill="#34d399">  findByIdForUpdate(UUID id)</text>
+  <text x="850" y="538" text-anchor="middle" font-size="12" fill="#cbd5e1">• Flyway Migrations (V1 → V7)</text>
+  <text x="850" y="558" text-anchor="middle" font-size="11" fill="#94a3b8">  users, accounts, transactions, idempotency, audit</text>
+
+  <!-- Double-Entry Audit Log & Invariants -->
+  <rect x="50" y="620" width="1180" height="190" rx="14" fill="#131d31" stroke="#334155" stroke-width="1.5"/>
+  <text x="80" y="655" font-size="16" font-weight="700" fill="#f8fafc">VERIFIED SYSTEM INVARIANTS &amp; CONCURRENCY SAFETY</text>
+
+  <!-- Invariant 1 -->
+  <g transform="translate(80, 675)">
+    <rect width="340" height="105" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="16" y="28" font-size="13" font-weight="700" fill="#38bdf8">1. Deadlock Prevention</text>
+    <text x="16" y="50" font-size="11.5" fill="#cbd5e1">Deterministic UUID Sorting</text>
+    <text x="16" y="70" font-size="11" fill="#94a3b8">Both A→B and B→A acquire locks in UUID order (smaller first), breaking circular wait.</text>
+    <text x="16" y="90" font-size="10.5" font-weight="700" fill="#34d399">✓ 0 Deadlocks in 100-run Concurrency IT</text>
+  </g>
+
+  <!-- Invariant 2 -->
+  <g transform="translate(470, 675)">
+    <rect width="340" height="105" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="16" y="28" font-size="13" font-weight="700" fill="#fbbf24">2. Zero Balance Drift</text>
+    <text x="16" y="50" font-size="11.5" fill="#cbd5e1">Append-Only Double-Entry Ledger</text>
+    <text x="16" y="70" font-size="11" fill="#94a3b8">Linked DEBIT/CREDIT records share correlation ID with Before/After balance tracking.</text>
+    <text x="16" y="90" font-size="10.5" font-weight="700" fill="#34d399">✓ 20,000.0000 total balance conserved</text>
+  </g>
+
+  <!-- Invariant 3 -->
+  <g transform="translate(860, 675)">
+    <rect width="340" height="105" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="16" y="28" font-size="13" font-weight="700" fill="#a855f7">3. Safe Token Lifecycle</text>
+    <text x="16" y="50" font-size="11.5" fill="#cbd5e1">DB-Backed Refresh Token Rotation</text>
+    <text x="16" y="70" font-size="11" fill="#94a3b8">Rotating refresh tokens revoke on logout; user identity derived strictly from JWT subject.</text>
+    <text x="16" y="90" font-size="10.5" font-weight="700" fill="#34d399">✓ 224 automated backend tests passed</text>
+  </g>
+
+  <!-- Flow Connecting Lines -->
+  <line x1="270" y1="185" x2="360" y2="185" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <line x1="620" y1="185" x2="710" y2="185" stroke="#6366f1" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <line x1="990" y1="185" x2="1050" y2="185" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrow-amber)"/>
+  <line x1="850" y1="340" x2="850" y2="380" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <line x1="710" y1="480" x2="620" y2="480" stroke="#818cf8" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+
+</svg>

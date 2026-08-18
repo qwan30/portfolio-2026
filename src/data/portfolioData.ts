@@ -59,6 +59,7 @@ export interface FeaturedProjectItem {
   githubUrl?: string; // undefined for private repos (Vijaco)
   liveUrl?: string;
   featuredImage: string;
+  featuredImageBadge?: string;
   thumbnails: GalleryItem[];
   caseStudy: CaseStudyData;
 }
@@ -491,8 +492,14 @@ export const portfolioData: PortfolioData = {
       ],
       techStack: ["Java 21", "Spring Boot", "Redis", "Kafka", "MySQL", "JMeter"],
       githubUrl: "https://github.com/qwan30/Flash-Sale-Concurrency-Engine",
-      featuredImage: "/flashsale-screens/architecture-overview.png",
+      featuredImage: "/flashsale-screens/grafana_system_metrics.png",
+      featuredImageBadge: "Observability",
       thumbnails: [
+        {
+          url: "/flashsale-screens/architecture-overview.png",
+          title: "Complete System Architecture & Gating Flow",
+          badge: "Architecture"
+        },
         {
           url: "/flashsale-screens/strategy-comparison.png",
           title: "4-Strategy Inventory Reservation Matrix",
@@ -502,11 +509,6 @@ export const portfolioData: PortfolioData = {
           url: "/flashsale-screens/jmeter_redis_lua_summary.png",
           title: "JMeter Concurrency Benchmark (5,000 Reqs / 100 Threads)",
           badge: "Load Benchmark"
-        },
-        {
-          url: "/flashsale-screens/grafana_system_metrics.png",
-          title: "Grafana Realtime Telemetry: JVM & Latency",
-          badge: "Observability"
         }
       ],
       caseStudy: {
@@ -1042,7 +1044,7 @@ export const portfolioData: PortfolioData = {
       role: "Backend Software Engineer",
       period: "Nov. 2025 – Dec. 2025",
       thesis: "Modular digital banking service enforcing double-entry ledger integrity, deterministic deadlock-free transfer locking, client idempotency-key replay, and DB-backed refresh-token rotation.",
-      representativeImage: "/hero-bg.png",
+      representativeImage: "/banking-screens/banking-platform-overview.svg",
       techStack: ["Java 17", "Spring Boot", "Spring Security", "PostgreSQL 15", "Flyway", "Next.js 16", "Playwright"],
       proofChip: "ACID transfers — 0 balance drift under 100-iteration concurrency",
       githubUrl: "https://github.com/qwan30/mini-digital-banking-platform",
@@ -1113,7 +1115,16 @@ export const portfolioData: PortfolioData = {
           "Complete banking lifecycle (auth, accounts, transfer, history, audit, admin) with a documented 224-test verification gate."
         ],
         gallery: [
-          { url: "/hero-bg.png", title: "Banking API Architecture & Transfer Lifecycles", badge: "Banking Core" }
+          {
+            url: "/banking-screens/banking-platform-overview.svg",
+            title: "Mini Digital Banking Platform — Customer Dashboard & Double-Entry Ledger",
+            badge: "Banking Core"
+          },
+          {
+            url: "/banking-screens/banking-architecture.svg",
+            title: "Hexagonal Architecture & Concurrency Lock Ordering Flow",
+            badge: "Architecture"
+          }
         ]
       }
     },
