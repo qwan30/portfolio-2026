@@ -1,380 +1,214 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Comic Sans MS', Roboto, sans-serif">
   <defs>
-    <!-- Gradients -->
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b0f19" />
-      <stop offset="50%" stop-color="#0f172a" />
-      <stop offset="100%" stop-color="#090d16" />
-    </linearGradient>
+    <!-- Arrow Markers -->
+    <marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L9,3.5 L0,7 Z" fill="#475569" />
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L9,3.5 L0,7 Z" fill="#16a34a" />
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L9,3.5 L0,7 Z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L9,3.5 L0,7 Z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L9,3.5 L0,7 Z" fill="#ea580c" />
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L9,3.5 L0,7 Z" fill="#7c3aed" />
+    </marker>
 
-    <linearGradient id="primary-card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e1b4b" />
-      <stop offset="100%" stop-color="#312e81" />
-    </linearGradient>
-
-    <linearGradient id="accent-cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#06b6d4" />
-      <stop offset="100%" stop-color="#3b82f6" />
-    </linearGradient>
-
-    <linearGradient id="accent-green-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10b981" />
-      <stop offset="100%" stop-color="#059669" />
-    </linearGradient>
-
-    <linearGradient id="card-inner-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#0f172a" />
-    </linearGradient>
-
-    <!-- Filters for Glow / Shadows -->
-    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="125%">
-      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000000" flood-opacity="0.5" />
+    <!-- Drop Shadow for Outer Frame -->
+    <filter id="soft-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#000000" flood-opacity="0.08" />
     </filter>
-
-    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-
-    <clipPath id="rounded-clip">
-      <rect x="0" y="0" width="1600" height="900" rx="0" />
-    </clipPath>
   </defs>
 
-  <!-- Canvas Background -->
-  <rect width="1600" height="900" fill="url(#bg-grad)" />
+  <!-- Background Canvas -->
+  <rect width="1600" height="900" fill="#090d16" />
 
-  <!-- Background Decorative Grid Lines -->
-  <g stroke="#1e293b" stroke-width="1" opacity="0.35">
-    <line x1="0" y1="80" x2="1600" y2="80" />
-    <line x1="0" y1="160" x2="1600" y2="160" />
-    <line x1="0" y1="240" x2="1600" y2="240" />
-    <line x1="0" y1="320" x2="1600" y2="320" />
-    <line x1="0" y1="400" x2="1600" y2="400" />
-    <line x1="0" y1="480" x2="1600" y2="480" />
-    <line x1="0" y1="560" x2="1600" y2="560" />
-    <line x1="0" y1="640" x2="1600" y2="640" />
-    <line x1="0" y1="720" x2="1600" y2="720" />
-    <line x1="0" y1="800" x2="1600" y2="800" />
-    <line x1="160" y1="0" x2="160" y2="900" />
-    <line x1="320" y1="0" x2="320" y2="900" />
-    <line x1="480" y1="0" x2="480" y2="900" />
-    <line x1="640" y1="0" x2="640" y2="900" />
-    <line x1="800" y1="0" x2="800" y2="900" />
-    <line x1="960" y1="0" x2="960" y2="900" />
-    <line x1="1120" y1="0" x2="1120" y2="900" />
-    <line x1="1280" y1="0" x2="1280" y2="900" />
-    <line x1="1440" y1="0" x2="1440" y2="900" />
+  <!-- Outer Card Frame (White rounded canvas like in Excalidraw UI screenshot) -->
+  <rect x="25" y="25" width="1550" height="805" rx="28" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" filter="url(#soft-shadow)" />
+
+  <!-- ================= TOP SECTION (ROOT & INGRESS) ================= -->
+
+  <!-- Top Root Node: 100 Concurrent Transfers -->
+  <g transform="translate(600, 50)">
+    <rect width="400" height="52" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.2" />
+    <text x="50" y="32" font-size="20">👥</text>
+    <text x="85" y="33" font-size="16" font-weight="700" fill="#15803d">100 Concurrent Reverse Transfer Requests</text>
   </g>
 
-  <!-- Ambient Light Orbs -->
-  <circle cx="200" cy="180" r="180" fill="#3b82f6" opacity="0.08" filter="url(#glow-cyan)" />
-  <circle cx="1400" cy="700" r="220" fill="#6366f1" opacity="0.06" filter="url(#glow-cyan)" />
-  <circle cx="850" cy="450" r="150" fill="#10b981" opacity="0.04" filter="url(#glow-cyan)" />
+  <!-- Arrow Top -> Gateway -->
+  <line x1="800" y1="102" x2="800" y2="128" stroke="#475569" stroke-width="2.2" marker-end="url(#arrow-gray)" />
 
-  <!-- ================= TOP HEADER BAR ================= -->
-  <rect x="40" y="24" width="1520" height="68" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+  <!-- Node 2: Client & Security Ingress -->
+  <g transform="translate(520, 130)">
+    <rect width="560" height="54" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2.2" />
+    <text x="40" y="34" font-size="20">🍃</text>
+    <text x="75" y="34" font-size="15" font-weight="700" fill="#1d4ed8">Next.js 16 Client → Spring Boot Controller (JWT Auth + X-Idempotency-Key)</text>
+  </g>
+
+  <!-- Arrow Gateway -> Idempotency Registry -->
+  <line x1="800" y1="184" x2="800" y2="210" stroke="#475569" stroke-width="2.2" marker-end="url(#arrow-gray)" />
+
+  <!-- Node 3: Transfer Idempotency Gate -->
+  <g transform="translate(550, 212)">
+    <rect width="500" height="50" rx="14" fill="#f8fafc" stroke="#475569" stroke-width="2.2" />
+    <text x="35" y="32" font-size="19">⚙️</text>
+    <text x="70" y="32" font-size="15" font-weight="700" fill="#334155">TransferIdempotencyEngine &amp; Request Hash Check</text>
+  </g>
+
+  <!-- ================= 4 ARCHITECTURAL BRANCHES ================= -->
+
+  <!-- Top Distribution Branch Lines from Node 3 -->
+  <line x1="800" y1="262" x2="800" y2="280" stroke="#475569" stroke-width="2.2" />
+  <line x1="200" y1="280" x2="1400" y2="280" stroke="#475569" stroke-width="2.2" />
+
+  <!-- Drop Lines to 4 Columns -->
+  <line x1="200" y1="280" x2="200" y2="330" stroke="#475569" stroke-width="2.2" marker-end="url(#arrow-gray)" />
+  <line x1="600" y1="280" x2="600" y2="330" stroke="#475569" stroke-width="2.2" marker-end="url(#arrow-gray)" />
+  <line x1="1000" y1="280" x2="1000" y2="330" stroke="#475569" stroke-width="2.2" marker-end="url(#arrow-gray)" />
+  <line x1="1400" y1="280" x2="1400" y2="330" stroke="#475569" stroke-width="2.2" marker-end="url(#arrow-gray)" />
+
+  <!-- Column Strategy Labels -->
+  <text x="200" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="#dc2626">action=PAYLOAD_MISMATCH</text>
+  <text x="600" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="#ea580c">action=KEY_REPLAY</text>
+  <text x="1000" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="#2563eb">transfer=DEADLOCK_FREE_LOCK</text>
+  <text x="1400" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="#16a34a">transfer=DOUBLE_ENTRY_LEDGER</text>
+
+
+  <!-- ================= COLUMN 1: PAYLOAD MISMATCH (RED) ================= -->
+  <g transform="translate(50, 332)">
+    <rect width="300" height="76" rx="14" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
+    <text x="20" y="38" font-size="18">❌</text>
+    <text x="50" y="34" font-size="13.5" font-weight="700" fill="#991b1b">Idempotency Key Conflict</text>
+    <text x="50" y="54" font-size="11.5" fill="#b91c1c">(Key reused with different body)</text>
+  </g>
+  <line x1="200" y1="408" x2="200" y2="445" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red)" />
+  <g transform="translate(50, 447)">
+    <rect width="300" height="70" rx="14" fill="#fef2f2" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="5 4" />
+    <text x="20" y="35" font-size="16">🚫</text>
+    <text x="48" y="32" font-size="12.5" font-weight="700" fill="#b91c1c">HTTP 409 Conflict</text>
+    <text x="48" y="50" font-size="11" fill="#7f1d1d">Rejects duplicate transfer attempt</text>
+  </g>
+
+
+  <!-- ================= COLUMN 2: KEY REPLAY (ORANGE) ================= -->
+  <g transform="translate(450, 332)">
+    <rect width="300" height="76" rx="14" fill="#fffbeb" stroke="#ea580c" stroke-width="2" />
+    <text x="20" y="38" font-size="18">⚡</text>
+    <text x="50" y="34" font-size="13.5" font-weight="700" fill="#9a3412">Duplicate Retry Replay</text>
+    <text x="50" y="54" font-size="11.5" fill="#c2410c">(Network timeout safe recovery)</text>
+  </g>
+  <line x1="600" y1="408" x2="600" y2="445" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)" />
+  <g transform="translate(450, 447)">
+    <rect width="300" height="70" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8" />
+    <text x="20" y="35" font-size="16">📦</text>
+    <text x="48" y="32" font-size="12.5" font-weight="700" fill="#92400e">Replay Serialized Response</text>
+    <text x="48" y="50" font-size="11" fill="#78350f">Exact HTTP 200 · Zero Double Debit</text>
+  </g>
+
+
+  <!-- ================= COLUMN 3: DEADLOCK-FREE LOCKING (BLUE) ================= -->
+  <g transform="translate(850, 332)">
+    <rect width="300" height="76" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+    <text x="20" y="38" font-size="18">🛡️</text>
+    <text x="50" y="34" font-size="13.5" font-weight="700" fill="#1e40af">Deterministic Lock Ordering</text>
+    <text x="50" y="54" font-size="11.5" fill="#1d4ed8">sort(UUID_from, UUID_to)</text>
+  </g>
+  <line x1="1000" y1="408" x2="1000" y2="445" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)" />
+  <g transform="translate(850, 447)">
+    <rect width="300" height="70" rx="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.8" />
+    <text x="20" y="35" font-size="16">🐬</text>
+    <text x="48" y="32" font-size="12.5" font-weight="700" fill="#1e3a8a">Postgres: findByIdForUpdate</text>
+    <text x="48" y="50" font-size="11" fill="#1e40af">Lock UUID_min THEN UUID_max</text>
+  </g>
+  <line x1="1000" y1="517" x2="1000" y2="550" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)" />
+  <g transform="translate(850, 552)">
+    <rect width="300" height="66" rx="14" fill="#eff6ff" stroke="#60a5fa" stroke-width="1.8" />
+    <text x="20" y="35" font-size="16">🔒</text>
+    <text x="48" y="30" font-size="12.5" font-weight="700" fill="#1e40af">Zero Lock Wait Deadlocks</text>
+    <text x="48" y="48" font-size="11" fill="#2563eb">A⇄B concurrency resolves safely</text>
+  </g>
+
+
+  <!-- ================= COLUMN 4: DOUBLE-ENTRY LEDGER (GREEN) ================= -->
+  <g transform="translate(1250, 332)">
+    <rect width="300" height="76" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+    <text x="20" y="38" font-size="18">💎</text>
+    <text x="50" y="34" font-size="13.5" font-weight="700" fill="#15803d">Double-Entry Append-Only</text>
+    <text x="50" y="54" font-size="11.5" fill="#166534">TRANSFER_DEBIT + CREDIT</text>
+  </g>
   
-  <!-- App Logo / Badge -->
-  <rect x="58" y="38" width="40" height="40" rx="10" fill="url(#accent-cyan-grad)" />
-  <path d="M78 47 L68 53 L68 65 L78 71 L88 65 L88 53 Z" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" />
-  <circle cx="78" cy="59" r="3" fill="#ffffff" />
+  <!-- Branch out from Col 4: Overdraft Check vs Settle -->
+  <line x1="1340" y1="408" x2="1310" y2="445" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red)" />
+  <line x1="1460" y1="408" x2="1490" y2="445" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-green)" />
+  <text x="1270" y="430" font-size="11" font-weight="700" fill="#dc2626">balance &lt; amt</text>
+  <text x="1515" y="430" font-size="11" font-weight="700" fill="#16a34a">balance &gt;= amt</text>
 
-  <text x="110" y="54" font-size="18" font-weight="800" fill="#f8fafc" letter-spacing="0.5">MINI DIGITAL BANKING PLATFORM</text>
-  <text x="110" y="73" font-size="12" font-weight="500" fill="#94a3b8">Modular Monolith Architecture · Concurrency &amp; Double-Entry Core</text>
-
-  <!-- Top Badges -->
-  <g transform="translate(680, 42)">
-    <rect width="180" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-    <circle cx="16" cy="16" r="4" fill="#38bdf8" />
-    <text x="28" y="20" font-size="11.5" font-weight="600" fill="#e2e8f0">Java 17 · Spring Boot 3</text>
+  <!-- Overdraft Rejection -->
+  <g transform="translate(1190, 447)">
+    <rect width="180" height="70" rx="14" fill="#fef2f2" stroke="#dc2626" stroke-width="1.8" />
+    <text x="14" y="35" font-size="15">❌</text>
+    <text x="38" y="32" font-size="11.5" font-weight="700" fill="#991b1b">Overdraft Reject</text>
+    <text x="38" y="50" font-size="10.5" fill="#b91c1c">422 Insufficient</text>
   </g>
 
-  <g transform="translate(875, 42)">
-    <rect width="190" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-    <circle cx="16" cy="16" r="4" fill="#818cf8" />
-    <text x="28" y="20" font-size="11.5" font-weight="600" fill="#e2e8f0">PostgreSQL 15 · Flyway V1-7</text>
+  <!-- Ledger Persistence -->
+  <g transform="translate(1390, 447)">
+    <rect width="180" height="70" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8" />
+    <text x="14" y="35" font-size="15">📝</text>
+    <text x="38" y="32" font-size="11.5" font-weight="700" fill="#15803d">Before / After</text>
+    <text x="38" y="50" font-size="10.5" fill="#166534">Snapshots Linked</text>
   </g>
 
-  <g transform="translate(1080, 42)">
-    <rect width="160" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-    <circle cx="16" cy="16" r="4" fill="#34d399" />
-    <text x="28" y="20" font-size="11.5" font-weight="600" fill="#e2e8f0">Next.js 16 · React 19</text>
-  </g>
-
-  <g transform="translate(1255, 42)">
-    <rect width="285" height="32" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1" />
-    <text x="14" y="20" font-size="12" font-weight="700" fill="#34d399">✓ 0 Balance Drift · 224 Tests Passed</text>
+  <line x1="1480" y1="517" x2="1480" y2="550" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-green)" />
+  <g transform="translate(1360, 552)">
+    <rect width="210" height="66" rx="14" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.8" />
+    <text x="16" y="35" font-size="16">🪵</text>
+    <text x="44" y="30" font-size="12" font-weight="700" fill="#15803d">Fail-Closed Audit Log</text>
+    <text x="44" y="48" font-size="10.5" fill="#166534">V7_create_audit_log</text>
   </g>
 
 
-  <!-- ================= LEFT COLUMN: CUSTOMER BANKING UI (Width 940) ================= -->
-  <g transform="translate(40, 110)">
+  <!-- ================= BOTTOM CONVERGENCE & VERIFICATION ================= -->
+
+  <!-- Converge Blue & Green columns to Final Settlement -->
+  <line x1="1000" y1="618" x2="1000" y2="648" stroke="#2563eb" stroke-width="2" />
+  <line x1="1465" y1="618" x2="1465" y2="648" stroke="#16a34a" stroke-width="2" />
+  <line x1="600" y1="517" x2="600" y2="648" stroke="#ea580c" stroke-width="2" />
+  <line x1="600" y1="648" x2="1465" y2="648" stroke="#16a34a" stroke-width="2" />
+  <line x1="1050" y1="648" x2="1050" y2="675" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arrow-green)" />
+
+  <!-- Final Success Node -->
+  <g transform="translate(850, 678)">
+    <rect width="400" height="54" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.2" />
+    <text x="45" y="34" font-size="20">🎉</text>
+    <text x="80" y="34" font-size="15" font-weight="700" fill="#15803d">Transfer Finalized · 0 Balance Drift Guaranteed</text>
+  </g>
+
+  <!-- Left Side: Automated Testing Gate Box -->
+  <g transform="translate(200, 678)">
+    <rect width="520" height="54" rx="14" fill="#faf5ff" stroke="#7c3aed" stroke-width="2.2" />
+    <text x="35" y="34" font-size="20">🧪</text>
+    <text x="70" y="34" font-size="14.5" font-weight="700" fill="#6d28d9">224 Backend Tests Passed · 100-Run Concurrency IT Passed</text>
+  </g>
+
+
+  <!-- ================= BOTTOM FOOTER PILL ================= -->
+  <g transform="translate(480, 848)">
+    <!-- Dark Pill Container -->
+    <rect width="640" height="38" rx="19" fill="#0f172a" />
     
-    <!-- Outer Container Frame -->
-    <rect width="920" height="750" rx="20" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" filter="url(#card-shadow)" />
-
-    <!-- UI Sub-Header -->
-    <rect width="920" height="56" rx="20" fill="#131d31" />
-    <rect y="36" width="920" height="20" fill="#131d31" />
-    <circle cx="28" cy="28" r="6" fill="#ef4444" opacity="0.8" />
-    <circle cx="48" cy="28" r="6" fill="#f59e0b" opacity="0.8" />
-    <circle cx="68" cy="28" r="6" fill="#10b981" opacity="0.8" />
-    <text x="100" y="33" font-size="13" font-weight="600" fill="#94a3b8">Customer Portal · Secure Banking Session</text>
-    <rect x="740" y="14" width="160" height="28" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1" />
-    <circle cx="756" cy="28" r="4" fill="#10b981" />
-    <text x="768" y="32" font-size="11" font-weight="600" fill="#cbd5e1">JWT Auth · HTTP-Only</text>
-
-    <!-- Welcome & Balance Banner (Indigo/Purple Card) -->
-    <g transform="translate(24, 76)">
-      <rect width="872" height="150" rx="16" fill="url(#primary-card-grad)" stroke="#4338ca" stroke-width="1.5" />
-      
-      <!-- Decorative background shapes -->
-      <circle cx="800" cy="30" r="90" fill="#ffffff" opacity="0.04" />
-      <circle cx="720" cy="120" r="60" fill="#ffffff" opacity="0.03" />
-
-      <text x="32" y="38" font-size="13" font-weight="600" fill="#a5b4fc" letter-spacing="0.5">PORTFOLIO TOTAL BALANCE</text>
-      <text x="32" y="85" font-size="38" font-weight="800" fill="#ffffff" font-family="'Segoe UI', system-ui, sans-serif">₫ 245,850,000 <tspan font-size="20" font-weight="600" fill="#c7d2fe">VND</tspan></text>
-      <text x="32" y="118" font-size="12" font-weight="500" fill="#818cf8">Active currency: Vietnamese Đồng (VND) · Exact BigDecimal(19,4)</text>
-
-      <!-- Transfer Quick Button -->
-      <g transform="translate(680, 48)">
-        <rect width="160" height="48" rx="12" fill="#ffffff" />
-        <path d="M720 72 L730 72 M726 68 L730 72 L726 76" stroke="#1e1b4b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        <text x="80" y="29" font-size="14" font-weight="700" fill="#1e1b4b" text-anchor="middle">Instant Transfer</text>
-      </g>
-    </g>
-
-    <!-- Two Account Cards Grid -->
-    <g transform="translate(24, 244)">
-      
-      <!-- Account 1: Primary Checking -->
-      <rect width="424" height="132" rx="14" fill="#131d31" stroke="#1e293b" stroke-width="1.2" />
-      <rect x="18" y="18" width="40" height="40" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1" />
-      <!-- Wallet Icon -->
-      <path d="M30 32 L46 32 L46 44 L30 44 Z M42 38 A2 2 0 1 1 42 38.01" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
-      
-      <text x="68" y="32" font-size="13" font-weight="700" fill="#f8fafc">Checking Account</text>
-      <text x="68" y="48" font-size="11" font-weight="500" fill="#64748b" font-family="monospace">UUID: 8a7f4120-e29a-4c22-b91c</text>
-      
-      <text x="18" y="96" font-size="22" font-weight="800" fill="#f8fafc">₫ 185,500,000 <tspan font-size="13" font-weight="500" fill="#94a3b8">VND</tspan></text>
-      
-      <rect x="334" y="20" width="72" height="24" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1" />
-      <text x="370" y="36" font-size="10.5" font-weight="700" fill="#34d399" text-anchor="middle">ACTIVE</text>
-      
-      <text x="18" y="118" font-size="10.5" fill="#10b981" font-weight="600">✓ Pessimistic Lock Protected</text>
-
-      <!-- Account 2: Business Savings -->
-      <g transform="translate(448, 0)">
-        <rect width="424" height="132" rx="14" fill="#131d31" stroke="#1e293b" stroke-width="1.2" />
-        <rect x="18" y="18" width="40" height="40" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1" />
-        <!-- Vault Icon -->
-        <path d="M30 32 L46 32 L46 44 L30 44 Z M38 38 A2 2 0 1 1 38 38.01" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" />
-        
-        <text x="68" y="32" font-size="13" font-weight="700" fill="#f8fafc">Savings Account</text>
-        <text x="68" y="48" font-size="11" font-weight="500" fill="#64748b" font-family="monospace">UUID: 9c2b8741-f401-49ae-a03d</text>
-        
-        <text x="18" y="96" font-size="22" font-weight="800" fill="#f8fafc">₫ 60,350,000 <tspan font-size="13" font-weight="500" fill="#94a3b8">VND</tspan></text>
-        
-        <rect x="334" y="20" width="72" height="24" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1" />
-        <text x="370" y="36" font-size="10.5" font-weight="700" fill="#34d399" text-anchor="middle">ACTIVE</text>
-        
-        <text x="18" y="118" font-size="10.5" fill="#a78bfa" font-weight="600">✓ Deterministic Lock Order: 2nd</text>
-      </g>
-    </g>
-
-    <!-- Double-Entry Transaction Ledger Table -->
-    <g transform="translate(24, 394)">
-      <rect width="872" height="332" rx="16" fill="#131d31" stroke="#1e293b" stroke-width="1.2" />
-      
-      <!-- Table Header -->
-      <text x="24" y="32" font-size="14" font-weight="700" fill="#f8fafc">IMMUTABLE DOUBLE-ENTRY TRANSACTION LEDGER</text>
-      <text x="24" y="48" font-size="11" font-weight="500" fill="#64748b">Append-only audit rows capturing before/after balance snapshots with zero floating drift</text>
-      
-      <rect x="680" y="16" width="168" height="26" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-      <text x="764" y="33" font-size="10.5" font-weight="600" fill="#94a3b8" text-anchor="middle">Flyway V3_create_transactions</text>
-
-      <!-- Table Column Titles -->
-      <g transform="translate(20, 68)">
-        <rect width="832" height="32" rx="8" fill="#1e293b" />
-        <text x="16" y="20" font-size="10.5" font-weight="700" fill="#94a3b8">TRANSACTION TYPE</text>
-        <text x="210" y="20" font-size="10.5" font-weight="700" fill="#94a3b8">CORRELATION ID</text>
-        <text x="380" y="20" font-size="10.5" font-weight="700" fill="#94a3b8">AMOUNT</text>
-        <text x="530" y="20" font-size="10.5" font-weight="700" fill="#94a3b8">BALANCE SNAPSHOT</text>
-        <text x="750" y="20" font-size="10.5" font-weight="700" fill="#94a3b8">STATUS</text>
-      </g>
-
-      <!-- Table Row 1 (DEBIT) -->
-      <g transform="translate(20, 108)">
-        <rect width="832" height="60" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
-        <rect x="16" y="16" width="120" height="26" rx="6" fill="#450a0a" stroke="#dc2626" stroke-width="0.8" />
-        <text x="76" y="33" font-size="10.5" font-weight="700" fill="#fca5a5" text-anchor="middle">TRANSFER_DEBIT</text>
-        
-        <text x="210" y="28" font-size="11.5" font-weight="600" fill="#e2e8f0" font-family="monospace">tx-7b89-4a01</text>
-        <text x="210" y="44" font-size="9.5" fill="#64748b">Idemp: X-Idemp-8821</text>
-
-        <text x="380" y="35" font-size="13" font-weight="700" fill="#f87171">-₫ 15,000,000</text>
-        
-        <text x="530" y="28" font-size="11" font-weight="600" fill="#94a3b8">Before: ₫ 200,500,000</text>
-        <text x="530" y="44" font-size="11" font-weight="700" fill="#f8fafc">After: ₫ 185,500,000</text>
-
-        <rect x="740" y="16" width="76" height="26" rx="6" fill="#064e3b" stroke="#059669" stroke-width="0.8" />
-        <text x="778" y="33" font-size="10.5" font-weight="700" fill="#34d399" text-anchor="middle">SETTLED</text>
-      </g>
-
-      <!-- Table Row 2 (CREDIT) -->
-      <g transform="translate(20, 176)">
-        <rect width="832" height="60" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
-        <rect x="16" y="16" width="120" height="26" rx="6" fill="#064e3b" stroke="#059669" stroke-width="0.8" />
-        <text x="76" y="33" font-size="10.5" font-weight="700" fill="#6ee7b7" text-anchor="middle">TRANSFER_CREDIT</text>
-        
-        <text x="210" y="28" font-size="11.5" font-weight="600" fill="#e2e8f0" font-family="monospace">tx-7b89-4a01</text>
-        <text x="210" y="44" font-size="9.5" fill="#64748b">Matching Leg Correlation</text>
-
-        <text x="380" y="35" font-size="13" font-weight="700" fill="#34d399">+₫ 15,000,000</text>
-        
-        <text x="530" y="28" font-size="11" font-weight="600" fill="#94a3b8">Before: ₫ 45,350,000</text>
-        <text x="530" y="44" font-size="11" font-weight="700" fill="#f8fafc">After: ₫ 60,350,000</text>
-
-        <rect x="740" y="16" width="76" height="26" rx="6" fill="#064e3b" stroke="#059669" stroke-width="0.8" />
-        <text x="778" y="33" font-size="10.5" font-weight="700" fill="#34d399" text-anchor="middle">SETTLED</text>
-      </g>
-
-      <!-- Table Row 3 (DEPOSIT) -->
-      <g transform="translate(20, 244)">
-        <rect width="832" height="60" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
-        <rect x="16" y="16" width="120" height="26" rx="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.8" />
-        <text x="76" y="33" font-size="10.5" font-weight="700" fill="#c7d2fe" text-anchor="middle">DEPOSIT_CASH</text>
-        
-        <text x="210" y="28" font-size="11.5" font-weight="600" fill="#e2e8f0" font-family="monospace">tx-3a12-88ef</text>
-        <text x="210" y="44" font-size="9.5" fill="#64748b">VND Cash Deposit Station</text>
-
-        <text x="380" y="35" font-size="13" font-weight="700" fill="#38bdf8">+₫ 50,000,000</text>
-        
-        <text x="530" y="28" font-size="11" font-weight="600" fill="#94a3b8">Before: ₫ 135,500,000</text>
-        <text x="530" y="44" font-size="11" font-weight="700" fill="#f8fafc">After: ₫ 185,500,000</text>
-
-        <rect x="740" y="16" width="76" height="26" rx="6" fill="#064e3b" stroke="#059669" stroke-width="0.8" />
-        <text x="778" y="33" font-size="10.5" font-weight="700" fill="#34d399" text-anchor="middle">SETTLED</text>
-      </g>
-    </g>
-
-  </g>
-
-
-  <!-- ================= RIGHT COLUMN: ENGINEERING DEEP DIVE (Width 580) ================= -->
-  <g transform="translate(980, 110)">
+    <!-- Blue 'OVERVIEW' badge -->
+    <rect x="6" y="5" width="92" height="28" rx="14" fill="#2563eb" />
+    <text x="52" y="24" text-anchor="middle" font-size="11.5" font-weight="800" fill="#ffffff" letter-spacing="1">OVERVIEW</text>
     
-    <!-- Outer Container Frame -->
-    <rect width="580" height="750" rx="20" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" filter="url(#card-shadow)" />
-
-    <!-- Sub-Header -->
-    <rect width="580" height="56" rx="20" fill="#131d31" />
-    <rect y="36" width="580" height="20" fill="#131d31" />
-    <text x="24" y="34" font-size="14" font-weight="700" fill="#f8fafc" letter-spacing="0.5">ENGINEERED CONCURRENCY &amp; ARCHITECTURE</text>
-
-    <!-- Card 1: Hexagonal Modular Monolith -->
-    <g transform="translate(20, 72)">
-      <rect width="540" height="152" rx="14" fill="#131d31" stroke="#3b82f6" stroke-width="1.2" />
-      <rect x="16" y="14" width="28" height="28" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1" />
-      <text x="30" y="32" font-size="12" font-weight="800" fill="#38bdf8" text-anchor="middle">01</text>
-      
-      <text x="54" y="28" font-size="13" font-weight="700" fill="#f8fafc">Hexagonal Modular Monolith (5 Maven Modules)</text>
-      <text x="54" y="44" font-size="10.5" font-weight="500" fill="#94a3b8">Strict dependency direction: start → controller → application → domain</text>
-
-      <!-- Module Stack Visual -->
-      <g transform="translate(16, 56)">
-        <rect width="118" height="42" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-        <text x="59" y="20" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">domain</text>
-        <text x="59" y="34" font-size="8.5" fill="#94a3b8" text-anchor="middle">Zero Frameworks</text>
-
-        <rect x="130" y="0" width="118" height="42" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-        <text x="189" y="20" font-size="10" font-weight="700" fill="#818cf8" text-anchor="middle">application</text>
-        <text x="189" y="34" font-size="8.5" fill="#94a3b8" text-anchor="middle">Use Cases &amp; Tx</text>
-
-        <rect x="260" y="0" width="118" height="42" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-        <text x="319" y="20" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">infrastructure</text>
-        <text x="319" y="34" font-size="8.5" fill="#94a3b8" text-anchor="middle">JPA &amp; Flyway</text>
-
-        <rect x="390" y="0" width="118" height="42" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
-        <text x="449" y="20" font-size="10" font-weight="700" fill="#f472b6" text-anchor="middle">controller</text>
-        <text x="449" y="34" font-size="8.5" fill="#94a3b8" text-anchor="middle">REST &amp; Security</text>
-      </g>
-
-      <text x="16" y="134" font-size="10.5" fill="#cbd5e1">✓ Complete decoupling of business rules from database or Spring annotations</text>
-    </g>
-
-    <!-- Card 2: Deterministic UUID Lock Ordering -->
-    <g transform="translate(20, 238)">
-      <rect width="540" height="152" rx="14" fill="#131d31" stroke="#10b981" stroke-width="1.2" />
-      <rect x="16" y="14" width="28" height="28" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1" />
-      <text x="30" y="32" font-size="12" font-weight="800" fill="#34d399" text-anchor="middle">02</text>
-
-      <text x="54" y="28" font-size="13" font-weight="700" fill="#f8fafc">Deadlock-Free Transfer Locking Engine</text>
-      <text x="54" y="44" font-size="10.5" font-weight="500" fill="#94a3b8">Deterministic Lock Ordering + Pessimistic Row Locks (PESSIMISTIC_WRITE)</text>
-
-      <!-- Code / Logic Flow Pill -->
-      <g transform="translate(16, 56)">
-        <rect width="508" height="42" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
-        <text x="14" y="25" font-size="10" font-family="monospace" fill="#f8fafc">UUID first = min(fromId, toId); UUID second = max(fromId, toId);</text>
-        <text x="14" y="37" font-size="9" font-family="monospace" fill="#34d399">accountRepo.findByIdForUpdate(first) → accountRepo.findByIdForUpdate(second);</text>
-      </g>
-
-      <text x="16" y="134" font-size="10.5" fill="#34d399" font-weight="600">✓ Mathematically eliminates circular wait deadlock cycles across concurrent A⇄B transfers</text>
-    </g>
-
-    <!-- Card 3: Idempotency-Key Replay Engine -->
-    <g transform="translate(20, 404)">
-      <rect width="540" height="152" rx="14" fill="#131d31" stroke="#f59e0b" stroke-width="1.2" />
-      <rect x="16" y="14" width="28" height="28" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1" />
-      <text x="30" y="32" font-size="12" font-weight="800" fill="#fbbf24" text-anchor="middle">03</text>
-
-      <text x="54" y="28" font-size="13" font-weight="700" fill="#f8fafc">Client Idempotency-Key &amp; Response Replay</text>
-      <text x="54" y="44" font-size="10.5" font-weight="500" fill="#94a3b8">Persistent `idempotency_log` table with SHA-256 Request Hashing</text>
-
-      <!-- Diagram Flow -->
-      <g transform="translate(16, 56)">
-        <rect width="150" height="42" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
-        <text x="75" y="20" font-size="10" font-weight="600" fill="#e2e8f0" text-anchor="middle">X-Idempotency-Key</text>
-        <text x="75" y="34" font-size="8.5" fill="#94a3b8" text-anchor="middle">Client HTTP Header</text>
-
-        <path d="M174 77 L196 77" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
-
-        <rect x="204" y="0" width="150" height="42" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
-        <text x="279" y="20" font-size="10" font-weight="600" fill="#fbbf24" text-anchor="middle">Unique Constraint</text>
-        <text x="279" y="34" font-size="8.5" fill="#94a3b8" text-anchor="middle">(user_id, key) unique</text>
-
-        <path d="M362 77 L384 77" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
-
-        <rect x="392" y="0" width="116" height="42" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
-        <text x="450" y="20" font-size="10" font-weight="600" fill="#34d399" text-anchor="middle">Cached Replay</text>
-        <text x="450" y="34" font-size="8.5" fill="#94a3b8" text-anchor="middle">Zero Double Debit</text>
-      </g>
-
-      <text x="16" y="134" font-size="10.5" fill="#cbd5e1">✓ Retried requests safely replay original transaction without double debiting</text>
-    </g>
-
-    <!-- Card 4: Verification Suite & Benchmark Summary -->
-    <g transform="translate(20, 570)">
-      <rect width="540" height="152" rx="14" fill="#064e3b" stroke="#059669" stroke-width="1.5" />
-      <text x="20" y="30" font-size="13" font-weight="800" fill="#34d399">VERIFIED VERIFICATION GATES &amp; INVARIANTS</text>
-
-      <g transform="translate(16, 44)">
-        <rect width="248" height="88" rx="10" fill="#022c22" stroke="#047857" stroke-width="1" />
-        <text x="16" y="28" font-size="11" font-weight="700" fill="#a7f3d0">Concurrency Integration IT</text>
-        <text x="16" y="48" font-size="20" font-weight="800" fill="#ffffff">0 Drift</text>
-        <text x="16" y="70" font-size="9.5" fill="#6ee7b7">100 reverse transfers / 4 threads</text>
-      </g>
-
-      <g transform="translate(276, 44)">
-        <rect width="248" height="88" rx="10" fill="#022c22" stroke="#047857" stroke-width="1" />
-        <text x="16" y="28" font-size="11" font-weight="700" fill="#a7f3d0">Full Test Gate (mvn verify)</text>
-        <text x="16" y="48" font-size="20" font-weight="800" fill="#ffffff">224 Passed</text>
-        <text x="16" y="70" font-size="9.5" fill="#6ee7b7">0 failures · 0 errors · 7 Flyways</text>
-      </g>
-    </g>
-
+    <!-- Title Text -->
+    <text x="114" y="24" font-size="15" font-weight="700" fill="#f8fafc">Mini Digital Banking Platform - Main Overview</text>
   </g>
 
 </svg>
