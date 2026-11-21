@@ -1,404 +1,300 @@
-import { useState, useEffect } from 'react';
-import { Mail, MapPin, Phone, Copy, Check, Send, X, ExternalLink, FileText, Menu } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { FileText, Menu, X } from 'lucide-react';
 import { portfolioData } from './data/portfolioData';
 import type { FeaturedProjectItem, SecondaryProjectItem } from './data/portfolioData';
+import { subscribeScrollFrame } from './hooks/useScrollEngine';
 import Hero from './components/Hero';
+import About from './components/About';
 import Projects from './components/Projects';
-import MoreProjects from './components/MoreProjects';
+import KineticTunnel from './components/KineticTunnel';
 import EngineeringFocus from './components/EngineeringFocus';
 import Skills from './components/Skills';
-import About from './components/About';
-import Activities from './components/Activities';
+import MetricsBars from './components/MetricsBars';
+import Credentials from './components/Credentials';
+import ArchitectureWireframes from './components/ArchitectureWireframes';
 import Footer from './components/Footer';
 import CaseStudyModal from './components/CaseStudyModal';
 import ImageLightbox, { type LightboxData } from './components/ImageLightbox';
+import ContactModal from './components/ContactModal';
+
+const NAV_ITEMS = [
+  { id: 'about', label: 'About' },
+  { id: 'work', label: 'Work' },
+  { id: 'engineering', label: 'Focus' },
+  { id: 'skills', label: 'Stack' },
+  { id: 'credentials', label: 'Credentials' },
+  { id: 'contact', label: 'Contact' },
+] as const;
 
 function App() {
-  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [headerTheme, setHeaderTheme] = useState<'light' | 'dark'>('light');
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
-  const [copiedPhone, setCopiedPhone] = useState(false);
-
   const [selectedProject, setSelectedProject] = useState<
     FeaturedProjectItem | SecondaryProjectItem | null
   >(null);
   const [lightboxData, setLightboxData] = useState<LightboxData | null>(null);
 
+  const navRef = useRef<HTMLElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const headerThemeRef = useRef<'light' | 'dark'>('light');
+
   const { personal } = portfolioData;
 
   useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const shouldShow = window.scrollY > 300;
-          setShowScrollTop((prev) => (prev !== shouldShow ? shouldShow : prev));
-          ticking = false;
-        });
-        ticking = true;
+    const supportsNativeScrollProgress =
+      typeof CSS !== 'undefined' && CSS.supports('animation-timeline', 'scroll()');
+
+    return subscribeScrollFrame(() => {
+      const bands = document.querySelectorAll<HTMLElement>('[data-theme-band]');
+      let nextTheme: 'light' | 'dark' = 'light';
+      for (const band of bands) {
+        const rect = band.getBoundingClientRect();
+        if (rect.top <= 48 && rect.bottom > 48) {
+          nextTheme = band.dataset.themeBand === 'dark' ? 'dark' : 'light';
+          break;
+        }
       }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+      if (nextTheme !== headerThemeRef.current) {
+        headerThemeRef.current = nextTheme;
+        setHeaderTheme(nextTheme);
+      }
+
+      if (
+        !supportsNativeScrollProgress &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        progressBarRef.current
+      ) {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+        progressBarRef.current.style.transform = `scaleX(${ratio})`;
+      }
+    });
   }, []);
 
   useEffect(() => {
+    const navEl = navRef.current;
+    if (!navEl) return;
+
+    const supportsScrollTargetGroup =
+      typeof CSS !== 'undefined' && CSS.supports('scroll-target-group: auto');
+
+    if (supportsScrollTargetGroup) {
+      const syncAriaCurrent = () => {
+        const currentLink = navEl.querySelector<HTMLAnchorElement>('a:target-current');
+        navEl.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+          link.setAttribute('aria-current', link === currentLink ? 'true' : 'false');
+        });
+      };
+
+      syncAriaCurrent();
+      document.addEventListener('scrollend', syncAriaCurrent);
+      return () => document.removeEventListener('scrollend', syncAriaCurrent);
+    }
+
+    const links = Array.from(navEl.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'));
+    const sections = NAV_ITEMS.map((item) => document.getElementById(item.id)).filter(
+      (el): el is HTMLElement => el !== null
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            for (const link of links) {
+              const isActive = link.getAttribute('href') === `#${id}`;
+              link.classList.toggle('target-current', isActive);
+              link.setAttribute('aria-current', String(isActive));
+            }
+          }
+        }
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+    );
+
+    sections.forEach((sec) => observer.observe(sec));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setIsContactOpen(false);
         setIsMobileMenuOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isMobileMenuOpen]);
 
-  const handleCopy = (text: string, type: 'email' | 'phone') => {
-    navigator.clipboard.writeText(text);
-    if (type === 'email') {
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2000);
-    } else {
-      setCopiedPhone(true);
-      setTimeout(() => setCopiedPhone(false), 2000);
-    }
-  };
+  const handleOpenContact = useCallback(() => setIsContactOpen(true), []);
+  const handleCloseContact = useCallback(() => setIsContactOpen(false), []);
+  const handleCloseProject = useCallback(() => setSelectedProject(null), []);
+  const handleCloseLightbox = useCallback(() => setLightboxData(null), []);
+
+  const isDarkHeader = headerTheme === 'dark';
 
   return (
-    <div className="min-h-screen bg-canvas text-ink font-sans selection:bg-blue-200 selection:text-ink relative">
-      
-      {/* Top Navigation */}
-      <header className="fixed top-0 w-full p-4 md:px-8 md:py-5 flex justify-between items-center z-40 text-ink bg-canvas/90 backdrop-blur-md border-b border-black/8">
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="font-display font-bold text-xl md:text-2xl tracking-tight hover:text-blue-600 transition-colors cursor-pointer"
-        >
-          QUAN.DEV
-        </button>
+    <div className="min-h-screen bg-cream text-ink font-sans selection:bg-cobalt/20 selection:text-ink relative">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2.5 focus:rounded-lg focus:bg-obsidian focus:text-light-ink focus:font-mono focus:text-xs focus:font-semibold"
+      >
+        Skip to main content
+      </a>
 
-        {/* Desktop Navigation: Projects · Engineering · Skills · About · Resume · Contact */}
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
-          <a href="#projects" className="hover:text-blue-600 transition-colors">
-            Projects
-          </a>
-          <a href="#engineering" className="hover:text-blue-600 transition-colors">
-            Engineering
-          </a>
-          <a href="#skills" className="hover:text-blue-600 transition-colors">
-            Skills
-          </a>
-          <a href="#about" className="hover:text-blue-600 transition-colors">
-            About
-          </a>
-          <a
-            href={personal.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 font-mono text-xs font-bold text-blue-700 hover:text-blue-800 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-200 hover:bg-blue-100 transition-colors"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            <span>Resume</span>
-          </a>
-        </nav>
-
-        {/* Action Controls */}
-        <div className="flex items-center gap-3">
+      <header
+        data-header-theme={headerTheme}
+        className="adaptive-header fixed top-0 inset-x-0 z-40 backdrop-blur-md border-b"
+      >
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 lg:px-16 h-16 flex items-center justify-between gap-4">
           <button
-            onClick={() => setIsContactOpen(true)}
-            className="bg-ink text-white rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold hover:bg-blue-600 hover:shadow-lg transition-all cursor-pointer shadow-xs"
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="inline-flex items-center gap-2 font-display font-extrabold text-sm sm:text-base tracking-tight uppercase cursor-pointer py-2"
           >
-            Contact Me
+            <span
+              className={`w-6 h-6 rounded-md inline-flex items-center justify-center font-mono text-xs font-bold transition-colors ${
+                isDarkHeader ? 'bg-light-ink text-obsidian' : 'bg-ink text-cream'
+              }`}
+              aria-hidden="true"
+            >
+              Q
+            </span>
+            <span>QUAN.DEV</span>
           </button>
 
-          {/* Mobile Menu Trigger */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center cursor-pointer"
-            aria-label="Toggle navigation menu"
+          <nav
+            ref={navRef}
+            aria-label="Primary navigation"
+            className="hidden md:flex items-center gap-6 lg:gap-7 font-mono text-[11px] uppercase tracking-[0.14em] font-medium nav-scrollspy"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </header>
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="py-1 opacity-70 hover:opacity-100 transition-opacity"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-      {/* Mobile Drawer */}
-      {isMobileMenuOpen && (
-        <div
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-xs md:hidden pt-20"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-white border-b border-black/10 p-6 flex flex-col gap-4 font-sans text-sm font-semibold shadow-xl"
-          >
-            <a
-              href="#projects"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="py-2 hover:text-blue-600"
-            >
-              Projects
-            </a>
-            <a
-              href="#engineering"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="py-2 hover:text-blue-600"
-            >
-              Engineering Focus
-            </a>
-            <a
-              href="#skills"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="py-2 hover:text-blue-600"
-            >
-              Skills
-            </a>
-            <a
-              href="#about"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="py-2 hover:text-blue-600"
-            >
-              About & Experience
-            </a>
+          <div className="flex items-center gap-2.5">
             <a
               href={personal.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2 text-blue-700 flex items-center gap-1.5"
+              className={`hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full font-mono text-[11px] font-semibold uppercase tracking-wider border transition-colors ${
+                isDarkHeader
+                  ? 'border-obsidian-hairline-strong text-light-secondary hover:text-light-ink hover:border-light-ink'
+                  : 'border-cream-hairline text-ink-secondary hover:text-ink hover:border-ink'
+              }`}
+            >
+              <FileText className="w-3 h-3" />
+              <span>CV</span>
+            </a>
+
+            <button
+              type="button"
+              onClick={handleOpenContact}
+              className={`h-10 px-5 rounded-full font-sans text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+                isDarkHeader
+                  ? 'bg-light-ink hover:bg-sand-gold text-obsidian'
+                  : 'bg-ink hover:bg-cobalt text-cream'
+              }`}
+            >
+              Contact
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className={`md:hidden w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer transition-colors ${
+                isDarkHeader
+                  ? 'border-obsidian-hairline-strong text-light-ink'
+                  : 'border-cream-hairline text-ink'
+              }`}
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        <div
+          ref={progressBarRef}
+          aria-hidden="true"
+          className={`scroll-progress-bar absolute bottom-0 left-0 right-0 h-[2px] pointer-events-none ${
+            isDarkHeader ? 'bg-sand-gold' : 'bg-cobalt'
+          }`}
+        />
+      </header>
+
+      {isMobileMenuOpen ? (
+        <div
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="fixed inset-0 z-30 bg-black/55 backdrop-blur-xs md:hidden pt-16"
+        >
+          <nav
+            id="mobile-nav-drawer"
+            aria-label="Mobile navigation"
+            onClick={(e) => e.stopPropagation()}
+            className="bg-obsidian text-light-ink border-b border-obsidian-hairline px-6 py-6 flex flex-col gap-1 font-mono text-sm uppercase tracking-wider shadow-2xl"
+          >
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="min-h-11 flex items-center px-2 rounded-lg text-light-ink hover:bg-obsidian-elevated transition-colors"
+              >
+                {item.label}
+              </a>
+            ))}
+            <a
+              href={personal.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="min-h-11 flex items-center gap-2 px-2 rounded-lg text-sand-gold hover:bg-obsidian-elevated transition-colors mt-2 pt-2 border-t border-obsidian-hairline"
             >
               <FileText className="w-4 h-4" />
               <span>Resume (PDF)</span>
             </a>
-          </div>
+          </nav>
         </div>
-      )}
+      ) : null}
 
-      {/* Main Sections */}
-      <main>
-        <Hero onOpenContact={() => setIsContactOpen(true)} />
+      <main id="main-content" tabIndex={-1}>
+        <Hero />
+        <About />
         <Projects
-          onExpandImage={(data) => setLightboxData(data)}
-          onSelectProject={(proj) => setSelectedProject(proj)}
+          onExpandImage={setLightboxData}
+          onSelectProject={setSelectedProject}
         />
-        <MoreProjects
-          onExpandImage={(data) => setLightboxData(data)}
-          onSelectProject={(proj) => setSelectedProject(proj)}
-        />
+        <KineticTunnel />
         <EngineeringFocus />
         <Skills />
-        <About onExpandImage={(data) => setLightboxData(data)} />
-        <Activities onExpandImage={(data) => setLightboxData(data)} />
+        <MetricsBars />
+        <Credentials onExpandImage={setLightboxData} />
+        <ArchitectureWireframes />
       </main>
 
-      <Footer onOpenContact={() => setIsContactOpen(true)} />
+      <Footer onOpenContact={handleOpenContact} />
 
-      {/* Floating Scroll to Top */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={`fixed bottom-8 right-8 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-[0_4px_14px_0_rgba(0,82,255,0.39)] hover:bg-blue-700 hover:-translate-y-1 transition-all duration-300 z-40 cursor-pointer ${
-          showScrollTop
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-4 pointer-events-none'
-        }`}
-        title="Scroll to Top"
-        aria-label="Scroll to top"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2.5}
-            d="M5 10l7-7m0 0l7 7m-7-7v18"
-          />
-        </svg>
-      </button>
-
-      {/* Case Study Full-Depth Modal */}
       <CaseStudyModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-        onExpandImage={(data) => setLightboxData(data)}
+        onClose={handleCloseProject}
+        onExpandImage={setLightboxData}
       />
 
-      {/* High-Resolution Image Lightbox */}
-      <ImageLightbox
-        data={lightboxData}
-        onClose={() => setLightboxData(null)}
-      />
+      <ImageLightbox data={lightboxData} onClose={handleCloseLightbox} />
 
-      {/* Contact Modal (100% English) */}
-      {isContactOpen && (
-        <div
-          onClick={() => setIsContactOpen(false)}
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Contact Information"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-[#fcfaf7] text-ink rounded-3xl max-w-lg w-full p-7 md:p-9 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] border border-black/10 relative"
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setIsContactOpen(false)}
-              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/5 hover:bg-black/10 text-ink flex items-center justify-center transition-colors cursor-pointer"
-              title="Close"
-              aria-label="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="mb-8">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-blue-700">
-                  CONTACT INFORMATION
-                </span>
-              </div>
-              <h3 className="font-display text-3xl md:text-4xl text-ink tracking-tight">
-                {personal.name}
-              </h3>
-              <p className="font-sans text-xs md:text-sm text-ink/75 mt-1 font-medium">
-                {personal.title} • {personal.location}
-              </p>
-            </div>
-
-            {/* Contact Details Cards */}
-            <div className="flex flex-col gap-4 mb-8">
-              {/* Email Card */}
-              <div className="p-4 md:p-5 rounded-2xl bg-white border border-black/8 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-blue-500/40 hover:shadow-xs transition-all group">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="font-mono text-[10px] uppercase font-bold text-blue-700 tracking-wider block">
-                      Email
-                    </span>
-                    <span className="font-mono text-xs md:text-sm font-bold text-ink select-all truncate block">
-                      {personal.email}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
-                  <button
-                    onClick={() => handleCopy(personal.email, 'email')}
-                    className="h-9 px-3 rounded-xl bg-gray-100 hover:bg-gray-200 font-sans text-xs font-semibold text-ink border border-black/5 transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
-                  >
-                    {copiedEmail ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5 text-ink/60" />
-                    )}
-                    <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
-                  </button>
-                  <a
-                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${personal.email}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="h-9 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-sans text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>Send</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Location Card */}
-              <div className="p-4 md:p-5 rounded-2xl bg-white border border-black/8 shadow-2xs flex items-center gap-3 hover:border-emerald-500/40 hover:shadow-xs transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="font-mono text-[10px] uppercase font-bold text-emerald-700 tracking-wider block">
-                    Location
-                  </span>
-                  <span className="font-sans text-xs md:text-sm font-bold text-ink">
-                    {personal.location}
-                  </span>
-                </div>
-              </div>
-
-              {/* Phone Card */}
-              <div className="p-4 md:p-5 rounded-2xl bg-white border border-black/8 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-amber-500/40 hover:shadow-xs transition-all group">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="font-mono text-[10px] uppercase font-bold text-amber-700 tracking-wider block">
-                      Phone
-                    </span>
-                    <span className="font-mono text-xs md:text-sm font-bold text-ink select-all truncate block">
-                      {personal.phone}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
-                  <button
-                    onClick={() => handleCopy(personal.phoneRaw, 'phone')}
-                    className="h-9 px-3 rounded-xl bg-gray-100 hover:bg-gray-200 font-sans text-xs font-semibold text-ink border border-black/5 transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
-                  >
-                    {copiedPhone ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5 text-ink/60" />
-                    )}
-                    <span>{copiedPhone ? 'Copied' : 'Copy'}</span>
-                  </button>
-                  <a
-                    href={`tel:${personal.phoneRaw}`}
-                    className="h-9 px-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-sans text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap"
-                  >
-                    <Phone className="w-3.5 h-3.5" />
-                    <span>Call</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="pt-6 border-t border-black/10 flex flex-wrap items-center justify-between gap-3">
-              <span className="font-mono text-xs text-ink/60 font-medium">
-                Professional Networks:
-              </span>
-              <div className="flex items-center gap-4">
-                <a
-                  href={personal.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs font-bold text-ink hover:text-blue-600 transition-colors flex items-center gap-1"
-                >
-                  <span>GitHub</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-                <a
-                  href={personal.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs font-bold text-ink hover:text-blue-600 transition-colors flex items-center gap-1"
-                >
-                  <span>LinkedIn</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-                <a
-                  href={personal.socials.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs font-bold text-ink hover:text-blue-600 transition-colors flex items-center gap-1"
-                >
-                  <span>Facebook</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )}
-
+      <ContactModal open={isContactOpen} onClose={handleCloseContact} />
     </div>
   );
 }

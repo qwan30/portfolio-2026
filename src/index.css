@@ -1,105 +1,265 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Anton", sans-serif;
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Colors (Warm Editorial Theme) */
-  --color-canvas: #f4f0e6; /* Warm beige */
-  --color-ink: #111111; /* Near black */
-  --color-accent: #e05d34; /* Rust orange */
-  --color-primary: #111111;
-  
-  --color-surface-soft: #ffffff; /* White cards */
-  --color-surface-dark: #111111; /* Dark sections */
-  
-  --color-pastel-blue: #e0f2fe;
-  --color-pastel-green: #dcfce7;
-  --color-pastel-pink: #ffe4e6;
-  --color-pastel-purple: #f3e8ff;
-  --color-pastel-yellow: #fef08a;
-  
-  --color-hairline: #e5e5e5;
-  
-  --color-text-muted: #b5a999;
-  --color-text-body: #555555;
-  
-  --color-on-primary: #ffffff;
-  --color-on-dark: #ffffff;
+  --color-cream: #f3efe6;
+  --color-cream-soft: #eae4d7;
+  --color-cream-card: #fbf9f4;
+  --color-cream-hairline: #d6cfc2;
+
+  --color-obsidian: #090a0e;
+  --color-obsidian-surface: #11131a;
+  --color-obsidian-elevated: #181b25;
+  --color-obsidian-hairline: rgba(234, 228, 215, 0.14);
+  --color-obsidian-hairline-strong: rgba(234, 228, 215, 0.28);
+
+  --color-ink: #111111;
+  --color-ink-secondary: #3f3d39;
+  --color-ink-muted: #7a746a;
+  --color-ink-stone: #8f897e;
+
+  --color-light-ink: #efe9dc;
+  --color-light-secondary: #b9b3a7;
+  --color-light-muted: #8a8792;
+  --color-slate-accent: #6f78a8;
+  --color-sand-gold: #e2cfa8;
+
+  --color-cobalt: #1d3a94;
+  --color-cobalt-hover: #152d78;
+  --color-flame: #d9531e;
+  --color-verified: #157a4c;
+  --color-verified-dark: #4cd995;
+  --color-verified-soft: rgba(76, 217, 149, 0.12);
 }
 
-body, html {
-  background-color: var(--color-canvas);
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+html {
+  background-color: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
-/* Minimalist scrollbar */
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  overflow-x: clip;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cobalt);
+  outline-offset: 2px;
+}
+
+[data-theme-band="dark"] :focus-visible {
+  outline-color: var(--color-sand-gold);
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+h1,
+h2 {
+  text-wrap: balance;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
+  height: 7px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--color-canvas); 
+  background: var(--color-obsidian);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #d8d0c2; 
+  background: rgba(239, 233, 220, 0.24);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #b5a999; 
+  background: rgba(239, 233, 220, 0.44);
 }
 
-/* Performance optimizations: Content-visibility for offscreen sections */
-#about, #projects, #engineering, #skills, #activities {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
+.adaptive-header {
+  transition:
+    background-color 0.28s var(--ease-out),
+    color 0.28s var(--ease-out),
+    border-color 0.28s var(--ease-out);
 }
 
-/* GPU hardware-accelerated reveal animations */
-.gpu-accelerated {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: transform, opacity;
+.adaptive-header[data-header-theme="light"] {
+  background-color: rgba(243, 239, 230, 0.84);
+  color: var(--color-ink);
+  border-color: rgba(17, 17, 17, 0.1);
 }
 
-.reveal-init {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
+.adaptive-header[data-header-theme="dark"] {
+  background-color: rgba(9, 10, 14, 0.82);
+  color: var(--color-light-ink);
+  border-color: rgba(239, 233, 220, 0.1);
 }
 
-.reveal-visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+.nav-scrollspy {
+  scroll-target-group: auto;
 }
 
-@keyframes fadeInFast {
-  from {
+.nav-scrollspy a {
+  position: relative;
+}
+
+.nav-scrollspy a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.22s var(--ease-out);
+}
+
+.nav-scrollspy a:is(:target-current, .target-current) {
+  opacity: 1;
+}
+
+.nav-scrollspy a:is(:target-current, .target-current)::after {
+  transform: scaleX(1);
+}
+
+.scroll-progress-bar {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    @keyframes scroll-progress-grow {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    .scroll-progress-bar {
+      animation: scroll-progress-grow auto linear;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+.hero-portrait-mask {
+  -webkit-mask-image: radial-gradient(ellipse 84% 88% at 50% 42%, #000 62%, transparent 99%);
+  mask-image: radial-gradient(ellipse 84% 88% at 50% 42%, #000 62%, transparent 99%);
+}
+
+.dawn-aurora {
+  background:
+    radial-gradient(ellipse 52% 48% at 24% 96%, rgba(208, 78, 49, 0.72) 0%, rgba(162, 54, 42, 0.32) 42%, transparent 74%),
+    radial-gradient(ellipse 62% 54% at 78% 88%, rgba(63, 46, 128, 0.62) 0%, rgba(36, 30, 82, 0.28) 46%, transparent 78%),
+    radial-gradient(ellipse 40% 35% at 50% 100%, rgba(185, 88, 66, 0.34) 0%, transparent 70%),
+    linear-gradient(180deg, #090a0e 0%, #0b0c12 52%, #13111c 100%);
+}
+
+.poster-card-shadow {
+  box-shadow:
+    0 28px 64px -18px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.monolith-bar {
+  position: relative;
+  transform-origin: bottom center;
+}
+
+.monolith-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+}
+
+@layer components {
+  dialog.native-modal {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    margin: auto;
+    max-width: calc(100vw - 1.5rem);
+    max-height: calc(100dvh - 1.5rem);
+    overflow: visible;
+  }
+
+  dialog.native-modal[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  dialog.native-modal:modal {
+    overscroll-behavior: contain;
+  }
+
+  dialog.native-modal::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background: rgba(5, 6, 10, 0.82);
+    backdrop-filter: blur(8px);
+  }
+
+  dialog.native-lightbox::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background: rgba(4, 5, 8, 0.94);
+    backdrop-filter: blur(10px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.native-modal {
     opacity: 0;
-    transform: scale(0.98);
+    transform: translateY(10px) scale(0.97);
+    transition:
+      opacity 0.2s var(--ease-out),
+      transform 0.22s var(--ease-out),
+      display 0.2s allow-discrete,
+      overlay 0.2s allow-discrete;
+    transition-behavior: allow-discrete;
   }
-  to {
+
+  dialog.native-modal[open] {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
-}
 
-.animate-fadeIn {
-  animation: fadeInFast 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  @starting-style {
+    dialog.native-modal[open] {
+      opacity: 0;
+      transform: translateY(10px) scale(0.97);
+    }
   }
 }

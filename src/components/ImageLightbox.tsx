@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
-import { X } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { DIALOG_LIGHT_DISMISS, useNativeModal } from '../hooks/useNativeModal';
 
-export interface LightboxData {
+export interface LightboxImage {
   url: string;
   title: string;
   badge?: string;
   description?: string;
+}
+
+export interface LightboxData extends LightboxImage {
+  images?: LightboxImage[];
+  initialIndex?: number;
 }
 
 interface ImageLightboxProps {
@@ -13,73 +19,140 @@ interface ImageLightboxProps {
   onClose: () => void;
 }
 
-export const ImageLightbox: React.FC<ImageLightboxProps> = ({ data, onClose }) => {
+export function ImageLightbox({ data, onClose }: ImageLightboxProps) {
+  const dialogRef = useNativeModal({ open: data !== null, onClose });
+  const images: LightboxImage[] = data
+    ? data.images && data.images.length > 0
+      ? data.images
+      : [data]
+    : [];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
   useEffect(() => {
     if (!data) return;
+    const nextIndex = data.initialIndex ?? 0;
+    setActiveIndex(nextIndex >= 0 && nextIndex < images.length ? nextIndex : 0);
+  }, [data, images.length]);
+
+  const showPrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const showNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  useEffect(() => {
+    if (!data || images.length <= 1) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        showPrev();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        showNext();
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [data, onClose]);
+  }, [data, images.length, showNext, showPrev]);
 
-  if (!data) return null;
+  const current = images[activeIndex] ?? data;
+  const isSvg = current ? current.url.toLowerCase().endsWith('.svg') : false;
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 md:p-8 cursor-zoom-out animate-fadeIn select-none"
-      role="dialog"
-      aria-modal="true"
-      aria-label="High-Resolution Image Viewer"
+    <dialog
+      ref={dialogRef}
+      {...DIALOG_LIGHT_DISMISS}
+      aria-label="High-resolution evidence viewer"
+      className="native-modal native-lightbox w-[min(72rem,calc(100vw-1.5rem))]"
     >
-      {/* Top Bar */}
-      <div className="absolute top-6 right-6 flex items-center gap-4 z-10">
-        <span className="font-mono text-xs text-gray-400 hidden sm:inline">
-          Click anywhere or press Esc to close
-        </span>
-        <button
-          onClick={onClose}
-          className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold text-lg transition-colors backdrop-blur-sm cursor-pointer"
-          title="Close viewer"
-          aria-label="Close"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
+      {current ? (
+        <div className="flex flex-col items-center gap-4 w-full px-2 sm:px-4">
+          <div className="w-full flex items-center justify-between gap-4 text-light-ink">
+            <div className="flex items-center gap-2.5 min-w-0">
+              {current.badge ? (
+                <span className="font-mono text-[11px] uppercase font-semibold tracking-wider px-2.5 py-1 rounded-md bg-cobalt text-white shrink-0">
+                  {current.badge}
+                </span>
+              ) : null}
+              <h2 className="font-sans text-sm sm:text-base font-semibold text-light-ink truncate">
+                {current.title}
+              </h2>
+            </div>
 
-      {/* Centered Image Container */}
-      <div
-        className="relative max-h-[88vh] max-w-[96vw] flex flex-col items-center justify-center"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="relative rounded-2xl overflow-hidden border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] bg-slate-950">
-          <img
-            src={data.url}
-            alt={data.title}
-            className="max-h-[78vh] max-w-[92vw] w-auto h-auto object-contain"
-            decoding="async"
-          />
-        </div>
-
-        <div className="mt-4 text-center max-w-2xl px-4">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            {data.badge && (
-              <span className="font-mono text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded-full bg-blue-600/90 text-white">
-                {data.badge}
-              </span>
-            )}
-            <h4 className="font-display text-lg sm:text-xl text-white tracking-wide">
-              {data.title}
-            </h4>
+            <div className="flex items-center gap-3 shrink-0">
+              {images.length > 1 ? (
+                <span className="font-mono text-xs text-light-muted tabular-nums">
+                  {String(activeIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+                </span>
+              ) : null}
+              <button
+                type="button"
+                onClick={onClose}
+                autoFocus
+                className="w-11 h-11 rounded-full bg-obsidian-elevated hover:bg-white/15 border border-obsidian-hairline-strong text-light-ink flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Close image viewer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-          {data.description && (
-            <p className="font-sans text-xs text-gray-400 mt-1">{data.description}</p>
-          )}
+
+          <div className="relative w-full flex items-center justify-center">
+            {images.length > 1 ? (
+              <button
+                type="button"
+                onClick={showPrev}
+                className="absolute left-2 sm:left-4 z-10 w-11 h-11 rounded-full bg-obsidian/90 hover:bg-cobalt border border-obsidian-hairline-strong text-light-ink flex items-center justify-center transition-colors cursor-pointer shadow-lg"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            ) : null}
+
+            <div
+              className={`rounded-xl overflow-hidden border border-obsidian-hairline-strong shadow-2xl max-w-full flex items-center justify-center p-2 sm:p-3 ${
+                isSvg ? 'bg-[#f6f3ec]' : 'bg-obsidian'
+              }`}
+            >
+              <img
+                src={current.url}
+                alt={current.title}
+                className="max-h-[74dvh] max-w-[86vw] w-auto h-auto object-contain rounded-lg"
+                decoding="async"
+              />
+            </div>
+
+            {images.length > 1 ? (
+              <button
+                type="button"
+                onClick={showNext}
+                className="absolute right-2 sm:right-4 z-10 w-11 h-11 rounded-full bg-obsidian/90 hover:bg-cobalt border border-obsidian-hairline-strong text-light-ink flex items-center justify-center transition-colors cursor-pointer shadow-lg"
+                aria-label="Next image"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            ) : null}
+          </div>
+
+          <div className="text-center max-w-2xl px-2">
+            {current.description ? (
+              <p className="font-sans text-xs sm:text-sm text-light-secondary leading-relaxed">
+                {current.description}
+              </p>
+            ) : null}
+            <p className="font-mono text-[11px] text-light-muted mt-1">
+              {images.length > 1
+                ? 'Use arrow keys to navigate · Esc or click outside to close'
+                : 'Press Esc or click outside to close'}
+            </p>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : null}
+    </dialog>
   );
-};
+}
 
 export default ImageLightbox;
